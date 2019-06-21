@@ -2,6 +2,9 @@
 This library provides a [JsonSerializer](https://github.com/FasterXML/jackson-databind) and
 a set of annotations to serialize any PoJo as [GeoJSON](https://tools.ietf.org/html/rfc7946).
 
+## Status
+The only supported GeoJSON type at the moment is "Feature".
+
 ## Maven
 ```xml
 <dependency>
