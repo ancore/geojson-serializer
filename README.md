@@ -115,6 +115,28 @@ Works with Spring MVC as well:
    }
 ```
 
+## Annotation Combinations
+
+**@GeoJson(type=GeoJsonType.FEATURE)**
+ - @GeoJsonId {0,1}
+ - @GeoJsonGeometry {0,1}
+ - @GeoJsonProperties {0,1} **or** @GeoJsonProperty {0,}
+
+**@GeoJson(type=GeoJsonType.FEATURE_COLLECTION)**
+ - @GeoJsonFeatures {0,1}
+
+
+**@GeoJson(type=GeoJsonType.POINT)**, **@GeoJson(type=GeoJsonType.MULTI_POINT)**, 
+**@GeoJson(type=GeoJsonType.LINE_STRING)**, **@GeoJson(type=GeoJsonType.MULTI_LINE_STRING)**
+**@GeoJson(type=GeoJsonType.POLYGON)**, **@GeoJson(type=GeoJsonType.MULTI_POLYGON)**
+ - @GeoJsonGeometry {0,1}
+
+**@GeoJson(type=GeoJsonType.GEOMETRY_COLLECTION**
+ - not supported yet
+
+
+
+
 ## Credits
 
 Copyright (c) 2019 DTAP GmbH

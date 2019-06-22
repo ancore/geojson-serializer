@@ -12,20 +12,16 @@
         ]
       },
       "properties": {
+        "name": "Name 1",
         "description": "Lorem ipsum 1"
       }
     },
     {
       "type": "Feature",
-      "id": "a0afaa49-f19d-419f-8f24-85a45029bac0",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          42.0,
-          23.0
-        ]
-      },
+      "id": "71c26c20-94ec-11e9-bc42-526af7764f64",
+      "geometry": null,
       "properties": {
+        "name": "Name 2",
         "description": "Lorem ipsum 2"
       }
     }

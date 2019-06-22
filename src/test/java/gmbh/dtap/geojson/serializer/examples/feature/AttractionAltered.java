@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer.examples;
+package gmbh.dtap.geojson.serializer.examples.feature;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.annotation.GeoJson;
-import gmbh.dtap.geojson.annotation.GeoJsonGeometry;
 import gmbh.dtap.geojson.annotation.GeoJsonId;
 import gmbh.dtap.geojson.annotation.GeoJsonProperty;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
-import org.locationtech.jts.geom.Point;
 
 import java.util.UUID;
 
@@ -38,10 +36,7 @@ import java.util.UUID;
  *    {
  *       "type": "Feature",
  *       "id": "...",
- *       "geometry": {
- *          "type": "Point",
- *          "coordinates: [ ..., ...]
- *       },
+ *       "geometry": null,
  *       "properties": {
  *          "name": "...",
  *          "description": "..."
@@ -58,13 +53,11 @@ public class AttractionAltered {
    @GeoJsonId private UUID id;
    @GeoJsonProperty private String name;
    private String description;
-   @GeoJsonGeometry private Point location;
 
-   public AttractionAltered(UUID id, String name, String description, Point location) {
+   public AttractionAltered(UUID id, String name, String description) {
       this.id = id;
       this.name = name;
       this.description = description;
-      this.location = location;
    }
 
    public UUID getId() {
@@ -78,9 +71,5 @@ public class AttractionAltered {
    @GeoJsonProperty(name = "alteredDescription")
    public String getDescription() {
       return description;
-   }
-
-   public Point getLocation() {
-      return location;
    }
 }

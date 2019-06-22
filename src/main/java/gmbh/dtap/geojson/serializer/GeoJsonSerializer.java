@@ -23,22 +23,21 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import gmbh.dtap.geojson.annotation.GeoJson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 /**
  * A {@link JsonSerializer} implementation for types annotated by {@link GeoJson}.
- * <p>The type attribute of the {@link GeoJson} annotation defines the type of the <em>GeoJSON Object</em>.
- * <p><em>GeoJSON objects</em> require and allow additioal fields.
+ * <p>The {@link GeoJson#type() type attribute} of the annotation defines the
+ * output type of the <em>GeoJSON Object</em>.
+ * <p>Please refer to {@link GeoJson} for a list of additional annotations per type.
  *
+ * @see GeoJson
+ * @see GeoJsonType
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3" target="_blank">RFC 7946 - GeoJSON Object</a>
  * @since 0.1.0
  */
 public class GeoJsonSerializer extends StdSerializer<Object> {
-
-   private static final Logger logger = LoggerFactory.getLogger(GeoJsonSerializer.class);
 
    /**
     * {@inheritDoc}
@@ -86,13 +85,29 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
    }
 
    /**
+    * Checks for a class level annotation of type {@link GeoJson}.
+    * Throws an exception if not present.
+    *
+    * @param object the object of which the class should be ckecked
+    * @return the annotation
+    * @throws GeoJsonSerializerException if annotation is not present
+    * @since 0.2.0
+    */
+   private static GeoJsonType findType(Object object) {
+      GeoJson geoJsonAnnotation = object.getClass().getAnnotation(GeoJson.class);
+      if (geoJsonAnnotation == null) {
+         throw new IllegalArgumentException("not annotated with @GeoJson");
+      }
+      return geoJsonAnnotation.type();
+   }
+
+   /**
     * {@inheritDoc}
     *
     * @since 0.1.0
     */
    @Override public void serialize(Object object, JsonGenerator gen, SerializerProvider provider) throws IOException {
-      logger.debug("serialize: {}", object);
-      GeoJsonType type = findType(object.getClass());
+      GeoJsonType type = findType(object);
       switch (type) {
          case FEATURE:
             new FeatureSerializer().serialize(object, gen, provider);
@@ -113,13 +128,5 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
          default:
             throw new IllegalStateException("unexpected type: " + type);
       }
-   }
-
-   static GeoJsonType findType(Class<?> clazz) {
-      GeoJson geoJsonAnnotation = clazz.getAnnotation(GeoJson.class);
-      if (geoJsonAnnotation == null) {
-         throw new IllegalArgumentException("not annotated with @GeoJson");
-      }
-      return geoJsonAnnotation.type();
    }
 }

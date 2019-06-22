@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019 DTAP GmbH
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package gmbh.dtap.geojson.serializer;
 
 import gmbh.dtap.geojson.annotation.GeoJsonGeometry;
@@ -45,7 +61,7 @@ class ClassUtils {
    static Geometry findGeometry(Object object) {
       Member member = findOne(object, GeoJsonGeometry.class);
       if (member != null) {
-         Object value = ClassUtils.getValue(object, member, Geometry.class);
+         Object value = getValue(object, member, Geometry.class);
          return Geometry.class.cast(value);
       }
       return null;
@@ -154,7 +170,7 @@ class ClassUtils {
       } catch (Exception e) {
          throw new GeoJsonSerializerException("value from Field failed: object=" + object + ", field=" + field, e);
       }
-      if (!expectedClass.isInstance(value)) {
+      if (value != null && !expectedClass.isInstance(value)) {
          throw new GeoJsonSerializerException("value from Field is not of expected type: object=" + object + ", field=" + field + ", expectedType=" + expectedClass);
       }
       return expectedClass.cast(value);

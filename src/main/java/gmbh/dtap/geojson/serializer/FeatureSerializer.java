@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import gmbh.dtap.geojson.annotation.GeoJsonId;
 import gmbh.dtap.geojson.annotation.GeoJsonProperty;
+import org.locationtech.jts.geom.Geometry;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -31,8 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static gmbh.dtap.geojson.serializer.ClassUtils.findOne;
-import static gmbh.dtap.geojson.serializer.ClassUtils.getValue;
+import static gmbh.dtap.geojson.serializer.ClassUtils.*;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
@@ -41,7 +41,6 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
  * @since 0.2.0
  */
 class FeatureSerializer {
-
 
    /**
     * Serializes a feature.
@@ -53,15 +52,28 @@ class FeatureSerializer {
     * @since 0.2.0
     */
    void serialize(Object object, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      // start object
       gen.writeStartObject();
+
+      // type
       gen.writeStringField("type", "Feature");
+      // id
       Object id = findId(object);
       if (id != null) {
          gen.writeObjectField("id", id);
       }
+      // geometry
       gen.writeFieldName("geometry");
-      new GeometrySerializer().serialize(ClassUtils.findGeometry(object), gen, provider);
+      Geometry geometry = findGeometry(object);
+      if (geometry != null) {
+         new GeometrySerializer().serialize(geometry, gen, provider);
+      } else {
+         gen.writeNull();
+      }
+      // properties
       gen.writeObjectField("properties", findProperties(object));
+
+      // end object
       gen.writeEndObject();
    }
 

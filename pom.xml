@@ -6,7 +6,7 @@
 
     <groupId>gmbh.dtap.geojson</groupId>
     <artifactId>geojson-serializer</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
 
     <name>A GeoJSON Serializer Library</name>
     <url>https://dtap.gmbh</url>

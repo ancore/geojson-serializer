@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer.examples;
+package gmbh.dtap.geojson.serializer.examples.feature;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.annotation.GeoJson;
@@ -28,26 +28,27 @@ import org.locationtech.jts.geom.Point;
 import java.util.UUID;
 
 /**
- * Class with erroneous annotations, {@link GeoJsonId} is missing.
+ * Class with erroneous annotations, {@link GeoJsonId} is present multiple times.
  *
  * @since 0.2.0
  */
 @GeoJson(type = GeoJsonType.FEATURE)
 @JsonSerialize(using = GeoJsonSerializer.class)
-public class AttractionNoGeoJsonId {
+public class AttractionMultipleGeoJsonId {
 
-   private UUID id;
+   @GeoJsonId private UUID id;
    @GeoJsonProperty private String name;
    @GeoJsonProperty private String description;
    @GeoJsonGeometry private Point location;
 
-   public AttractionNoGeoJsonId(UUID id, String name, String description, Point location) {
+   public AttractionMultipleGeoJsonId(UUID id, String name, String description, Point location) {
       this.id = id;
       this.name = name;
       this.description = description;
       this.location = location;
    }
 
+   @GeoJsonId
    public UUID getId() {
       return id;
    }
