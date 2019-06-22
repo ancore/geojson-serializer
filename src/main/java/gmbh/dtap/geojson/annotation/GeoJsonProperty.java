@@ -26,6 +26,7 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
+ * TODO: correct
  * Indicates one entry of the <em>Properties</em> for the <em>Feature</em> to be generated.
  * <p>This annotation an be present 0...n times. The properties field will be set to
  * JSON <tt>null</tt> if not available.

@@ -18,10 +18,7 @@ package gmbh.dtap.geojson.serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import gmbh.dtap.geojson.annotation.GeoJson;
-import gmbh.dtap.geojson.annotation.GeoJsonGeometry;
-import gmbh.dtap.geojson.annotation.GeoJsonId;
-import gmbh.dtap.geojson.annotation.GeoJsonProperty;
+import gmbh.dtap.geojson.annotation.*;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.junit.Test;
@@ -34,6 +31,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -45,6 +44,7 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
  *
  * @since 0.1.0
  */
+@SuppressWarnings("squid:S1192")
 public class GeoJsonSerializerTest {
 
    private static final Logger logger = LoggerFactory.getLogger(GeoJsonSerializerTest.class);
@@ -52,33 +52,7 @@ public class GeoJsonSerializerTest {
    private ObjectMapper objectMapper = new ObjectMapper();
    private GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
 
-   @Test
-   public void testTestFeatureEntityByFields() throws IOException, URISyntaxException, JSONException {
-      TestFeatureEntityByFields object = new TestFeatureEntityByFields(
-            fromString("f551106e-3180-4aaa-957c-3f8457d3f942"),
-            geometryFactory.createPoint(new Coordinate(23.0, 42.0)),
-            "Lorem ipsum");
-
-      String json = objectMapper.writeValueAsString(object);
-      logger.info("json: {}", json);
-
-      String expectedJson = IOUtils.toString(getClass().getResource("/TestFeatureEntity.json").toURI(), UTF_8);
-      assertEquals(json, expectedJson, true);
-   }
-
-   @Test
-   public void testTestFeatureEntityByMethods() throws IOException, URISyntaxException, JSONException {
-      TestFeatureEntityByMethods object = new TestFeatureEntityByMethods(
-            fromString("f551106e-3180-4aaa-957c-3f8457d3f942"),
-            geometryFactory.createPoint(new Coordinate(23.0, 42.0)),
-            "Lorem ipsum");
-
-      String json = objectMapper.writeValueAsString(object);
-      logger.info("json: {}", json);
-
-      String expectedJson = IOUtils.toString(getClass().getResource("/TestFeatureEntity.json").toURI(), UTF_8);
-      assertEquals(json, expectedJson, true);
-   }
+   // TestFeatureEntityByFields
 
    @GeoJson(type = GeoJsonType.FEATURE)
    @JsonSerialize(using = GeoJsonSerializer.class)
@@ -86,7 +60,8 @@ public class GeoJsonSerializerTest {
 
       @GeoJsonId private final UUID id;
       @GeoJsonGeometry private final Point location;
-      @GeoJsonProperty private final String description;
+      @GeoJsonProperty(name = "description")
+      private final String description;
 
       TestFeatureEntityByFields(UUID id, Point location, String description) {
          this.id = id;
@@ -106,6 +81,22 @@ public class GeoJsonSerializerTest {
          return description;
       }
    }
+
+   @Test
+   public void testFeatureEntityByFields() throws IOException, URISyntaxException, JSONException {
+      TestFeatureEntityByFields object = new TestFeatureEntityByFields(
+            fromString("f551106e-3180-4aaa-957c-3f8457d3f942"),
+            geometryFactory.createPoint(new Coordinate(23.0, 42.0)),
+            "Lorem ipsum");
+
+      String json = objectMapper.writeValueAsString(object);
+      logger.info("json: {}", json);
+
+      String expectedJson = IOUtils.toString(getClass().getResource("/TestFeatureEntity.json").toURI(), UTF_8);
+      assertEquals(json, expectedJson, true);
+   }
+
+   // TestFeatureEntityByMethods
 
    @GeoJson(type = GeoJsonType.FEATURE)
    @JsonSerialize(using = GeoJsonSerializer.class)
@@ -129,8 +120,68 @@ public class GeoJsonSerializerTest {
          return location;
       }
 
-      @GeoJsonProperty public String getDescription() {
+      @GeoJsonProperty(name = "description")
+      public String getDescription() {
          return description;
       }
    }
+
+   @Test
+   public void testFeatureEntityByMethods() throws IOException, URISyntaxException, JSONException {
+      TestFeatureEntityByMethods object = new TestFeatureEntityByMethods(
+            fromString("f551106e-3180-4aaa-957c-3f8457d3f942"),
+            geometryFactory.createPoint(new Coordinate(23.0, 42.0)),
+            "Lorem ipsum");
+
+      String json = objectMapper.writeValueAsString(object);
+      logger.info("json: {}", json);
+
+      String expectedJson = IOUtils.toString(getClass().getResource("/TestFeatureEntity.json").toURI(), UTF_8);
+      assertEquals(json, expectedJson, true);
+   }
+
+   // TestFeatureCollectionByField
+
+   @GeoJson(type = GeoJsonType.FEATURE_COLLECTION)
+   @JsonSerialize(using = GeoJsonSerializer.class)
+   public class TestFeatureCollectionByField {
+
+      @GeoJsonFeatures
+      private final List<TestFeatureEntityByFields> entities;
+
+      TestFeatureCollectionByField() {
+         this.entities = new ArrayList<>();
+      }
+
+      public void add(TestFeatureEntityByFields entity) {
+         this.entities.add(entity);
+      }
+
+      public List<TestFeatureEntityByFields> getEntities() {
+         return entities;
+      }
+   }
+
+   @Test
+   public void testFeatureCollectionByField() throws IOException, URISyntaxException, JSONException {
+      TestFeatureEntityByFields object1 = new TestFeatureEntityByFields(
+            fromString("f551106e-3180-4aaa-957c-3f8457d3f942"),
+            geometryFactory.createPoint(new Coordinate(23.0, 42.0)),
+            "Lorem ipsum 1");
+      TestFeatureEntityByFields object2 = new TestFeatureEntityByFields(
+            fromString("a0afaa49-f19d-419f-8f24-85a45029bac0"),
+            geometryFactory.createPoint(new Coordinate(42.0, 23.0)),
+            "Lorem ipsum 2");
+
+      TestFeatureCollectionByField collection = new TestFeatureCollectionByField();
+      collection.add(object1);
+      collection.add(object2);
+
+      String json = objectMapper.writeValueAsString(collection);
+      logger.info("json: {}", json);
+
+      String expectedJson = IOUtils.toString(getClass().getResource("/TestFeatureCollectionEntity.json").toURI(), UTF_8);
+      assertEquals(json, expectedJson, true);
+   }
+
 }
