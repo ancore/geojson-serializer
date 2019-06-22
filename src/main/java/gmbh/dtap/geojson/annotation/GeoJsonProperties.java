@@ -19,33 +19,37 @@ package gmbh.dtap.geojson.annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-import java.util.UUID;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Indicates the <em>id</em> of the generated <em>Feature</em>.
- * <p>This annotation is optional. No id is set to the feature if missing.
- * <p>Getter annotation example with type {@link UUID}:
+ * Indicates the <em>Properties Object</em> of the <em>Feature</em> to be generated.
+ * <p>This annotation can be present 0...1 times. The properties object can be any JSON
+ * object. The getter or field name is not relevant.
+ * <p>The properties field will be set to JSON <tt>null</tt> if no annotation of this type
+ * nor {@link GeoJsonProperty} is available. Please refer to {@link GeoJsonProperty} for
+ * an annotation with multiple property sources.
+ * <p>Getter annotation example with a {@link java.util.Map}:
  * <pre>
- *    &#064;GeoJsonId
- *    public UUID getId() {
- *       return id;
+ *    &#064;GeoJsonProperties
+ *    public Map&lt;String, Object&gt; getProperties() {
+ *       return Collections.singletonMap("key", "value");
  *    }
  * </pre>
- * <p>Field annotation example with type {@link Long}:
+ * <p>Field annotation example with a {@link java.util.Map}:
  * <pre>
- *    &#064;GeoJsonId
- *    private Long id;
+ *    &#064;GeoJsonProperties
+ *    private Map&lt;String, Object&gt; properties;
  * </pre>
  *
+ * @see GeoJsonProperty
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2" target="_blank">RFC 7946 - Feature Object</a>
- * @since 0.1.0
+ * @since 0.2.0
  */
 @Documented
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
-public @interface GeoJsonId {
+public @interface GeoJsonProperties {
 }

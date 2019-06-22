@@ -16,7 +16,6 @@
 
 package gmbh.dtap.geojson.annotation;
 
-import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
 
 import java.lang.annotation.Documented;
@@ -30,17 +29,21 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Indicates the <em>features</em> of the generated <em>FeatureCollection</em>.
- * <p>Example for {@link GeoJsonType type} <em>FeatureCollection</em>:
+ * <p>This annotation is complementary to a {@link GeoJson#type()} of {@link GeoJsonType#FEATURE_COLLECTION},
+ * however, it is optional. The <em>features</em> field of the GeoJSON will be set
+ * to an empty JSON array if missing.
+ * <p>Example:
  * <pre>
  *    &#064;GeoJson(type = GeoJsonType.FEATURE_COLLECTION)
- *    public class TestEntities {
+ *    &#064;JsonSerialize(using = GeoJsonSerializer.class)
+ *    public class Attractions {
  *
  *       &#064;GeoJsonFeatures
- *       private List<TestEntity> entities;
+ *       private List&lt;Attraction&gt; attractions;
  *
  *    }
  * </pre>
- * <p>The output of the {@link GeoJsonSerializer serializer} for the annotation will look like:
+ * The output of above example will look like:
  * <pre>
  *    {
  *       "type": "FeatureCollection",
@@ -58,8 +61,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *    }
  * </pre>
  *
- * @see GeoJsonType
- * @see GeoJsonSerializer
+ * @see GeoJson
+ * @see GeoJsonType#FEATURE_COLLECTION
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.3" target="_blank">RFC 7946 - FeatureCollection Object</a>
  * @since 0.1.0
  */

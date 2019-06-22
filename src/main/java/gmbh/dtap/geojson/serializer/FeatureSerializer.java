@@ -21,8 +21,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import gmbh.dtap.geojson.annotation.GeoJsonId;
 import gmbh.dtap.geojson.annotation.GeoJsonProperty;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -33,12 +31,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static gmbh.dtap.geojson.serializer.ClassUtils.findOne;
+import static gmbh.dtap.geojson.serializer.ClassUtils.getValue;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
-public class FeatureSerializer {
+/**
+ * This class is used by {@link GeoJsonSerializer} to serialize a <em>Feature</em>.
+ *
+ * @since 0.2.0
+ */
+class FeatureSerializer {
 
-   private static final Logger logger = LoggerFactory.getLogger(FeatureSerializer.class);
 
+   /**
+    * Serializes a feature.
+    *
+    * @param object   the object of which the feature is taken
+    * @param gen      {@inheritDoc}
+    * @param provider {@inheritDoc}
+    * @throws IOException possibly thrown by JsonGenerator
+    * @since 0.2.0
+    */
    void serialize(Object object, JsonGenerator gen, SerializerProvider provider) throws IOException {
       gen.writeStartObject();
       gen.writeStringField("type", "Feature");
@@ -52,14 +65,32 @@ public class FeatureSerializer {
       gen.writeEndObject();
    }
 
+   /**
+    * Scans the class of the <tt>object</tt> for one annotation of type {@link GeoJsonId}.
+    * If present, the value of the annotated getter or field will be returned.
+    *
+    * @param object the object of which the class should be scanned
+    * @return the object, or <tt>null</tt> if annotation is not present
+    * @throws GeoJsonSerializerException on any error
+    * @since 0.2.0
+    */
    private Object findId(Object object) {
-      Member member = ClassUtils.findOne(object, GeoJsonId.class);
+      Member member = findOne(object, GeoJsonId.class);
       if (member != null) {
-         return ClassUtils.getValue(object, member, Object.class);
+         return getValue(object, member, Object.class);
       }
       return null;
    }
 
+   /**
+    * Scans the class of the <tt>object</tt> for all annotations of type {@link GeoJsonProperty}.
+    * If present, the values of the annotated getter or field will be returned
+    *
+    * @param object the object of which the class should be scanned
+    * @return the object, or <tt>null</tt> if annotation is not present
+    * @throws GeoJsonSerializerException on any error
+    * @since 0.2.0
+    */
    private Object findProperties(Object object) {
       List<Member> members = ClassUtils.scanFor(object, GeoJsonProperty.class);
       if (members.isEmpty()) {
@@ -77,11 +108,11 @@ public class FeatureSerializer {
       if (isNotBlank(annotation.name())) {
          // with name attribute -> map with one entry
          String name = annotation.name();
-         Object value = ClassUtils.getValue(object, member, Object.class);
+         Object value = getValue(object, member, Object.class);
          return Collections.singletonMap(name, value);
       } else {
          // without name attribute -> object
-         return ClassUtils.getValue(object, member, Object.class);
+         return getValue(object, member, Object.class);
       }
    }
 
@@ -89,7 +120,7 @@ public class FeatureSerializer {
       Map<String, Object> properties = new HashMap<>(members.size());
       for (Member member : members) {
          String name = getName(member);
-         Object value = ClassUtils.getValue(object, member, Object.class);
+         Object value = getValue(object, member, Object.class);
          properties.put(name, value);
       }
       return properties;

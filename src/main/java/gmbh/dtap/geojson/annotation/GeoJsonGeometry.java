@@ -16,6 +16,7 @@
 
 package gmbh.dtap.geojson.annotation;
 
+import gmbh.dtap.geojson.serializer.GeoJsonType;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
@@ -31,10 +32,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Indicates the <em>Geometry Object</em> of the <em>Feature</em> to be generated.
- * <p>This annotation is optional. The geometry field will be set to JSON <tt>null</tt> if not available.
+ * <p>This annotation is complementary to a {@link GeoJson#type()} of {@link GeoJsonType#FEATURE} and
+ * any all other {@link GeoJsonType#isGeometryType() geometry types}.
+ * However, it is optional. The geometry field will be set to JSON <tt>null</tt> if not available.
+ * <p>The actual serialization of the {@link Geometry} is done with <em>graphhopper/jackson-datatype-jts</em>.
  * <p>The expected type is {@link Geometry} or one of its standard implementations.
  * <p>Getter annotation example with the {@link Point} implementation of {@link Geometry}:
- * <p><pre>
+ * <pre>
  *    &#064;GeoJsonGeometry
  *    public Point getLocation() {
  *       return location;
@@ -43,10 +47,20 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <p>Field annotation example with the {@link Polygon} implementation of {@link Geometry}:
  * <pre>
  *    &#064;GeoJsonGeometry
+ *    &#064;JsonSerialize(using = GeoJsonSerializer.class)
  *    private Polygon area;
  * </pre>
  * <p>
  *
+ * @see GeoJsonType#FEATURE
+ * @see GeoJsonType#LINE_STRING
+ * @see GeoJsonType#MULTI_LINE_STRING
+ * @see GeoJsonType#POINT
+ * @see GeoJsonType#MULTI_POINT
+ * @see GeoJsonType#POLYGON
+ * @see GeoJsonType#MULTI_POLYGON
+ * @see <a href="https://github.com/locationtech/jts" target="_blank">JTS Topology Suite</a>
+ * @see <a href="https://github.com/graphhopper/jackson-datatype-jts">jackson-datatype-jts</a>
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2" target="_blank">RFC 7946 - Feature Object</a>
  * @since 0.1.0
  */

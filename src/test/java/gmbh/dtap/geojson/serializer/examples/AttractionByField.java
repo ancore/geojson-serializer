@@ -29,7 +29,7 @@ import java.util.UUID;
 
 /**
  * Class with correct annotations.
- * <p>This class demonstrates a <em>Feature</em> based on a field annotations.
+ * <p>This class demonstrates a <em>Feature</em> based on field annotations.
  * <p>The fact that the {@link GeoJsonProperty} annotation is present multiple times,
  * causes the serializer to create a JSON object as <em>properties</em>.
  * <p>The GeoJSON will be:

@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * A {@link JsonSerializer} implementation for types annotated by {@link GeoJson).
+ * A {@link JsonSerializer} implementation for types annotated by {@link GeoJson}.
  * <p>The type attribute of the {@link GeoJson} annotation defines the type of the <em>GeoJSON Object</em>.
  * <p><em>GeoJSON objects</em> require and allow additioal fields.
  *

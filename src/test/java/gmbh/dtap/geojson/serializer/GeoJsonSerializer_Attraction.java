@@ -22,6 +22,13 @@ public class GeoJsonSerializer_Attraction {
    private static final Point location = TestUtils.point(23, 42);
 
    @Test
+   public void shouldSerializeAttractionAltered() throws IOException, URISyntaxException, JSONException {
+      AttractionAltered attraction = new AttractionAltered(uuid, "Name", "Lorem ipsum", location);
+      String expectedJson = IOUtils.toString(getClass().getResource("/examples/AttractionAltered.json").toURI(), UTF_8);
+      String actualJson = new ObjectMapper().writeValueAsString(attraction);
+      assertEquals(expectedJson, actualJson, true);
+   }
+   @Test
    public void shouldSerializeAttractionByField() throws IOException, URISyntaxException, JSONException {
       AttractionByField attraction = new AttractionByField(uuid, "Name", "Lorem ipsum", location);
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/AttractionByField.json").toURI(), UTF_8);
@@ -33,14 +40,6 @@ public class GeoJsonSerializer_Attraction {
    public void shouldSerializeAttractionByMethod() throws IOException, URISyntaxException, JSONException {
       AttractionByMethod attraction = new AttractionByMethod(uuid, "Name", "Lorem ipsum", location);
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/AttractionByMethod.json").toURI(), UTF_8);
-      String actualJson = new ObjectMapper().writeValueAsString(attraction);
-      assertEquals(expectedJson, actualJson, true);
-   }
-
-   @Test
-   public void shouldSerializeAttractionAltered() throws IOException, URISyntaxException, JSONException {
-      AttractionAltered attraction = new AttractionAltered(uuid, "Name", "Lorem ipsum", location);
-      String expectedJson = IOUtils.toString(getClass().getResource("/examples/AttractionAltered.json").toURI(), UTF_8);
       String actualJson = new ObjectMapper().writeValueAsString(attraction);
       assertEquals(expectedJson, actualJson, true);
    }

@@ -19,24 +19,46 @@ package gmbh.dtap.geojson.serializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import gmbh.dtap.geojson.annotation.GeoJsonFeatures;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeatureCollectionSerializer {
+/**
+ * This class is used by {@link GeoJsonSerializer} to serialize a <em>FeatureCollection</em>.
+ *
+ * @since 0.2.0
+ */
+class FeatureCollectionSerializer {
 
-   private static final Logger logger = LoggerFactory.getLogger(FeatureCollectionSerializer.class);
-
+   /**
+    * Serializes the features to a feature collection.
+    *
+    * @param object   the object of which the features are taken
+    * @param gen      {@inheritDoc}
+    * @param provider {@inheritDoc}
+    * @throws IOException possibly thrown by JsonGenerator
+    * @since 0.2.0
+    */
    void serialize(Object object, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      gen.writeStartObject();
+      gen.writeStringField("type", "FeatureCollection");
       gen.writeStartObject();
       gen.writeObjectField("features", findFeatures(object));
       gen.writeEndObject();
+      gen.writeEndObject();
    }
 
+   /**
+    * TODO: refactor
+    * Should scan for one occurrence only.
+    * Multiple should be implemented according to GeoJsonProperty
+    *
+    * @param object the object of which the features are taken
+    * @return the features, may be empty but never <tt>null</tt>
+    * @since 0.2.0
+    */
    private Object[] findFeatures(Object object) {
       List<Member> members = ClassUtils.scanFor(object, GeoJsonFeatures.class);
       List<Object> features = new ArrayList<>(members.size());
