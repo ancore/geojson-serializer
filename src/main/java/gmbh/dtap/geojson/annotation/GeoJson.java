@@ -16,6 +16,7 @@
 
 package gmbh.dtap.geojson.annotation;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
 
@@ -28,15 +29,33 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Enabled the annotated type can be used to generate a <em>GeoJson Object</em> by the {@link GeoJsonSerializer}.
- * <p>Example for {@link GeoJsonType type} <em>Feature</em>:
+ * Enables the annotated type to be serialized as a <em>GeoJson Object</em> by the {@link GeoJsonSerializer}.
+ * <p>Please note that the {@link GeoJsonSerializer} needs to be set with the {@link JsonSerialize} annotation.
+ * <p>Depending on the type, further annotations on fields or getters are complementary.
+ * <p>{@link GeoJsonType#FEATURE}
+ * <ul>
+ * <li>{@link GeoJsonId}</li>
+ * <li>{@link GeoJsonGeometry}</li>
+ * <li>{@link GeoJsonProperties} or {@link GeoJsonProperty}</li>
+ * </ul>
+ * <p>{@link GeoJsonType#FEATURE_COLLECTION}
+ * <ul>
+ * <li>{@link GeoJsonFeatures}</li>
+ * </ul>
+ * <p>{@link GeoJsonType#POINT}, {@link GeoJsonType#LINE_STRING} and all other
+ * {@link GeoJsonType#isGeometryType() geometry types}:
+ * <ul>
+ * <li>{@link GeoJsonGeometry}</li>
+ * </ul>
+ * <p>Example for type <em>Feature</em>:
  * <pre>
  *    &#064;GeoJson(type = GeoJsonType.FEATURE)
+ *    &#064;JsonSerialize(using = GeoJsonSerializer.class)
  *    public class TestEntity {
  *
  *    }
  * </pre>
- * <p>The output of the {@link GeoJsonSerializer serializer} for the annotation will look like:
+ * The output of the above example will look like:
  * <pre>
  *    {
  *       "type": "Feature",
@@ -46,6 +65,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * </pre>
  *
  * @see GeoJsonType
+ * @see JsonSerialize
  * @see GeoJsonSerializer
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3" target="_blank">RFC 7946 - GeoJSON Object</a>
  * @since 0.1.0
@@ -57,7 +77,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface GeoJson {
 
    /**
-    * Returns the {@link GeoJsonType}.
+    * Returns the {@link GeoJsonType} to serialize to.
     *
     * @return the {@link GeoJsonType}
     * @since 0.1.0

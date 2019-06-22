@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package gmbh.dtap.geojson.annotation;
 
 import java.lang.annotation.Documented;
@@ -26,27 +25,27 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Indicates one entry of the <em>Properties</em> for the <em>Feature</em> to be generated.
- * <p>This annotation an be present 0...n times. The properties field will be set to
- * JSON <tt>null</tt> if not available.
- * <p>A property field can be any JSON object. If this annotation is present once, the
- * annotated return value or field value is used as properties field.
- * <p>If this annotation is present multiple times, a JSON object is created where
- * every annotation is added by key and value.
- * <p>Getter annotation example with the {@link String}:
- * <p><pre>
+ * Indicates one attribute of the <em>Properties Object</em> for the <em>Feature</em> to be generated.
+ * <p>This annotation an be present 0...n times. The key of an attribute is taken from the annotated
+ * getter or field and can be overwritten by {@link GeoJsonProperty#name()}.
+ * The attribute values can be any JSON object.
+ * <p>The properties field will be set to JSON <tt>null</tt> if no annotation of this type
+ * nor {@link GeoJsonProperties} is available. Please refer to {@link GeoJsonProperties} for
+ * an annotation as a bundled property sources.
+ * <p>Getter annotations example with the {@link String}:
+ * <pre>
  *    &#064;GeoJsonProperty
  *    public String getCityName() {
  *       return cityName;
  *    }
- * </pre>
- * <p>Field annotation example with the {@link int}:
- * <pre>
- *    &#064;GeoJsonProperty
- *    private int amount;
- * </pre>
- * <p></p>
  *
+ *    &#064;GeoJsonProperty(name="localization")
+ *    public Locale getLocale() {
+ *       return locale;
+ *    }
+ * </pre>
+ *
+ * @see GeoJsonProperties
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2" target="_blank">RFC 7946 - Feature Object</a>
  * @since 0.1.0
  */
@@ -56,7 +55,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface GeoJsonProperty {
 
    /**
-    * Returns the name of the property in the <em>Feature</em>.
+    * Returns the name of the property attribute. Allows to overwrite the default behaviour.
     * <p>If not set, the field name or getter name (without "get", lower case) wil be used.
     *
     * @return the optional name of the property

@@ -2,6 +2,11 @@
 This library provides a [JsonSerializer](https://github.com/FasterXML/jackson-databind) and
 a set of annotations to serialize any PoJo as [GeoJSON](https://tools.ietf.org/html/rfc7946).
 
+## Links 
+
+  - @see <a href="https://github.com/locationtech/jts" target="_blank">JTS Topology Suite</a>
+  - @see <a href="https://github.com/graphhopper/jackson-datatype-jts">jackson-datatype-jts</a>
+
 ## Status
 *DRAFT* The only supported GeoJSON type at the moment is "Feature".
 
@@ -109,6 +114,28 @@ Works with Spring MVC as well:
             .orElse(ResponseEntity.notFound().build());
    }
 ```
+
+## Annotation Combinations
+
+**@GeoJson(type=GeoJsonType.FEATURE)**
+ - @GeoJsonId {0,1}
+ - @GeoJsonGeometry {0,1}
+ - @GeoJsonProperties {0,1} **or** @GeoJsonProperty {0,}
+
+**@GeoJson(type=GeoJsonType.FEATURE_COLLECTION)**
+ - @GeoJsonFeatures {0,1}
+
+
+**@GeoJson(type=GeoJsonType.POINT)**, **@GeoJson(type=GeoJsonType.MULTI_POINT)**, 
+**@GeoJson(type=GeoJsonType.LINE_STRING)**, **@GeoJson(type=GeoJsonType.MULTI_LINE_STRING)**
+**@GeoJson(type=GeoJsonType.POLYGON)**, **@GeoJson(type=GeoJsonType.MULTI_POLYGON)**
+ - @GeoJsonGeometry {0,1}
+
+**@GeoJson(type=GeoJsonType.GEOMETRY_COLLECTION**
+ - not supported yet
+
+
+
 
 ## Credits
 

@@ -4,11 +4,12 @@
   "geometry": {
     "type": "Point",
     "coordinates": [
-      23.0,
-      42.0
+      23,
+      42
     ]
   },
   "properties": {
-    "description": "Lorem ipsum"
+    "nameKey": "Name",
+    "descriptionKey": "Lorem ipsum"
   }
 }

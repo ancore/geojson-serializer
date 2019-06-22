@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package gmbh.dtap.geojson.serializer;
 
 import com.bedatadriven.jackson.datatype.jts.serialization.GeometrySerializer;
@@ -24,52 +23,82 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import gmbh.dtap.geojson.annotation.GeoJson;
-import gmbh.dtap.geojson.annotation.GeoJsonGeometry;
-import gmbh.dtap.geojson.annotation.GeoJsonId;
-import gmbh.dtap.geojson.annotation.GeoJsonProperty;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.reflect.FieldUtils;
-import org.locationtech.jts.geom.Geometry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- * A {@link JsonSerializer} implementation for types annotated by {@link GeoJson).
- * <p>The type attribute of the {@link GeoJson} annotation defines the type of the <em>GeoJSON Object</em>.
- * <p><em>GeoJSON objects</em> require and allow additioal fields.
+ * A {@link JsonSerializer} implementation for types annotated by {@link GeoJson}.
+ * <p>The {@link GeoJson#type() type attribute} of the annotation defines the
+ * output type of the <em>GeoJSON Object</em>.
+ * <p>Please refer to {@link GeoJson} for a list of additional annotations per type.
  *
+ * @see GeoJson
+ * @see GeoJsonType
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3" target="_blank">RFC 7946 - GeoJSON Object</a>
  * @since 0.1.0
  */
 public class GeoJsonSerializer extends StdSerializer<Object> {
 
-   private static final Logger logger = LoggerFactory.getLogger(GeoJsonSerializer.class);
-
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.1.0
+    */
    public GeoJsonSerializer() {
       super(Object.class);
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.1.0
+    */
    public GeoJsonSerializer(Class<Object> t) {
       super(t);
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.1.0
+    */
    public GeoJsonSerializer(JavaType type) {
       super(type);
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.1.0
+    */
    public GeoJsonSerializer(Class<?> t, boolean dummy) {
       super(t, dummy);
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.1.0
+    */
    public GeoJsonSerializer(StdSerializer<?> src) {
       super(src);
+   }
+
+   /**
+    * Checks for a class level annotation of type {@link GeoJson}.
+    * Throws an exception if not present.
+    *
+    * @param object the object of which the class should be ckecked
+    * @return the annotation
+    * @throws GeoJsonSerializerException if annotation is not present
+    * @since 0.2.0
+    */
+   private static GeoJsonType findType(Object object) {
+      GeoJson geoJsonAnnotation = object.getClass().getAnnotation(GeoJson.class);
+      if (geoJsonAnnotation == null) {
+         throw new IllegalArgumentException("not annotated with @GeoJson");
+      }
+      return geoJsonAnnotation.type();
    }
 
    /**
@@ -78,114 +107,26 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
     * @since 0.1.0
     */
    @Override public void serialize(Object object, JsonGenerator gen, SerializerProvider provider) throws IOException {
-      Class<?> clazz = object.getClass();
-      logger.debug("clazz: {}", clazz);
-
-      GeoJsonType type = findType(clazz);
-      Object id = findId(clazz, object);
-      Geometry geometry = findGeometry(clazz, object);
-      Map<String, Object> properties = findProperties(clazz, object);
-      logger.debug("found: type={}, id={}, geometry={}, properties={}", type, id, geometry, properties);
-
-      gen.writeStartObject();
-      gen.writeStringField("type", type.getName());
-      gen.writeObjectField("id", id);
-      gen.writeFieldName("geometry");
-      new GeometrySerializer().serialize(geometry, gen, provider);
-      gen.writeObjectField("properties", properties);
-      gen.writeEndObject();
-   }
-
-   private GeoJsonType findType(Class<?> clazz) {
-      GeoJson geoJsonAnnotation = clazz.getAnnotation(GeoJson.class);
-      if (geoJsonAnnotation == null) {
-         throw new IllegalArgumentException("not annotated with @GeoJson");
+      GeoJsonType type = findType(object);
+      switch (type) {
+         case FEATURE:
+            new FeatureSerializer().serialize(object, gen, provider);
+            break;
+         case FEATURE_COLLECTION:
+            new FeatureCollectionSerializer().serialize(object, gen, provider);
+            break;
+         case POINT:
+         case LINE_STRING:
+         case MULTI_POINT:
+         case MULTI_POLYGON:
+         case MULTI_LINE_STRING:
+            gen.writeFieldName("geometry");
+            new GeometrySerializer().serialize(ClassUtils.findGeometry(object), gen, provider);
+            break;
+         case GEOMETRY_COLLECTION:
+            throw new UnsupportedOperationException("not implemented: " + type);
+         default:
+            throw new IllegalStateException("unexpected type: " + type);
       }
-      return geoJsonAnnotation.type();
-   }
-
-   private Object findId(Class<?> clazz, Object object) throws IOException {
-      for (Method method : clazz.getDeclaredMethods()) {
-         if (method.isAnnotationPresent(GeoJsonId.class)) {
-            try {
-               return method.invoke(object);
-            } catch (InvocationTargetException | IllegalAccessException e) {
-               throw new IOException(e);
-            }
-         }
-      }
-      for (Field field : clazz.getDeclaredFields()) {
-         if (field.isAnnotationPresent(GeoJsonId.class)) {
-            try {
-               return FieldUtils.readField(field, object, true);
-            } catch (IllegalAccessException e) {
-               throw new IOException(e);
-            }
-         }
-      }
-      throw new IllegalArgumentException("missing annotation @GeoJsonId: " + clazz.getName());
-   }
-
-   private Geometry findGeometry(Class<?> clazz, Object object) throws IOException {
-      for (Method method : clazz.getDeclaredMethods()) {
-         if (method.isAnnotationPresent(GeoJsonGeometry.class)) {
-            if (!(Geometry.class.isAssignableFrom(method.getReturnType()))) {
-               throw new IllegalArgumentException("@GeoJsonGeometry method does not return type Geometry");
-            }
-            try {
-               return (Geometry) method.invoke(object);
-            } catch (InvocationTargetException | IllegalAccessException e) {
-               throw new IOException(e);
-            }
-         }
-      }
-      for (Field field : clazz.getDeclaredFields()) {
-         if (field.isAnnotationPresent(GeoJsonGeometry.class)) {
-            if (!(Geometry.class.isAssignableFrom(field.getType()))) {
-               throw new IllegalArgumentException("@GeoJsonGeometry field is not of type Geometry");
-            }
-            try {
-               return (Geometry) FieldUtils.readField(field, object, true);
-            } catch (IllegalAccessException e) {
-               throw new IOException(e);
-            }
-         }
-      }
-      throw new IllegalArgumentException("missing annotation @GeoJsonGeometry: " + clazz.getName());
-   }
-
-   private Map<String, Object> findProperties(Class<?> clazz, Object object) throws IOException {
-      Map<String, Object> properties = new HashMap<>();
-      for (Method method : clazz.getDeclaredMethods()) {
-         if (method.isAnnotationPresent(GeoJsonProperty.class)) {
-            try {
-               GeoJsonProperty annotation = method.getAnnotation(GeoJsonProperty.class);
-               String key = annotation.name();
-               if (key.isEmpty()) {
-                  key = StringUtils.removeStart(method.getName(), "get").toLowerCase();
-               }
-               Object value = method.invoke(object);
-               properties.put(key, value);
-            } catch (InvocationTargetException | IllegalAccessException e) {
-               throw new IOException(e);
-            }
-         }
-      }
-      for (Field field : clazz.getDeclaredFields()) {
-         if (field.isAnnotationPresent(GeoJsonProperty.class)) {
-            try {
-               GeoJsonProperty annotation = field.getAnnotation(GeoJsonProperty.class);
-               String key = annotation.name();
-               if (key.isEmpty()) {
-                  key = field.getName();
-               }
-               Object value = FieldUtils.readField(field, object, true);
-               properties.put(key, value);
-            } catch (IllegalAccessException e) {
-               throw new IOException(e);
-            }
-         }
-      }
-      return properties;
    }
 }
