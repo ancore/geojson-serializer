@@ -1,26 +1,38 @@
 # geojson-serializer
-This library provides a [JsonSerializer](https://github.com/FasterXML/jackson-databind) and
-a set of annotations to serialize any PoJo as [GeoJSON](https://tools.ietf.org/html/rfc7946).
+A library with a JsonSerializer and a set of annotations to serialize any PoJo as GeoJSON.
+
+The serialization of Geometry objects from the **JTS Technology Suite** is handled by the **graphopper implemenation**
+of **jackson-datatype-jts**. The original **jackson-datatype-jts** project is not maintained anymore and uses an old
+version of the **JTS Topology Suite**, which can cause a nameing conflict due to the different package name.
+
+This library uses the **org.locationtech.jts.geom** classes.
 
 ## Links 
 
-  - @see <a href="https://github.com/locationtech/jts" target="_blank">JTS Topology Suite</a>
-  - @see <a href="https://github.com/graphhopper/jackson-datatype-jts">jackson-datatype-jts</a>
+ - [GeoJson Specification](https://tools.ietf.org/html/rfc7946)
+ - [Jackson Databind](https://github.com/FasterXML/jackson-databind)
+ - [JTS Topology Suite](https://github.com/locationtech/jts)
+ - [graphhopper implementation of jackson-datatype-jts](https://github.com/graphhopper/jackson-datatype-jts)
 
 ## Status
-*DRAFT* The only supported GeoJSON type at the moment is "Feature".
+The status of this library is something like **alpha**. Feature and FeatureCollection seem to work pretty well. However, 
+the test coverage is low on other GeoJSON types and even some implementation is missing.
 
-## Maven
+Please let me know if you have any ideas for improvement.
+
+## Maven Dependency
 ```xml
 <dependency>
     <groupId>gmbh.dtap.geojson</groupId>
     <artifactId>geojson-serializer</artifactId>
-    <version>0.1.0-SNAPSHOT</version> 
+    <version>0.2.0-SNAPSHOT</version> 
 </dependency>
 ```
 
-## Example
-The PoJo (Attraction) is annotated to be serialized as a GeoJSON Feature: 
+## Example for Feature
+The following PoJo (Attraction) is annotated to be serialized as a GeoJSON Feature.
+It has a field annotation to point out the Feature's id, two String properties and one geometry (Point).
+
 ```java
     import com.fasterxml.jackson.databind.annotation.JsonSerialize;
     import gmbh.dtap.geojson.annotation.*;
@@ -104,8 +116,7 @@ Output:
     }
 ```
 
-Works with Spring MVC as well:
-
+Works with Spring MVC:
 ```java
    @GetMapping("/api/attractions/{id}")
    public ResponseEntity<Attraction> findById(@PathVariable(value = "id") UUID id) {
@@ -114,6 +125,7 @@ Works with Spring MVC as well:
             .orElse(ResponseEntity.notFound().build());
    }
 ```
+(of course this example would require JPA annotations as well)
 
 ## Annotation Combinations
 
@@ -125,7 +137,6 @@ Works with Spring MVC as well:
 **@GeoJson(type=GeoJsonType.FEATURE_COLLECTION)**
  - @GeoJsonFeatures {0,1}
 
-
 **@GeoJson(type=GeoJsonType.POINT)**, **@GeoJson(type=GeoJsonType.MULTI_POINT)**, 
 **@GeoJson(type=GeoJsonType.LINE_STRING)**, **@GeoJson(type=GeoJsonType.MULTI_LINE_STRING)**
 **@GeoJson(type=GeoJsonType.POLYGON)**, **@GeoJson(type=GeoJsonType.MULTI_POLYGON)**
@@ -133,8 +144,6 @@ Works with Spring MVC as well:
 
 **@GeoJson(type=GeoJsonType.GEOMETRY_COLLECTION**
  - not supported yet
-
-
 
 
 ## Credits
