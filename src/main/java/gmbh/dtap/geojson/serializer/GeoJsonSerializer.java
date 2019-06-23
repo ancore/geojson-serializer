@@ -16,7 +16,6 @@
 
 package gmbh.dtap.geojson.serializer;
 
-import com.bedatadriven.jackson.datatype.jts.serialization.GeometrySerializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -114,14 +113,6 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
             break;
          case FEATURE_COLLECTION:
             new FeatureCollectionSerializer().serialize(object, gen, provider);
-            break;
-         case POINT:
-         case LINE_STRING:
-         case MULTI_POINT:
-         case MULTI_POLYGON:
-         case MULTI_LINE_STRING:
-            gen.writeFieldName("geometry");
-            new GeometrySerializer().serialize(ClassUtils.findGeometry(object), gen, provider);
             break;
          case GEOMETRY_COLLECTION:
             throw new UnsupportedOperationException("not implemented: " + type);
