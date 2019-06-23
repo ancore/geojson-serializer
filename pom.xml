@@ -6,7 +6,7 @@
 
     <groupId>gmbh.dtap.geojson</groupId>
     <artifactId>geojson-serializer</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.1-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A library with a JsonSerializer and a set of annotations to serialize any PoJo as GeoJSON.</description>

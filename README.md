@@ -36,7 +36,7 @@ The status of this library is something like **beta**. Please let me know if you
 <dependency>
     <groupId>gmbh.dtap.geojson</groupId>
     <artifactId>geojson-serializer</artifactId>
-    <version>0.3.0-SNAPSHOT</version> 
+    <version>0.3.0</version>
 </dependency>
 ```
 
