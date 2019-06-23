@@ -2,7 +2,7 @@
 
 A library with a JsonSerializer and a set of annotations to serialize any PoJo as [GeoJSON]([GeoJson Specification](https://tools.ietf.org/html/rfc7946).
 
-Currently supported is [Feature]()https://tools.ietf.org/html/rfc7946#section-3.2 and [FeatureCollection](https://tools.ietf.org/html/rfc7946#section-3.3), 
+Currently supported is [Feature](https://tools.ietf.org/html/rfc7946#section-3.2) and [FeatureCollection](https://tools.ietf.org/html/rfc7946#section-3.3), 
 [GeometryCollection](https://tools.ietf.org/html/rfc7946#section-3.1.8) is not yet implemented.
 
 ## Procedure
