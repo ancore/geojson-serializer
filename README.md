@@ -152,7 +152,7 @@ Works with Spring MVC:
 **@GeoJson(type=GeoJsonType.FEATURE_COLLECTION)**
  - @GeoJsonFeatures {0,1}
 
-**@GeoJson(type=GeoJsonType.GEOMETRY_COLLECTION**
+**@GeoJson(type=GeoJsonType.GEOMETRY_COLLECTION)**
  - not supported yet
 
 ## Credits
