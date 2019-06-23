@@ -42,11 +42,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <ul>
  * <li>{@link GeoJsonFeatures}</li>
  * </ul>
- * <p>{@link GeoJsonType#POINT}, {@link GeoJsonType#LINE_STRING} and all other
- * {@link GeoJsonType#isGeometryType() geometry types}:
- * <ul>
- * <li>{@link GeoJsonGeometry}</li>
- * </ul>
+ * <p>{@link GeoJsonType#GEOMETRY_COLLECTION} is not supported yet.
  * <p>Example for type <em>Feature</em>:
  * <pre>
  *    &#064;GeoJson(type = GeoJsonType.FEATURE)

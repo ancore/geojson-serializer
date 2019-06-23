@@ -1,5 +1,24 @@
 # geojson-serializer
-A library with a JsonSerializer and a set of annotations to serialize any PoJo as GeoJSON.
+
+A library with a JsonSerializer and a set of annotations to serialize any PoJo as [GeoJSON]([GeoJson Specification](https://tools.ietf.org/html/rfc7946)).
+
+Currently supported is [Feature]()https://tools.ietf.org/html/rfc7946#section-3.2 and [FeatureCollection](https://tools.ietf.org/html/rfc7946#section-3.3), 
+[GeometryCollection](https://tools.ietf.org/html/rfc7946#section-3.1.8) is not yet implemented.
+
+## Procedure
+
+The PoJo containing the data for the GeoJSON object is annotated with `@GeoJson`.
+
+Whether the GeoJSON is a _Feature_, _FeatureCollection_ or, when implemented later, a _GeometryCollection_ is specified by the annotation attribute `type`,
+for example `GeoJson(type = GeoJsonType.FEATURE)`.
+
+PoJo annotations on field or getters indicate the GeoJSON members (_id_, _geometry_, _properties_, _features_) depending on the type.
+
+## Dependencies
+
+ - [Jackson Databind](https://github.com/FasterXML/jackson-databind)
+ - [JTS Topology Suite](https://github.com/locationtech/jts)
+ - [graphhopper implementation of jackson-datatype-jts](https://github.com/graphhopper/jackson-datatype-jts)
 
 The serialization of Geometry objects from the **JTS Technology Suite** is handled by the **graphopper implemenation**
 of **jackson-datatype-jts**. The original **jackson-datatype-jts** project is not maintained anymore and uses an old
@@ -7,29 +26,22 @@ version of the **JTS Topology Suite**, which can cause a nameing conflict due to
 
 This library uses the **org.locationtech.jts.geom** classes.
 
-## Links 
-
- - [GeoJson Specification](https://tools.ietf.org/html/rfc7946)
- - [Jackson Databind](https://github.com/FasterXML/jackson-databind)
- - [JTS Topology Suite](https://github.com/locationtech/jts)
- - [graphhopper implementation of jackson-datatype-jts](https://github.com/graphhopper/jackson-datatype-jts)
-
 ## Status
-The status of this library is something like **alpha**. Feature and FeatureCollection seem to work pretty well. However, 
-the test coverage is low on other GeoJSON types and even some implementation is missing.
 
-Please let me know if you have any ideas for improvement.
+The status of this library is something like **beta**. Please let me know if you have any ideas for improvement.
 
 ## Maven Dependency
+
 ```xml
 <dependency>
     <groupId>gmbh.dtap.geojson</groupId>
     <artifactId>geojson-serializer</artifactId>
-    <version>0.2.0-SNAPSHOT</version> 
+    <version>0.3.0</version>
 </dependency>
 ```
 
 ## Example for Feature
+
 The following PoJo (Attraction) is annotated to be serialized as a GeoJSON Feature.
 It has a field annotation to point out the Feature's id, two String properties and one geometry (Point).
 
@@ -74,7 +86,8 @@ It has a field annotation to point out the Feature's id, two String properties a
     }
 ```
 
-Programmatically calling the ObjectMapper to serialize:  
+Programmatically calling the ObjectMapper to serialize:
+  
 ```java
    import com.fasterxml.jackson.core.JsonProcessingException;
    import com.fasterxml.jackson.databind.ObjectMapper;
@@ -101,6 +114,7 @@ Programmatically calling the ObjectMapper to serialize:
 ```
 
 Output:
+
 ```json
     {
       "type" : "Feature",
@@ -117,6 +131,7 @@ Output:
 ```
 
 Works with Spring MVC:
+
 ```java
    @GetMapping("/api/attractions/{id}")
    public ResponseEntity<Attraction> findById(@PathVariable(value = "id") UUID id) {
@@ -137,14 +152,8 @@ Works with Spring MVC:
 **@GeoJson(type=GeoJsonType.FEATURE_COLLECTION)**
  - @GeoJsonFeatures {0,1}
 
-**@GeoJson(type=GeoJsonType.POINT)**, **@GeoJson(type=GeoJsonType.MULTI_POINT)**, 
-**@GeoJson(type=GeoJsonType.LINE_STRING)**, **@GeoJson(type=GeoJsonType.MULTI_LINE_STRING)**
-**@GeoJson(type=GeoJsonType.POLYGON)**, **@GeoJson(type=GeoJsonType.MULTI_POLYGON)**
- - @GeoJsonGeometry {0,1}
-
 **@GeoJson(type=GeoJsonType.GEOMETRY_COLLECTION**
  - not supported yet
-
 
 ## Credits
 

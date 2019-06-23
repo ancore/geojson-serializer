@@ -28,48 +28,6 @@ import gmbh.dtap.geojson.annotation.GeoJson;
 public enum GeoJsonType {
 
    /**
-    * Geometry type <em>Point</em>
-    *
-    * @since 0.1.0
-    */
-   POINT("Point", true),
-
-   /**
-    * Geometry type <em>MultiPoint</em>
-    *
-    * @since 0.1.0
-    */
-   MULTI_POINT("MultiPoint", true),
-
-   /**
-    * Geometry type <em>LineString</em>
-    *
-    * @since 0.1.0
-    */
-   LINE_STRING("LineString", true),
-
-   /**
-    * Geometry type <em>MultiLineString</em>
-    *
-    * @since 0.1.0
-    */
-   MULTI_LINE_STRING("MultiLineString", true),
-
-   /**
-    * Geometry type <em>Polygon</em>
-    *
-    * @since 0.1.0
-    */
-   POLYGON("Polygon", true),
-
-   /**
-    * Geometry type <em>MultiPolygon</em>
-    *
-    * @since 0.1.0
-    */
-   MULTI_POLYGON("MultiPolygon", true),
-
-   /**
     * Geometry type <em>GeometryCollection</em>
     *
     * @since 0.1.0
