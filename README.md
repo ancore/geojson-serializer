@@ -140,7 +140,7 @@ Works with Spring MVC:
             .orElse(ResponseEntity.notFound().build());
    }
 ```
-(of course this example would require JPA annotations as well)
+Please refer to the [demo project](https://github.com/dtap-gmbh/geojson-serializer-demo) for details.
 
 ## Annotation Combinations
 
