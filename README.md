@@ -1,3 +1,5 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/gmbh.dtap/geojson-serializer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/gmbh.dtap/geojson-serializer)
+
 # geojson-serializer
 
 A library with a JsonSerializer and a set of annotations to serialize any PoJo as [GeoJSON](https://tools.ietf.org/html/rfc7946).
@@ -38,7 +40,7 @@ The status of this library is something like **beta**. Please let me know if you
 <dependency>
     <groupId>gmbh.dtap</groupId>
     <artifactId>geojson-serializer</artifactId>
-    <version>0.3.1</version>
+    <version>0.3.3</version>
 </dependency>
 ```
 
