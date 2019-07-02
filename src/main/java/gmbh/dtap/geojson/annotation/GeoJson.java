@@ -17,6 +17,8 @@
 package gmbh.dtap.geojson.annotation;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import gmbh.dtap.geojson.document.DocumentFactory;
+import gmbh.dtap.geojson.document.IntrospectionDocumentFactory;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
 
@@ -79,4 +81,13 @@ public @interface GeoJson {
     * @since 0.1.0
     */
    GeoJsonType type();
+
+   /**
+    * Return the {@link DocumentFactory} to use.
+    *
+    * @return the {@link DocumentFactory}, or the default if not specified
+    * @see IntrospectionDocumentFactory
+    * @since 0.4.0
+    */
+   Class<? extends DocumentFactory> factory() default IntrospectionDocumentFactory.class;
 }

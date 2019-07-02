@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer;
+package gmbh.dtap.geojson.introspection;
 
-import gmbh.dtap.geojson.annotation.GeoJsonGeometry;
+import gmbh.dtap.geojson.annotation.*;
+import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
+import gmbh.dtap.geojson.serializer.GeoJsonSerializerException;
+import gmbh.dtap.geojson.serializer.GeoJsonType;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.locationtech.jts.geom.Geometry;
 
@@ -28,18 +31,14 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import static org.apache.commons.lang3.StringUtils.removeStart;
-import static org.apache.commons.lang3.StringUtils.uncapitalize;
+import static org.apache.commons.lang3.StringUtils.*;
 
 /**
  * Utility class for the serializers.
  *
  * @see GeoJsonSerializer
- * @see FeatureSerializer
- * @see FeatureCollectionSerializer
  * @since 0.2.0
  */
 class ClassUtils {
@@ -47,6 +46,125 @@ class ClassUtils {
    private ClassUtils() {
       // static usage only
    }
+
+   /**
+    * Checks for a class level annotation of type {@link GeoJson}.
+    * Throws an exception if not present.
+    *
+    * @param object the object of which the class should be ckecked
+    * @return the annotation
+    * @throws GeoJsonSerializerException if annotation is not present
+    * @since 0.2.0
+    */
+   private static GeoJsonType findType(Object object) {
+      GeoJson geoJsonAnnotation = object.getClass().getAnnotation(GeoJson.class);
+      if (geoJsonAnnotation == null) {
+         throw new IllegalArgumentException("not annotated with @GeoJson");
+      }
+      return geoJsonAnnotation.type();
+   }
+
+   /**
+    * Scans the class of the <tt>object</tt> for one annotation of type {@link GeoJsonFeatures}.
+    * If present, the value of the annotated getter or field will be returned. If the value is
+    * not an array or {@link Collection}, a new array with one element is created.
+    *
+    * @param object the object of which the class should be scanned
+    * @return the array of objects, empty if no annotation is preset, never <tt>null</tt>
+    * @throws GeoJsonSerializerException on any error
+    * @since 0.2.0
+    */
+   private Object[] findFeatures(Object object) {
+      Member member = findOne(object, GeoJsonFeatures.class);
+      if (member != null) {
+         Object value = getValue(object, member, Object.class);
+         if (value instanceof Object[]) {
+            return (Object[]) value;
+         } else if (value instanceof Collection) {
+            Collection c = (Collection) value;
+            return c.toArray();
+         } else if (value != null) {
+            return new Object[]{value};
+         }
+      }
+      return new Object[0];
+   }
+
+   // -----------------
+
+
+   /**
+    * Scans the class of the <tt>object</tt> for one annotation of type {@link GeoJsonId}.
+    * If present, the value of the annotated getter or field will be returned.
+    *
+    * @param object the object of which the class should be scanned
+    * @return the object, or <tt>null</tt> if annotation is not present
+    * @throws GeoJsonSerializerException on any error
+    * @since 0.2.0
+    */
+   private Object findId(Object object) {
+      Member member = findOne(object, GeoJsonId.class);
+      if (member != null) {
+         return getValue(object, member, Object.class);
+      }
+      return null;
+   }
+
+   /**
+    * Scans the class of the <tt>object</tt> for all annotations of type {@link GeoJsonProperty}.
+    * If present, the values of the annotated getter or field will be returned
+    *
+    * @param object the object of which the class should be scanned
+    * @return the object, or <tt>null</tt> if annotation is not present
+    * @throws GeoJsonSerializerException on any error
+    * @since 0.2.0
+    */
+   private Object findProperties(Object object) {
+      List<Member> members = ClassUtils.scanFor(object, GeoJsonProperty.class);
+      if (members.isEmpty()) {
+         return null;
+      } else if (members.size() == 1) {
+         Member member = members.get(0);
+         return toProperties(object, member);
+      } else {
+         return toProperties(object, members);
+      }
+   }
+
+   private Object toProperties(Object object, Member member) {
+      GeoJsonProperty annotation = getPropertyAnnotation(member);
+      if (isNotBlank(annotation.name())) {
+         // with name attribute -> map with one entry
+         String name = annotation.name();
+         Object value = getValue(object, member, Object.class);
+         return Collections.singletonMap(name, value);
+      } else {
+         // without name attribute -> object
+         return getValue(object, member, Object.class);
+      }
+   }
+
+   private Object toProperties(Object object, List<Member> members) {
+      Map<String, Object> properties = new HashMap<>(members.size());
+      for (Member member : members) {
+         String name = getName(member);
+         Object value = getValue(object, member, Object.class);
+         properties.put(name, value);
+      }
+      return properties;
+   }
+
+   private GeoJsonProperty getPropertyAnnotation(Member member) {
+      if (member instanceof Field) {
+         return ((Field) member).getAnnotation(GeoJsonProperty.class);
+      } else if (member instanceof Method) {
+         return ((Method) member).getAnnotation(GeoJsonProperty.class);
+      } else {
+         throw new IllegalStateException("unexpected member: " + member);
+      }
+   }
+
+   // -----------------
 
    /**
     * Scans the class of the <tt>object</tt> for one annotation of type {@link GeoJsonGeometry}.
@@ -130,6 +248,15 @@ class ClassUtils {
          throw new IllegalStateException("unexpected member: " + member);
       }
    }
+
+   private String getProertyName(Member member) {
+      GeoJsonProperty annotation = getPropertyAnnotation(member);
+      if (isNotBlank(annotation.name())) {
+         return annotation.name();
+      }
+      return ClassUtils.getName(member);
+   }
+
 
    /**
     * Returns the value of a field or getter the returned value of a getter.
