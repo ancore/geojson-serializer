@@ -17,6 +17,7 @@
 package gmbh.dtap.geojson.document;
 
 import gmbh.dtap.geojson.annotation.GeoJson;
+import gmbh.dtap.geojson.introspection.IntrospectionDocumentFactory;
 
 /**
  * Implementing types can create {@link Document documents} from an annotated object.

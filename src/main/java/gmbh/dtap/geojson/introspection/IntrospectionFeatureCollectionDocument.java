@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.document;
+package gmbh.dtap.geojson.introspection;
 
-/**
- * Default implementation of a {@link DocumentFactory} that introspects the
- * object's class for annotations and retrieves the values of the annotated
- * fields and methods.
- *
- * @since 0.4.0
- */
-public class IntrospectionDocumentFactory implements DocumentFactory {
+import gmbh.dtap.geojson.document.FeatureCollectionDocument;
 
-   /**
-    * {@inheritDoc}
-    *
-    * @since 0.4.0
-    */
+import java.util.List;
+
+public class IntrospectionFeatureCollectionDocument implements FeatureCollectionDocument {
+
+   private final List<Object> features;
+
+   public IntrospectionFeatureCollectionDocument(List<Object> features) {
+      this.features = features;
+   }
+
    @Override
-   public Document from(Object object) {
-      return null;
+   public List<Object> getFeatures() {
+      return features;
    }
 }

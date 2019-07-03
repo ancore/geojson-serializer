@@ -18,7 +18,7 @@ package gmbh.dtap.geojson.annotation;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.document.DocumentFactory;
-import gmbh.dtap.geojson.document.IntrospectionDocumentFactory;
+import gmbh.dtap.geojson.introspection.IntrospectionDocumentFactory;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
 

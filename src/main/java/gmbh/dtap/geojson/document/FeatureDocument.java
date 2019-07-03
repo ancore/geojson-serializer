@@ -18,8 +18,6 @@ package gmbh.dtap.geojson.document;
 
 import org.locationtech.jts.geom.Geometry;
 
-import java.util.Optional;
-
 /**
  * Represents a <em>GeoJSON document</em> for a <em>Feature</em>.
  *
@@ -31,24 +29,24 @@ public interface FeatureDocument extends Document {
    /**
     * The optional ID.
     *
-    * @return the optional ID
+    * @return the optional ID, may be <tt>null</tt>
     * @since 0.4.0
     */
-   Optional<Object> getId();
+   Object getId();
 
    /**
     * The optional Geometry object.
     *
-    * @return the optional geometry
+    * @return the optional geometry, may be <tt>null</tt>
     * @since 0.4.0
     */
-   Optional<Geometry> getGeometry();
+   Geometry getGeometry();
 
    /**
     * The optional properties object.
     *
-    * @return the optional properties
+    * @return the optional properties, may be <tt>null</tt>
     * @since 0.4.0
     */
-   Optional<Object> getProperties();
+   Object getProperties();
 }

@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import gmbh.dtap.geojson.annotation.GeoJson;
 import gmbh.dtap.geojson.document.*;
+import org.locationtech.jts.geom.Geometry;
 
 import java.io.IOException;
 
@@ -141,13 +142,18 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
    private void write(FeatureDocument document, JsonGenerator gen, SerializerProvider provider) throws IOException {
       gen.writeStartObject();
       gen.writeStringField("type", "Feature");
+      Object id = document.getId();
+      if (id != null) {
+         gen.writeObjectField("id", id);
+      }
       gen.writeFieldName("geometry");
-      if (document.getGeometry().isPresent()) {
-         new GeometrySerializer().serialize(document.getGeometry().get(), gen, provider);
+      Geometry geometry = document.getGeometry();
+      if (geometry != null) {
+         new GeometrySerializer().serialize(geometry, gen, provider);
       } else {
          gen.writeNull();
       }
-      gen.writeObjectField("properties", document.getProperties().orElse(null));
+      gen.writeObjectField("properties", document.getProperties());
       gen.writeEndObject();
    }
 

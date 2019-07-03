@@ -29,8 +29,6 @@ import org.junit.runner.RunWith;
 import org.locationtech.jts.geom.Geometry;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Optional;
-
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -43,23 +41,23 @@ public class GeoJsonSerializerTest {
    @Test
    public void test() throws JsonProcessingException, JSONException {
       String value = new ObjectMapper().writeValueAsString(new TestFeature());
-      assertEquals("{\"type\":\"Feature\", \"geometry\": null, \"properties\": \"foo\"}", value, true);
+      assertEquals("{\"type\":\"Feature\", \"id\": \"23\", \"geometry\": null, \"properties\": \"foo\"}", value, true);
    }
 
    @JsonSerialize(using = GeoJsonSerializer.class)
    @GeoJson(type = GeoJsonType.FEATURE, factory = TestDocumentFactory.class)
    class TestFeature implements FeatureDocument {
 
-      @Override public Optional<Object> getId() {
-         return Optional.of("23");
+      @Override public Object getId() {
+         return "23";
       }
 
-      @Override public Optional<Geometry> getGeometry() {
-         return Optional.empty();
+      @Override public Geometry getGeometry() {
+         return null;
       }
 
-      @Override public Optional<Object> getProperties() {
-         return Optional.of("foo");
+      @Override public Object getProperties() {
+         return "foo";
       }
    }
 }
