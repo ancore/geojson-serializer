@@ -21,14 +21,30 @@ import org.locationtech.jts.geom.Geometry;
 
 import java.util.List;
 
+/**
+ * Default implementation of a {@link GeometryCollectionDocument}.
+ *
+ * @since 0.4.0
+ */
 public class IntrospectionGeometryCollectionDocument implements GeometryCollectionDocument {
 
    private final List<Geometry> geometries;
 
-   public IntrospectionGeometryCollectionDocument(List<Geometry> geometries) {
+   /**
+    * Constructor
+    *
+    * @param geometries the geometries, may be empty but not <tt>null</tt>
+    * @since 0.4.0
+    */
+   IntrospectionGeometryCollectionDocument(List<Geometry> geometries) {
       this.geometries = geometries;
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override
    public List<Geometry> getGeometries() {
       return null;

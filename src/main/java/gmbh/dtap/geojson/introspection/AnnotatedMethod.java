@@ -33,24 +33,50 @@ public class AnnotatedMethod implements Annotated {
    private final Method method;
    private List<Annotation> annotations;
 
+   /**
+    * Contructor
+    *
+    * @since 0.4.0
+    */
    AnnotatedMethod(String name, Method method, List<Annotation> annotations) {
       this.name = name;
       this.method = method;
       this.annotations = annotations;
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
+
    @Override public String getName() {
       return name;
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public String getDescription() {
       return method.toString();
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public List<Annotation> getAnnotations() {
       return annotations;
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public <T> T getValue(Object object, Class<T> expectedClass) throws DocumentFactoryException {
       Object value;
       try {
@@ -64,6 +90,11 @@ public class AnnotatedMethod implements Annotated {
       return expectedClass.cast(value);
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public String toString() {
       return "AnnotatedMethod{" +
             "name='" + name + '\'' +

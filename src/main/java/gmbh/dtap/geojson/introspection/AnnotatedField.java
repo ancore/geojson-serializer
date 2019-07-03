@@ -34,24 +34,49 @@ public class AnnotatedField implements Annotated {
    private final Field field;
    private List<Annotation> annotations;
 
+   /**
+    * Contructor
+    *
+    * @since 0.4.0
+    */
    AnnotatedField(String name, Field field, List<Annotation> annotations) {
       this.name = name;
       this.field = field;
       this.annotations = annotations;
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public String getName() {
       return name;
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public String getDescription() {
       return field.toString();
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public List<Annotation> getAnnotations() {
       return annotations;
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public <T> T getValue(Object object, Class<T> expectedClass) throws DocumentFactoryException {
       Object value;
       try {
@@ -65,6 +90,11 @@ public class AnnotatedField implements Annotated {
       return expectedClass.cast(value);
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public String toString() {
       return "AnnotatedField{" +
             "name='" + name + '\'' +

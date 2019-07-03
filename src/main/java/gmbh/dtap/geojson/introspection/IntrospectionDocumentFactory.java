@@ -128,6 +128,12 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
       return document;
    }
 
+   /**
+    * @param object
+    * @param annotated
+    * @return
+    * @throws DocumentFactoryException on any error
+    */
    private Object toProperties(Object object, Annotated annotated) throws DocumentFactoryException {
       // TODO: isNotBlank on the one annotation.name() not annotated!
 //      if (isNotBlank(annotated.getName())) {
@@ -141,6 +147,12 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
 //      }
    }
 
+   /**
+    * @param object
+    * @param annotateds
+    * @return
+    * @throws DocumentFactoryException on any error
+    */
    private Object toProperties(Object object, List<Annotated> annotateds) throws DocumentFactoryException {
       Map<String, Object> properties = new HashMap<>(annotateds.size());
       for (Annotated annotated : annotateds) {
@@ -166,6 +178,16 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
       return new IntrospectionFeatureCollectionDocument(features);
    }
 
+   /**
+    * Scans the index for a key of type {@link GeoJsonFeatures}.
+    * <p>
+    * The field's value or methods return value is checked in several ways to result in a list.
+    *
+    * @param index  the index
+    * @param object the object to retrieve the value from
+    * @return the object's value as {@link List}
+    * @throws DocumentFactoryException on any error
+    */
    private List<Object> findFeatures(ListMultimap<Class<? extends Annotation>, Annotated> index, Object object) throws DocumentFactoryException {
       Annotated annotated = oneOrNull(index, GeoJsonFeatures.class);
       if (annotated != null) {

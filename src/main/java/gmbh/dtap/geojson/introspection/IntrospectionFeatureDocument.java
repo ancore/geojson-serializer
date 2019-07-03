@@ -19,32 +19,78 @@ package gmbh.dtap.geojson.introspection;
 import gmbh.dtap.geojson.document.FeatureDocument;
 import org.locationtech.jts.geom.Geometry;
 
+/**
+ * Default implementation of a {@link FeatureDocument}.
+ *
+ * @since 0.4.0
+ */
 public class IntrospectionFeatureDocument implements FeatureDocument {
 
    private Object id;
    private Geometry geometry;
    private Object properties;
 
+   /**
+    * Constructor
+    *
+    * @since 0.4.0
+    */
+   IntrospectionFeatureDocument() {
+   }
+
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public Object getId() {
       return id;
    }
 
+   /**
+    * Sets the ID object. A string or number is advised.
+    *
+    * @param id the ID object.
+    * @since 0.4.0
+    */
    public void setId(Object id) {
       this.id = id;
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public Geometry getGeometry() {
       return geometry;
    }
 
+   /**
+    * Sets a geometry object.
+    *
+    * @param geometry the geometry object
+    * @since 0.4.0
+    */
    public void setGeometry(Geometry geometry) {
       this.geometry = geometry;
    }
 
+   /**
+    * {@inheritDoc}
+    *
+    * @since 0.4.0
+    */
    @Override public Object getProperties() {
       return properties;
    }
 
+   /**
+    * Sets a properties object.
+    *
+    * @param properties the properties object
+    * @since 0.4.0
+    */
    public void setProperties(Object properties) {
       this.properties = properties;
    }
