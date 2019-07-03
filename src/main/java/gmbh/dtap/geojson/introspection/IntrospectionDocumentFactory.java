@@ -37,6 +37,7 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.Optional.empty;
 import static java.util.stream.Collectors.joining;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * Default implementation of a {@link DocumentFactory} that introspects the
@@ -60,6 +61,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
     * @since 0.4.0
     */
    public IntrospectionDocumentFactory() {
+      // for reflection only
    }
 
    /**
@@ -74,7 +76,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
       }
       GeoJson geoJsonAnnotation = object.getClass().getAnnotation(GeoJson.class);
       if (geoJsonAnnotation == null) {
-         throw new DocumentFactoryException("Annotation @GeoJson not present.");
+         throw new DocumentFactoryException("Annotation @GeoJson is not present.");
       }
       switch (geoJsonAnnotation.type()) {
          case FEATURE:
@@ -89,7 +91,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
    }
 
    /**
-    * Returns a document representation of the object.
+    * Returns a feature document representation of the object.
     *
     * @param object the object
     * @return the feature document
@@ -120,7 +122,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
          throw new DocumentFactoryException("Annotations @GeoJsonProperties and @GeoJsonProperty are mutually exclusive: " + descriptions);
       } else if (propertiesAnnotated != null) {
          // one @GeoJsonProperties
-         document.setProperties(toProperties(object, propertiesAnnotated));
+         document.setProperties(propertiesAnnotated.getValue(object, Object.class));
       } else if (!propertyAnnotations.isEmpty()) {
          // one or more @GeoJsonProperty
          document.setProperties(toProperties(object, propertyAnnotations));
@@ -129,35 +131,25 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
    }
 
    /**
-    * @param object
-    * @param annotated
-    * @return
+    * Returns the values of all annotated field or methods as a {@link Map}.
+    * The key of the map is the name of the field or method as default. When the annotation's attribute
+    * {@link GeoJsonProperty#name()} is set, this name will be used as key.
+    *
+    * @param object     the object to retrieve the values from
+    * @param annotateds the fields or methods
+    * @return the map of properties, may be empty but never <tt>null</tt>
     * @throws DocumentFactoryException on any error
     */
-   private Object toProperties(Object object, Annotated annotated) throws DocumentFactoryException {
-      // TODO: isNotBlank on the one annotation.name() not annotated!
-//      if (isNotBlank(annotated.getName())) {
-//         // with name attribute -> map with one entry
-//         String name = annotated.getName();
-//         Object value = annotated.getValue(object, Object.class);
-//         return Collections.singletonMap(name, value);
-//      } else {
-      // without name attribute -> object
-      return annotated.getValue(object, Object.class);
-//      }
-   }
-
-   /**
-    * @param object
-    * @param annotateds
-    * @return
-    * @throws DocumentFactoryException on any error
-    */
-   private Object toProperties(Object object, List<Annotated> annotateds) throws DocumentFactoryException {
+   private Map<String, Object> toProperties(Object object, List<Annotated> annotateds) throws DocumentFactoryException {
       Map<String, Object> properties = new HashMap<>(annotateds.size());
       for (Annotated annotated : annotateds) {
-         String name = annotated.getName();
-         // TODO: possibly overwrite from the one annotation.name()
+         GeoJsonProperty annotation = findAnnotation(annotated, GeoJsonProperty.class);
+         String name;
+         if (!isBlank(annotation.name())) {
+            name = annotation.name();
+         } else {
+            name = annotated.getName();
+         }
          Object value = annotated.getValue(object, Object.class);
          properties.put(name, value);
       }
@@ -165,7 +157,21 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
    }
 
    /**
-    * Returns a document representation of the object.
+    * Returns the first occurrence of an annotation of a certain type from the annotated.
+    *
+    * @param annotated      the annotated field or method
+    * @param annotationType the annotation type
+    * @return the annotation, or <tt>null</tt> if not found
+    */
+   private <T extends Annotation> T findAnnotation(Annotated annotated, Class<T> annotationType) {
+      Annotation annotation = annotated.getAnnotations().stream()
+            .filter(a -> a.annotationType().equals(annotationType))
+            .findFirst().orElse(null);
+      return annotationType.cast(annotation);
+   }
+
+   /**
+    * Returns a feature collection document representation of the object.
     *
     * @param object the object
     * @return the feature collection document
@@ -204,7 +210,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
    }
 
    /**
-    * Returns a document representation of the object.
+    * Returns a geometry collection document representation of the object.
     *
     * @param object the object
     * @return the geometry collection document
