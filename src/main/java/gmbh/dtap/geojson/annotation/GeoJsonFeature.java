@@ -19,7 +19,6 @@ package gmbh.dtap.geojson.annotation;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
 
 import java.lang.annotation.Documented;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -28,20 +27,26 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Indicates the <em>Features Array</em> of the generated <em>FeatureCollection</em>.
+ * Indicates one element of the <em>Features Array</em> of the generated <em>FeatureCollection</em>.
  * <p>This annotation is complementary to a {@link GeoJson#type()} of {@link GeoJsonType#FEATURE_COLLECTION}
- * and can be present 0...1 times. The elements of the {@link java.util.Collection} or array will be
- * added to the feature array.
+ * and can be present 0...n times. All elements will be added to the feature array.
  * <p>
  * The annotations {@link GeoJsonFeatures} and {@link GeoJsonFeature} are mutual exclusive.
  * <p>Example:
  * <pre>
  *    &#064;GeoJson(type = GeoJsonType.FEATURE_COLLECTION)
  *    &#064;JsonSerialize(using = GeoJsonSerializer.class)
- *    public class Attractions {
+ *    public class Route {
  *
- *       &#064;GeoJsonFeatures
- *       private List&lt;Attraction&gt; attractions;
+ *       &#064;GeoJsonFeature
+ *       public Attraction getFirstStop() {
+ *          return first;
+ *       }
+ *
+ *       &#064;GeoJsonFeature
+ *       public Attraction getSecondStop() {
+ *          return second;
+ *       }
  *
  *    }
  * </pre>
@@ -61,17 +66,15 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *           "properties": null
  *       }]
  *    }
- * </pre>
  *
  * @see GeoJson
  * @see GeoJsonType#FEATURE_COLLECTION
- * @see GeoJsonFeature
+ * @see GeoJsonFeatures
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2" target="_blank">RFC 7946 - FeatureCollection Object</a>
- * @since 0.1.0
+ * @since 0.4.0
  */
-@Inherited
 @Documented
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
-public @interface GeoJsonFeatures {
+public @interface GeoJsonFeature {
 }

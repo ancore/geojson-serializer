@@ -32,8 +32,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Indicates the <em>Geometry Object</em> of the <em>Feature</em> to be generated.
- * <p>This annotation is complementary to a {@link GeoJson#type()} of {@link GeoJsonType#FEATURE}.
- * However, it is optional. The geometry field will be set to JSON <tt>null</tt> if not available.
+ * <p>This annotation is complementary to a {@link GeoJson#type()} of {@link GeoJsonType#FEATURE}
+ * and can be present 0...1 times. The geometry field will be set to JSON <tt>null</tt> if not available.
  * <p>The actual serialization of the {@link Geometry} is done with <em>com.graphhopper.external:jackson-datatype-jts</em>.
  * <p>The expected type is {@link Geometry} or one of its standard implementations.
  * <p>Getter annotation example with the {@link Point} implementation of {@link Geometry}:
@@ -51,6 +51,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * </pre>
  * <p>
  *
+ * @see GeoJson
  * @see GeoJsonType#FEATURE
  * @see <a href="https://github.com/locationtech/jts" target="_blank">JTS Topology Suite</a>
  * @see <a href="https://github.com/graphhopper/jackson-datatype-jts">jackson-datatype-jts</a>

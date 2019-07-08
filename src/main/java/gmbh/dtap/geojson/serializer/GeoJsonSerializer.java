@@ -169,7 +169,7 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
       gen.writeStartObject();
       gen.writeStringField("type", "FeatureCollection");
       gen.writeObjectField("features", document.getFeatures());
-      gen.writeStartObject();
+      gen.writeEndObject();
    }
 
    /**
@@ -184,6 +184,6 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
       gen.writeStartObject();
       gen.writeStringField("type", "GeometryCollection");
       gen.writeObjectField("geometries", document.getGeometries());
-      gen.writeStartObject();
+      gen.writeEndObject();
    }
 }

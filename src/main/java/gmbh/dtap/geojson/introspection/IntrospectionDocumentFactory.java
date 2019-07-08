@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.Collections.emptyList;
-import static java.util.Collections.singletonList;
 import static java.util.Optional.empty;
 import static java.util.stream.Collectors.joining;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -53,7 +52,10 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
     *
     * @since 0.4.0
     */
-   private static final Collection<Class<?>> annotationClasses = asList(GeoJsonId.class, GeoJsonProperty.class, GeoJsonProperties.class, GeoJsonGeometry.class, GeoJsonFeatures.class);
+   private static final Collection<Class<?>> annotationClasses = asList(
+         GeoJsonId.class, GeoJsonGeometry.class,
+         GeoJsonProperty.class, GeoJsonProperties.class,
+         GeoJsonFeature.class, GeoJsonFeatures.class);
 
    /**
     * For reflection only.
@@ -114,18 +116,18 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
       }
 
       Annotated propertiesAnnotated = oneOrNull(index, GeoJsonProperties.class);
-      List<Annotated> propertyAnnotations = index.get(GeoJsonProperty.class);
-      if (propertiesAnnotated != null && !propertyAnnotations.isEmpty()) {
+      List<Annotated> propertyAnnotated = index.get(GeoJsonProperty.class);
+      if (propertiesAnnotated != null && !propertyAnnotated.isEmpty()) {
          // both, @GeoJsonProperties and @GeoJsonProperty are present
          String descriptions = propertiesAnnotated.getDescription() + ", " +
-               propertyAnnotations.stream().map(Annotated::getDescription).collect(joining(", "));
+               propertyAnnotated.stream().map(Annotated::getDescription).collect(joining(", "));
          throw new DocumentFactoryException("Annotations @GeoJsonProperties and @GeoJsonProperty are mutually exclusive: " + descriptions);
       } else if (propertiesAnnotated != null) {
          // one @GeoJsonProperties
          document.setProperties(propertiesAnnotated.getValue(object, Object.class));
-      } else if (!propertyAnnotations.isEmpty()) {
+      } else if (!propertyAnnotated.isEmpty()) {
          // one or more @GeoJsonProperty
-         document.setProperties(toProperties(object, propertyAnnotations));
+         document.setProperties(toProperties(object, propertyAnnotated));
       }
       return document;
    }
@@ -180,33 +182,46 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
     */
    private FeatureCollectionDocument featureCollectionFrom(Object object) throws DocumentFactoryException {
       ListMultimap<Class<? extends Annotation>, Annotated> index = index(object);
-      List<Object> features = findFeatures(index, object);
-      return new IntrospectionFeatureCollectionDocument(features);
+
+      Annotated featuresAnnotated = oneOrNull(index, GeoJsonFeatures.class);
+      List<Annotated> featureAnnotated = index.get(GeoJsonFeature.class);
+      if (featuresAnnotated != null && !featureAnnotated.isEmpty()) {
+         // both, @GeoJsonFeatures and @GeoJsonFeature are present
+         String descriptions = featuresAnnotated.getDescription() + ", " +
+               featureAnnotated.stream().map(Annotated::getDescription).collect(joining(", "));
+         throw new DocumentFactoryException("Annotations @GeoJsonFeatures and @GeoJsonFeature are mutually exclusive: " + descriptions);
+      } else if (featuresAnnotated != null) {
+         // one @GeoJsonFeatures
+         return new IntrospectionFeatureCollectionDocument(toFeatures(object, featuresAnnotated));
+      } else if (!featureAnnotated.isEmpty()) {
+         // one or more @GeoJsonFeature
+         return new IntrospectionFeatureCollectionDocument(toFeatures(object, featureAnnotated));
+      }
+      return new IntrospectionFeatureCollectionDocument(emptyList());
    }
 
-   /**
-    * Scans the index for a key of type {@link GeoJsonFeatures}.
-    * <p>
-    * The field's value or methods return value is checked in several ways to result in a list.
-    *
-    * @param index  the index
-    * @param object the object to retrieve the value from
-    * @return the object's value as {@link List}
-    * @throws DocumentFactoryException on any error
-    */
-   private List<Object> findFeatures(ListMultimap<Class<? extends Annotation>, Annotated> index, Object object) throws DocumentFactoryException {
-      Annotated annotated = oneOrNull(index, GeoJsonFeatures.class);
-      if (annotated != null) {
-         Object value = annotated.getValue(object, Object.class);
-         if (value instanceof Object[]) {
-            return asList(((Object[]) value));
-         } else if (value instanceof Collection) {
-            return new ArrayList<Object>((Collection) value);
-         } else if (value != null) {
-            return singletonList(value);
+   private List<Object> toFeatures(Object object, Annotated annotated) throws DocumentFactoryException {
+      Object value = annotated.getValue(object, Object.class);
+      if (value == null) {
+         return emptyList();
+      } else if (value instanceof Object[]) {
+         return asList(((Object[]) value));
+      } else if (value instanceof Collection) {
+         return new ArrayList<Object>((Collection) value);
+      } else {
+         throw new DocumentFactoryException("Value of " + annotated.getDescription() + " is not an Array or Collection.");
+      }
+   }
+
+   private List<Object> toFeatures(Object object, List<Annotated> annotateds) throws DocumentFactoryException {
+      List<Object> features = new ArrayList<>();
+      for (Annotated annotated : annotateds) {
+         Object feature = annotated.getValue(object, Object.class);
+         if (feature != null) {
+            features.add(feature);
          }
       }
-      return emptyList();
+      return features;
    }
 
    /**

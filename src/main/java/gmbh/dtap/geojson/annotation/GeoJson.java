@@ -36,13 +36,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <p>Depending on the type, further annotations on fields or getters are complementary.
  * <p>{@link GeoJsonType#FEATURE}
  * <ul>
- * <li>{@link GeoJsonId}</li>
- * <li>{@link GeoJsonGeometry}</li>
- * <li>{@link GeoJsonProperties} or {@link GeoJsonProperty}</li>
+ * <li>{@link GeoJsonId} {0,1}</li>
+ * <li>{@link GeoJsonGeometry} {0,1}</li>
+ * <li>{@link GeoJsonProperties} {0,1} <strong>or</strong> {@link GeoJsonProperty} {0,}</li>
  * </ul>
  * <p>{@link GeoJsonType#FEATURE_COLLECTION}
  * <ul>
- * <li>{@link GeoJsonFeatures}</li>
+ * <li>{@link GeoJsonFeatures} {0,1} <strong>or</strong> {@link GeoJsonFeature} {0,}</li>
  * </ul>
  * <p>{@link GeoJsonType#GEOMETRY_COLLECTION} is not supported yet.
  * <p>Example for type <em>Feature</em>:
