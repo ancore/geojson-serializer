@@ -53,7 +53,8 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
     * @since 0.4.0
     */
    private static final Collection<Class<?>> annotationClasses = asList(
-         GeoJsonId.class, GeoJsonGeometry.class,
+         GeoJsonId.class,
+         GeoJsonGeometry.class, GeoJsonGeometries.class,
          GeoJsonProperty.class, GeoJsonProperties.class,
          GeoJsonFeature.class, GeoJsonFeatures.class);
 
@@ -235,8 +236,53 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
    private GeometryCollectionDocument geometryCollectionFrom(Object object) throws DocumentFactoryException {
       ListMultimap<Class<? extends Annotation>, Annotated> index = index(object);
 
-      // TODO: implement
+      Annotated geometriesAnnotated = oneOrNull(index, GeoJsonGeometries.class);
+      List<Annotated> geometryAnnotated = index.get(GeoJsonGeometry.class);
+      if (geometriesAnnotated != null && !geometryAnnotated.isEmpty()) {
+         // both, @GeoJsonGeometries and @GeoJsonGeometry are present
+         String descriptions = geometriesAnnotated.getDescription() + ", " +
+               geometryAnnotated.stream().map(Annotated::getDescription).collect(joining(", "));
+         throw new DocumentFactoryException("Annotations @GeoJsonGeometries and @GeoJsonGeometry are mutually exclusive: " + descriptions);
+      } else if (geometriesAnnotated != null) {
+         // one @GeoJsonGeometries
+         return new IntrospectionGeometryCollectionDocument(toGeometries(object, geometriesAnnotated));
+      } else if (!geometryAnnotated.isEmpty()) {
+         // one or more @GeoJsonGeometry
+         return new IntrospectionGeometryCollectionDocument(toGeometries(object, geometryAnnotated));
+      }
       return new IntrospectionGeometryCollectionDocument(emptyList());
+   }
+
+   private List<Geometry> toGeometries(Object object, Annotated annotated) throws DocumentFactoryException {
+      Object value = annotated.getValue(object, Object.class);
+      if (value == null) {
+         return emptyList();
+      } else if (value instanceof Geometry[]) {
+         return asList(((Geometry[]) value));
+      } else if (value instanceof Collection) {
+         List<Geometry> geometries = new ArrayList<>();
+         for (Object element : ((Collection) value)) {
+            if (element instanceof Geometry) {
+               geometries.add((Geometry) element);
+            } else {
+               throw new DocumentFactoryException("Value of " + annotated.getDescription() + " is not an Array or Collection of type Geometry.");
+            }
+         }
+         return geometries;
+      } else {
+         throw new DocumentFactoryException("Value of " + annotated.getDescription() + " is not an Array or Collection.");
+      }
+   }
+
+   private List<Geometry> toGeometries(Object object, List<Annotated> annotateds) throws DocumentFactoryException {
+      List<Geometry> geometries = new ArrayList<>();
+      for (Annotated annotated : annotateds) {
+         Geometry geometry = annotated.getValue(object, Geometry.class);
+         if (geometry != null) {
+            geometries.add(geometry);
+         }
+      }
+      return geometries;
    }
 
    /* --------------------------------- */

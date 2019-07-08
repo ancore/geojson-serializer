@@ -16,6 +16,7 @@
 
 package gmbh.dtap.geojson.serializer;
 
+import com.bedatadriven.jackson.datatype.jts.JtsModule;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gmbh.dtap.geojson.serializer.examples.feature.AttractionAltered;
@@ -24,6 +25,7 @@ import gmbh.dtap.geojson.serializer.examples.feature.AttractionByGetter;
 import gmbh.dtap.geojson.serializer.examples.feature.AttractionMultipleGeoJsonId;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -51,11 +53,19 @@ public class GeoJsonSerializerTestFeature {
    private static final Point location = TestUtils.point(23, 42);
    @Rule public ExpectedException exceptionRule = ExpectedException.none();
 
+   private ObjectMapper objectMapper;
+
+   @Before
+   public void setUp() {
+      objectMapper = new ObjectMapper();
+      objectMapper.registerModule(new JtsModule());
+   }
+
    @Test
    public void shouldSerializeAttractionAltered() throws IOException, URISyntaxException, JSONException {
       AttractionAltered attraction = new AttractionAltered(uuid, "Name", "Lorem ipsum");
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/feature/AttractionAltered.json").toURI(), UTF_8);
-      String actualJson = new ObjectMapper().writeValueAsString(attraction);
+      String actualJson = objectMapper.writeValueAsString(attraction);
       assertEquals(expectedJson, actualJson, true);
    }
 
@@ -63,7 +73,7 @@ public class GeoJsonSerializerTestFeature {
    public void shouldSerializeAttractionByField() throws IOException, URISyntaxException, JSONException {
       AttractionByField attraction = new AttractionByField(uuid, "Name", "Lorem ipsum", location);
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/feature/AttractionByField.json").toURI(), UTF_8);
-      String actualJson = new ObjectMapper().writeValueAsString(attraction);
+      String actualJson = objectMapper.writeValueAsString(attraction);
       assertEquals(expectedJson, actualJson, true);
    }
 
@@ -71,7 +81,7 @@ public class GeoJsonSerializerTestFeature {
    public void shouldSerializeAttractionByMethod() throws IOException, URISyntaxException, JSONException {
       AttractionByGetter attraction = new AttractionByGetter(uuid, "Name", "Lorem ipsum", location);
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/feature/AttractionByMethod.json").toURI(), UTF_8);
-      String actualJson = new ObjectMapper().writeValueAsString(attraction);
+      String actualJson = objectMapper.writeValueAsString(attraction);
       assertEquals(expectedJson, actualJson, true);
    }
 
@@ -80,6 +90,6 @@ public class GeoJsonSerializerTestFeature {
       exceptionRule.expect(JsonMappingException.class);
       exceptionRule.expectMessage("Annotation @GeoJsonId is present multiple times");
       AttractionMultipleGeoJsonId attraction = new AttractionMultipleGeoJsonId(uuid, "Name", "Description", location);
-      new ObjectMapper().writeValueAsString(attraction);
+      objectMapper.writeValueAsString(attraction);
    }
 }
