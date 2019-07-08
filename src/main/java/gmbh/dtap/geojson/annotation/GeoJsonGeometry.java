@@ -49,7 +49,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *    &#064;JsonSerialize(using = GeoJsonSerializer.class)
  *    private Polygon area;
  * </pre>
- * <p>
  *
  * @see GeoJson
  * @see GeoJsonType#FEATURE

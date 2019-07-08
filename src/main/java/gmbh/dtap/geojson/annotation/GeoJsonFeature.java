@@ -66,6 +66,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *           "properties": null
  *       }]
  *    }
+ * </pre>
  *
  * @see GeoJson
  * @see GeoJsonType#FEATURE_COLLECTION
