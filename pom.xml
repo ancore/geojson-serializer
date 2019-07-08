@@ -4,7 +4,7 @@
 
     <groupId>gmbh.dtap</groupId>
     <artifactId>geojson-serializer</artifactId>
-    <version>0.5.1</version>
+    <version>0.5.2-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A library with a JsonSerializer and a set of annotations to serialize any PoJo as GeoJSON.</description>
@@ -30,7 +30,7 @@
         <connection>scm:git@github.com:dtap-gmbh/geojson-serializer.git</connection>
         <url>scm:git@github.com:dtap-gmbh/geojson-serializer.git</url>
         <developerConnection>scm:git:git@github.com:dtap-gmbh/geojson-serializer.git</developerConnection>
-        <tag>geojson-serializer-0.5.1</tag>
+        <tag>geojson-serializer-0.5.0</tag>
     </scm>
 
     <distributionManagement>
