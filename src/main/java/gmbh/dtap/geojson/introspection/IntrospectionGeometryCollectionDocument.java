@@ -47,6 +47,6 @@ public class IntrospectionGeometryCollectionDocument implements GeometryCollecti
     */
    @Override
    public List<Geometry> getGeometries() {
-      return null;
+      return geometries;
    }
 }
