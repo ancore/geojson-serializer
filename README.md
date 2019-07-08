@@ -40,7 +40,7 @@ The status of this library is something like **beta**. Please let me know if you
 <dependency>
     <groupId>gmbh.dtap</groupId>
     <artifactId>geojson-serializer</artifactId>
-    <version>0.3.3</version>
+    <version>0.5.0</version>
 </dependency>
 ```
 
@@ -154,10 +154,12 @@ Please refer to the [demo project](https://github.com/dtap-gmbh/geojson-serializ
  - @GeoJsonProperties {0,1} **or** @GeoJsonProperty {0,}
 
 **@GeoJson(type=GeoJsonType.FEATURE_COLLECTION)**
- - @GeoJsonFeatures {0,1}
+ - @GeoJsonFeatures {0,1} **or** @GeoJsonFeature {0,}
 
 **@GeoJson(type=GeoJsonType.GEOMETRY_COLLECTION)**
- - not supported yet
+ - @GeoJsonGeometries {0,1} **or*** @GeoJsonGeometry {0,}
+
+*{0,1}: none or once*, *{0,} : none or any number*
 
 ## Credits
 

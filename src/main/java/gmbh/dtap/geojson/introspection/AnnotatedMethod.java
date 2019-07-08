@@ -84,7 +84,7 @@ public class AnnotatedMethod implements Annotated {
       } catch (Exception e) {
          throw new DocumentFactoryException("Value from Method failed: object=" + object + ", method=" + method, e);
       }
-      if (!expectedClass.isInstance(value)) {
+      if (value != null && !expectedClass.isInstance(value)) {
          throw new DocumentFactoryException("Value from Method is not of expected type: object=" + object + ", method=" + method + ", expectedType=" + expectedClass);
       }
       return expectedClass.cast(value);

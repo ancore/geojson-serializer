@@ -16,11 +16,13 @@
 
 package gmbh.dtap.geojson.serializer;
 
+import com.bedatadriven.jackson.datatype.jts.JtsModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gmbh.dtap.geojson.serializer.examples.feature.AttractionByField;
 import gmbh.dtap.geojson.serializer.examples.featurecollection.*;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
+import org.junit.Before;
 import org.junit.Test;
 import org.locationtech.jts.geom.Point;
 
@@ -32,7 +34,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 /**
- * Tests for <em>Feature</em>.
+ * Tests for <em>Feature Collection</em>.
  *
  * @see AttractionsByField
  * @see AttractionsByGetter
@@ -44,6 +46,14 @@ public class GeoJsonSerializerTestFeatureCollection {
    private static final UUID uuid2 = UUID.fromString("71c26c20-94ec-11e9-bc42-526af7764f64");
    private static final Point location = TestUtils.point(23, 42);
 
+   private ObjectMapper objectMapper;
+
+   @Before
+   public void setUp() {
+      objectMapper = new ObjectMapper();
+      objectMapper.registerModule(new JtsModule());
+   }
+
    @Test
    public void shouldSerializeAttractionsByField() throws IOException, URISyntaxException, JSONException {
       AttractionsByField attractions = new AttractionsByField();
@@ -51,7 +61,7 @@ public class GeoJsonSerializerTestFeatureCollection {
       attractions.add(new AttractionByField(uuid2, "Name 2", "Lorem ipsum 2", null));
 
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/featurecollection/AttractionsByField.json").toURI(), UTF_8);
-      String actualJson = new ObjectMapper().writeValueAsString(attractions);
+      String actualJson = objectMapper.writeValueAsString(attractions);
       assertEquals(expectedJson, actualJson, true);
    }
 
@@ -61,7 +71,7 @@ public class GeoJsonSerializerTestFeatureCollection {
       attractions.add(new AttractionByField(uuid1, "Name", "Lorem ipsum", location));
 
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/featurecollection/AttractionsByGetter.json").toURI(), UTF_8);
-      String actualJson = new ObjectMapper().writeValueAsString(attractions);
+      String actualJson = objectMapper.writeValueAsString(attractions);
       assertEquals(expectedJson, actualJson, true);
    }
 
@@ -70,7 +80,7 @@ public class GeoJsonSerializerTestFeatureCollection {
       AttractionsEmpty attractions = new AttractionsEmpty();
 
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/featurecollection/AttractionsEmpty.json").toURI(), UTF_8);
-      String actualJson = new ObjectMapper().writeValueAsString(attractions);
+      String actualJson = objectMapper.writeValueAsString(attractions);
       assertEquals(expectedJson, actualJson, true);
    }
 
@@ -79,7 +89,7 @@ public class GeoJsonSerializerTestFeatureCollection {
       AttractionsMissing attractions = new AttractionsMissing();
 
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/featurecollection/AttractionsMissing.json").toURI(), UTF_8);
-      String actualJson = new ObjectMapper().writeValueAsString(attractions);
+      String actualJson = objectMapper.writeValueAsString(attractions);
       assertEquals(expectedJson, actualJson, true);
    }
 
@@ -88,7 +98,7 @@ public class GeoJsonSerializerTestFeatureCollection {
       AttractionsNull attractions = new AttractionsNull();
 
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/featurecollection/AttractionsNull.json").toURI(), UTF_8);
-      String actualJson = new ObjectMapper().writeValueAsString(attractions);
+      String actualJson = objectMapper.writeValueAsString(attractions);
       assertEquals(expectedJson, actualJson, true);
    }
 }
