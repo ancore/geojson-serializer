@@ -17,10 +17,7 @@
 package gmbh.dtap.geojson.serializer.examples.feature;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import gmbh.dtap.geojson.annotation.GeoJson;
-import gmbh.dtap.geojson.annotation.GeoJsonGeometry;
-import gmbh.dtap.geojson.annotation.GeoJsonId;
-import gmbh.dtap.geojson.annotation.GeoJsonProperty;
+import gmbh.dtap.geojson.annotation.*;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
 import org.locationtech.jts.geom.Point;
@@ -44,8 +41,8 @@ import java.util.UUID;
  *          "coordinates: [ ..., ...]
  *       },
  *       "properties": {
- *          "name": "...",
- *          "description": "..."
+ *          "nameKey": "...",
+ *          "descriptionKey": "..."
  *       }
  *    }
  * </pre>
@@ -72,7 +69,7 @@ public class AttractionByGetter {
       return id;
    }
 
-   @GeoJsonProperty
+   @GeoJsonProperties
    public Map<String, String> getProperties() {
       return properties;
    }

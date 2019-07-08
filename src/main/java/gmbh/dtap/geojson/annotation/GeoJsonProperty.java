@@ -16,6 +16,8 @@
 
 package gmbh.dtap.geojson.annotation;
 
+import gmbh.dtap.geojson.serializer.GeoJsonType;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -27,11 +29,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * Indicates one attribute of the <em>Properties Object</em> for the <em>Feature</em> to be generated.
  * <p>This annotation an be present 0...n times. The key of an attribute is taken from the annotated
- * getter or field and can be overwritten by {@link GeoJsonProperty#name()}.
- * The attribute values can be any JSON object.
- * <p>The properties field will be set to JSON <tt>null</tt> if no annotation of this type
- * nor {@link GeoJsonProperties} is available. Please refer to {@link GeoJsonProperties} for
- * an annotation as a bundled property sources.
+ * getter or field and can be overwritten by {@link GeoJsonProperty#name()}. The attribute values
+ * can be any JSON object.
+ * <p>This annotation is mutually exclusive with {@link GeoJsonProperties}.
+ * <p>The properties field will be set to JSON <tt>null</tt> if no property is available.
  * <p>Getter annotations example with the {@link String}:
  * <pre>
  *    &#064;GeoJsonProperty
@@ -45,6 +46,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *    }
  * </pre>
  *
+ * @see GeoJson
+ * @see GeoJsonType#FEATURE
  * @see GeoJsonProperties
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2" target="_blank">RFC 7946 - Feature Object</a>
  * @since 0.1.0

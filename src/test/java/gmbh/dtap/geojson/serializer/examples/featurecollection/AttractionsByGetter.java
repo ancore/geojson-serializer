@@ -18,7 +18,7 @@ package gmbh.dtap.geojson.serializer.examples.featurecollection;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.annotation.GeoJson;
-import gmbh.dtap.geojson.annotation.GeoJsonFeatures;
+import gmbh.dtap.geojson.annotation.GeoJsonFeature;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
 import gmbh.dtap.geojson.serializer.examples.feature.AttractionByField;
@@ -48,7 +48,7 @@ public class AttractionsByGetter {
       return attractions;
    }
 
-   @GeoJsonFeatures
+   @GeoJsonFeature
    public AttractionByField getMainAttractions() {
       return attractions.get(0);
    }

@@ -78,9 +78,8 @@ public class GeoJsonSerializerTestFeature {
    @Test
    public void shouldThrowExceptionWhenMultipleGeoJsonId() throws IOException {
       exceptionRule.expect(JsonMappingException.class);
-      exceptionRule.expectMessage("GeoJsonId found more than once");
+      exceptionRule.expectMessage("Annotation @GeoJsonId is present multiple times");
       AttractionMultipleGeoJsonId attraction = new AttractionMultipleGeoJsonId(uuid, "Name", "Description", location);
       new ObjectMapper().writeValueAsString(attraction);
    }
-
 }

@@ -14,48 +14,30 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer;
+package gmbh.dtap.geojson.document;
 
 /**
- * Exception class for everything that can go wrong.
+ * For exceptions thrown by a {@link DocumentFactory} implementation.
  *
- * @since 0.2.0
+ * @since 0.4.0
  */
-public class GeoJsonSerializerException extends RuntimeException {
+public class DocumentFactoryException extends Exception {
 
    /**
     * {@inheritDoc}
     *
-    * @since 0.2.0
+    * @since 0.4.0
     */
-   public GeoJsonSerializerException(String message) {
+   public DocumentFactoryException(String message) {
       super(message);
    }
 
    /**
     * {@inheritDoc}
     *
-    * @since 0.2.0
+    * @since 0.4.0
     */
-   public GeoJsonSerializerException(String message, Throwable cause) {
+   public DocumentFactoryException(String message, Throwable cause) {
       super(message, cause);
-   }
-
-   /**
-    * {@inheritDoc}
-    *
-    * @since 0.2.0
-    */
-   public GeoJsonSerializerException(Throwable cause) {
-      super(cause);
-   }
-
-   /**
-    * {@inheritDoc}
-    *
-    * @since 0.2.0
-    */
-   public GeoJsonSerializerException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-      super(message, cause, enableSuppression, writableStackTrace);
    }
 }
