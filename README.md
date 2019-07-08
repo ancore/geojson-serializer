@@ -5,7 +5,7 @@
 A library with a JsonSerializer and a set of annotations to serialize any PoJo as [GeoJSON](https://tools.ietf.org/html/rfc7946).
 
 Currently supported is [Feature](https://tools.ietf.org/html/rfc7946#section-3.2) and [FeatureCollection](https://tools.ietf.org/html/rfc7946#section-3.3), 
-[GeometryCollection](https://tools.ietf.org/html/rfc7946#section-3.1.8) is not yet implemented.
+[GeometryCollection](https://tools.ietf.org/html/rfc7946#section-3.1.8).
 
 A demo Spring Boot project is available: https://github.com/dtap-gmbh/geojson-serializer-demo
 
@@ -13,7 +13,7 @@ A demo Spring Boot project is available: https://github.com/dtap-gmbh/geojson-se
 
 The PoJo containing the data for the GeoJSON object is annotated with `@GeoJson`.
 
-Whether the GeoJSON is a _Feature_, _FeatureCollection_ or, when implemented later, a _GeometryCollection_ is specified by the annotation attribute `type`,
+Whether the GeoJSON is a _Feature_, _FeatureCollection_ or a _GeometryCollection_ is specified by the annotation attribute `type`,
 for example `GeoJson(type = GeoJsonType.FEATURE)`.
 
 PoJo annotations on field or getters indicate the GeoJSON members (_id_, _geometry_, _properties_, _features_) depending on the type.
