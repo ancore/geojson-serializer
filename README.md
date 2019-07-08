@@ -40,7 +40,7 @@ The status of this library is something like **beta**. Please let me know if you
 <dependency>
     <groupId>gmbh.dtap</groupId>
     <artifactId>geojson-serializer</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 </dependency>
 ```
 
@@ -93,6 +93,7 @@ It has a field annotation to point out the Feature's id, two String properties a
 Programmatically calling the ObjectMapper to serialize:
   
 ```java
+   import com.bedatadriven.jackson.datatype.jts.JtsModule;
    import com.fasterxml.jackson.core.JsonProcessingException;
    import com.fasterxml.jackson.databind.ObjectMapper;
    import org.locationtech.jts.geom.Coordinate;
@@ -103,6 +104,8 @@ Programmatically calling the ObjectMapper to serialize:
    public static void main(String... args) throws JsonProcessingException {
       
       ObjectMapper objectMapper = new ObjectMapper();
+      objectMapper.registerModule(new JtsModule());
+      
       GeometryFactory geometryFactory = new GeometryFactory();
             
       Attraction attraction = new Attraction(
