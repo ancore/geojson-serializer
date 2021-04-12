@@ -38,7 +38,7 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
  * @see RouteByGetter
  * @since 0.5.0
  */
-public class GeoJsonSerializerTestGeometryCollection {
+public class GeoJsonSerializerGeometryCollectionTest {
 
    private ObjectMapper objectMapper;
 

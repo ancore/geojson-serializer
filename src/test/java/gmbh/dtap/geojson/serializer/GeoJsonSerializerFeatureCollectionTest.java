@@ -40,7 +40,7 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
  * @see AttractionsByGetter
  * @since 0.2.0
  */
-public class GeoJsonSerializerTestFeatureCollection {
+public class GeoJsonSerializerFeatureCollectionTest {
 
    private static final UUID uuid1 = UUID.fromString("f551106e-3180-4aaa-957c-3f8457d3f942");
    private static final UUID uuid2 = UUID.fromString("71c26c20-94ec-11e9-bc42-526af7764f64");
