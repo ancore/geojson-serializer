@@ -69,13 +69,25 @@ public class AttractionByGetter {
       return id;
    }
 
+   public void setId(UUID id) {
+      this.id = id;
+   }
+
    @GeoJsonProperties
    public Map<String, String> getProperties() {
       return properties;
    }
 
+   public void setProperties(Map<String, String> properties) {
+      this.properties = properties;
+   }
+
    @GeoJsonGeometry
    public Point getLocation() {
       return location;
+   }
+
+   public void setLocation(Point location) {
+      this.location = location;
    }
 }

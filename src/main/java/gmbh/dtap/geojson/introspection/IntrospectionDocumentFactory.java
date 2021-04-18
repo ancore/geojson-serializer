@@ -53,10 +53,10 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
     * @since 0.4.0
     */
    private static final Collection<Class<?>> annotationClasses = asList(
-         GeoJsonId.class,
-         GeoJsonGeometry.class, GeoJsonGeometries.class,
-         GeoJsonProperty.class, GeoJsonProperties.class,
-         GeoJsonFeature.class, GeoJsonFeatures.class);
+      GeoJsonId.class,
+      GeoJsonGeometry.class, GeoJsonGeometries.class,
+      GeoJsonProperty.class, GeoJsonProperties.class,
+      GeoJsonFeature.class, GeoJsonFeatures.class);
 
    /**
     * For reflection only.
@@ -121,7 +121,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
       if (propertiesAnnotated != null && !propertyAnnotated.isEmpty()) {
          // both, @GeoJsonProperties and @GeoJsonProperty are present
          String descriptions = propertiesAnnotated.getDescription() + ", " +
-               propertyAnnotated.stream().map(Annotated::getDescription).collect(joining(", "));
+            propertyAnnotated.stream().map(Annotated::getDescription).collect(joining(", "));
          throw new DocumentFactoryException("Annotations @GeoJsonProperties and @GeoJsonProperty are mutually exclusive: " + descriptions);
       } else if (propertiesAnnotated != null) {
          // one @GeoJsonProperties
@@ -140,7 +140,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
     *
     * @param object     the object to retrieve the values from
     * @param annotateds the fields or methods
-    * @return the map of properties, may be empty but never <tt>null</tt>
+    * @return the map of properties, may be empty but never <code>null</code>
     * @throws DocumentFactoryException on any error
     */
    private Map<String, Object> toProperties(Object object, List<Annotated> annotateds) throws DocumentFactoryException {
@@ -164,12 +164,12 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
     *
     * @param annotated      the annotated field or method
     * @param annotationType the annotation type
-    * @return the annotation, or <tt>null</tt> if not found
+    * @return the annotation, or <code>null</code> if not found
     */
    private <T extends Annotation> T findAnnotation(Annotated annotated, Class<T> annotationType) {
       Annotation annotation = annotated.getAnnotations().stream()
-            .filter(a -> a.annotationType().equals(annotationType))
-            .findFirst().orElse(null);
+         .filter(a -> a.annotationType().equals(annotationType))
+         .findFirst().orElse(null);
       return annotationType.cast(annotation);
    }
 
@@ -189,7 +189,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
       if (featuresAnnotated != null && !featureAnnotated.isEmpty()) {
          // both, @GeoJsonFeatures and @GeoJsonFeature are present
          String descriptions = featuresAnnotated.getDescription() + ", " +
-               featureAnnotated.stream().map(Annotated::getDescription).collect(joining(", "));
+            featureAnnotated.stream().map(Annotated::getDescription).collect(joining(", "));
          throw new DocumentFactoryException("Annotations @GeoJsonFeatures and @GeoJsonFeature are mutually exclusive: " + descriptions);
       } else if (featuresAnnotated != null) {
          // one @GeoJsonFeatures
@@ -208,7 +208,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
       } else if (value instanceof Object[]) {
          return asList(((Object[]) value));
       } else if (value instanceof Collection) {
-         return new ArrayList<Object>((Collection) value);
+         return new ArrayList<>((Collection<?>) value);
       } else {
          throw new DocumentFactoryException("Value of " + annotated.getDescription() + " is not an Array or Collection.");
       }
@@ -241,7 +241,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
       if (geometriesAnnotated != null && !geometryAnnotated.isEmpty()) {
          // both, @GeoJsonGeometries and @GeoJsonGeometry are present
          String descriptions = geometriesAnnotated.getDescription() + ", " +
-               geometryAnnotated.stream().map(Annotated::getDescription).collect(joining(", "));
+            geometryAnnotated.stream().map(Annotated::getDescription).collect(joining(", "));
          throw new DocumentFactoryException("Annotations @GeoJsonGeometries and @GeoJsonGeometry are mutually exclusive: " + descriptions);
       } else if (geometriesAnnotated != null) {
          // one @GeoJsonGeometries
@@ -302,8 +302,8 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
    private ListMultimap<Class<? extends Annotation>, Annotated> index(Object object) throws DocumentFactoryException {
       ListMultimap<Class<? extends Annotation>, Annotated> index = MultimapBuilder.hashKeys().arrayListValues().build();
       annotatedFrom(object.getClass())
-            .forEach(annotated -> annotated.getAnnotations()
-                  .forEach(t -> index.put(t.annotationType(), annotated)));
+         .forEach(annotated -> annotated.getAnnotations()
+            .forEach(t -> index.put(t.annotationType(), annotated)));
       return index;
    }
 
@@ -319,7 +319,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
       return annotated;
    }
 
-   private static BeanInfo getBeanInfo(Class clazz) throws DocumentFactoryException {
+   private static BeanInfo getBeanInfo(Class<?> clazz) throws DocumentFactoryException {
       try {
          return Introspector.getBeanInfo(clazz);
       } catch (IntrospectionException e) {
@@ -342,9 +342,9 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
          List<Annotation> annotations = filter(propertyDescriptor.getReadMethod().getAnnotations(), annotationClasses);
          if (!annotations.isEmpty()) {
             return Optional.of(new AnnotatedMethod(
-                  propertyDescriptor.getName(),
-                  propertyDescriptor.getReadMethod(),
-                  annotations
+               propertyDescriptor.getName(),
+               propertyDescriptor.getReadMethod(),
+               annotations
             ));
          }
       }
@@ -353,7 +353,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
 
    private static List<Annotation> filter(Annotation[] annotations, Collection<Class<?>> permittedTypes) {
       return stream(annotations)
-            .filter(a -> permittedTypes.contains(a.annotationType()))
-            .collect(Collectors.toList());
+         .filter(a -> permittedTypes.contains(a.annotationType()))
+         .collect(Collectors.toList());
    }
 }

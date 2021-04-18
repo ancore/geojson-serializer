@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * Class with correct annotations.
- * <p>This class demonstrates a <em>FeatureCollection</em> based on an <tt>null</tt> field.
+ * <p>This class demonstrates a <em>FeatureCollection</em> based on an <code>null</code> field.
  *
  * @since 0.2.0
  */
@@ -44,7 +44,7 @@ public class AttractionsNull {
 
    @Override public String toString() {
       return "AttractionsByField{" +
-            "attractions=" + attractions +
-            '}';
+         "attractions=" + attractions +
+         '}';
    }
 }

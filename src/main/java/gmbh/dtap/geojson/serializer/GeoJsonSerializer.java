@@ -105,7 +105,7 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
       Class<? extends DocumentFactory> factory = geoJsonAnnotation.factory();
       DocumentFactory documentFactory;
       try {
-         documentFactory = factory.newInstance();
+         documentFactory = factory.getDeclaredConstructor().newInstance();
       } catch (Exception e) {
          throw new IllegalStateException("Factory instantiation failed for " + factory, e);
       }

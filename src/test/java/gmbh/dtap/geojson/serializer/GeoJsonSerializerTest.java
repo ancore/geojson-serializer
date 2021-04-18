@@ -23,30 +23,27 @@ import gmbh.dtap.geojson.annotation.GeoJson;
 import gmbh.dtap.geojson.document.DocumentFactoryException;
 import gmbh.dtap.geojson.document.FeatureDocument;
 import org.json.JSONException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
-@RunWith(MockitoJUnitRunner.class)
-public class GeoJsonSerializerTest {
+class GeoJsonSerializerTest {
 
-   @Before
-   public void setUp() throws DocumentFactoryException {
+   @BeforeAll
+   public static void setUp() throws DocumentFactoryException {
    }
 
    @Test
-   public void test() throws JsonProcessingException, JSONException {
+   void test() throws JsonProcessingException, JSONException {
       String value = new ObjectMapper().writeValueAsString(new TestFeature());
       assertEquals("{\"type\":\"Feature\", \"id\": \"23\", \"geometry\": null, \"properties\": \"foo\"}", value, true);
    }
 
    @JsonSerialize(using = GeoJsonSerializer.class)
    @GeoJson(type = GeoJsonType.FEATURE, factory = TestDocumentFactory.class)
-   class TestFeature implements FeatureDocument {
+   static class TestFeature implements FeatureDocument {
 
       @Override public Object getId() {
          return "23";

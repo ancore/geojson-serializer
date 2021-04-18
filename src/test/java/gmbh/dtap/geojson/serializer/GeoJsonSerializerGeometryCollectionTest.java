@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import gmbh.dtap.geojson.serializer.examples.geometrycollection.*;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -38,18 +38,18 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
  * @see RouteByGetter
  * @since 0.5.0
  */
-public class GeoJsonSerializerGeometryCollectionTest {
+class GeoJsonSerializerGeometryCollectionTest {
 
-   private ObjectMapper objectMapper;
+   private static ObjectMapper objectMapper;
 
-   @Before
-   public void setUp() {
+   @BeforeAll
+   public static void setUp() {
       objectMapper = new ObjectMapper();
       objectMapper.registerModule(new JtsModule());
    }
 
    @Test
-   public void shouldSerializeByField() throws IOException, URISyntaxException, JSONException {
+   void shouldSerializeByField() throws IOException, URISyntaxException, JSONException {
       RouteByField route = new RouteByField();
       route.add(point(23, 42));
       route.add(point(122, 0));
@@ -60,7 +60,7 @@ public class GeoJsonSerializerGeometryCollectionTest {
    }
 
    @Test
-   public void shouldSerializeByGetter() throws IOException, URISyntaxException, JSONException {
+   void shouldSerializeByGetter() throws IOException, URISyntaxException, JSONException {
       RouteByGetter route = new RouteByGetter();
       route.add(point(23, 42));
       route.add(point(122, 0));
@@ -71,7 +71,7 @@ public class GeoJsonSerializerGeometryCollectionTest {
    }
 
    @Test
-   public void shouldSerializeEmpty() throws IOException, URISyntaxException, JSONException {
+   void shouldSerializeEmpty() throws IOException, URISyntaxException, JSONException {
       RouteEmpty route = new RouteEmpty();
 
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/geometrycollection/RouteEmpty.json").toURI(), UTF_8);
@@ -80,7 +80,7 @@ public class GeoJsonSerializerGeometryCollectionTest {
    }
 
    @Test
-   public void shouldSerializeMissing() throws IOException, URISyntaxException, JSONException {
+   void shouldSerializeMissing() throws IOException, URISyntaxException, JSONException {
       RouteMissing route = new RouteMissing();
 
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/geometrycollection/RouteMissing.json").toURI(), UTF_8);
@@ -88,7 +88,8 @@ public class GeoJsonSerializerGeometryCollectionTest {
       assertEquals(expectedJson, actualJson, true);
    }
 
-   @Test public void shouldSerializeNull() throws IOException, URISyntaxException, JSONException {
+   @Test
+   void shouldSerializeNull() throws IOException, URISyntaxException, JSONException {
       RouteNull route = new RouteNull();
 
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/geometrycollection/RouteNull.json").toURI(), UTF_8);

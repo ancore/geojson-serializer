@@ -49,7 +49,7 @@ public class AttractionsByField {
 
    @Override public String toString() {
       return "AttractionsByField{" +
-            "attractions=" + attractions +
-            '}';
+         "attractions=" + attractions +
+         '}';
    }
 }

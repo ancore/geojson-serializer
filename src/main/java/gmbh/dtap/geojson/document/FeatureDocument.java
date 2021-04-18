@@ -29,7 +29,7 @@ public interface FeatureDocument extends Document {
    /**
     * The optional ID.
     *
-    * @return the optional ID, may be <tt>null</tt>
+    * @return the optional ID, may be <code>null</code>
     * @since 0.4.0
     */
    Object getId();
@@ -37,7 +37,7 @@ public interface FeatureDocument extends Document {
    /**
     * The optional Geometry object.
     *
-    * @return the optional geometry, may be <tt>null</tt>
+    * @return the optional geometry, may be <code>null</code>
     * @since 0.4.0
     */
    Geometry getGeometry();
@@ -45,7 +45,7 @@ public interface FeatureDocument extends Document {
    /**
     * The optional properties object.
     *
-    * @return the optional properties, may be <tt>null</tt>
+    * @return the optional properties, may be <code>null</code>
     * @since 0.4.0
     */
    Object getProperties();

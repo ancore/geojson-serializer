@@ -55,7 +55,7 @@ public class AttractionsByGetter {
 
    @Override public String toString() {
       return "AttractionsByGetter{" +
-            "attractions=" + attractions +
-            '}';
+         "attractions=" + attractions +
+         '}';
    }
 }

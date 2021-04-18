@@ -69,7 +69,7 @@ public enum GeoJsonType {
    /**
     * Returns whether the type is a geometry type according to the <em>GeoJSON</em> specification.
     *
-    * @return <tt>true</tt> if the type is a geometry, <tt>false</tt> otherwise
+    * @return <code>true</code> if the type is a geometry, <code>false</code> otherwise
     * @since 0.1.0
     */
    public boolean isGeometryType() {

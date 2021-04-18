@@ -22,8 +22,8 @@ import gmbh.dtap.geojson.serializer.examples.feature.AttractionByField;
 import gmbh.dtap.geojson.serializer.examples.featurecollection.*;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Point;
 
 import java.io.IOException;
@@ -40,22 +40,22 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
  * @see AttractionsByGetter
  * @since 0.2.0
  */
-public class GeoJsonSerializerFeatureCollectionTest {
+class GeoJsonSerializerFeatureCollectionTest {
 
    private static final UUID uuid1 = UUID.fromString("f551106e-3180-4aaa-957c-3f8457d3f942");
    private static final UUID uuid2 = UUID.fromString("71c26c20-94ec-11e9-bc42-526af7764f64");
    private static final Point location = TestUtils.point(23, 42);
 
-   private ObjectMapper objectMapper;
+   private static ObjectMapper objectMapper;
 
-   @Before
-   public void setUp() {
+   @BeforeAll
+   public static void setUp() {
       objectMapper = new ObjectMapper();
       objectMapper.registerModule(new JtsModule());
    }
 
    @Test
-   public void shouldSerializeAttractionsByField() throws IOException, URISyntaxException, JSONException {
+   void shouldSerializeAttractionsByField() throws IOException, URISyntaxException, JSONException {
       AttractionsByField attractions = new AttractionsByField();
       attractions.add(new AttractionByField(uuid1, "Name 1", "Lorem ipsum 1", location));
       attractions.add(new AttractionByField(uuid2, "Name 2", "Lorem ipsum 2", null));
@@ -66,7 +66,7 @@ public class GeoJsonSerializerFeatureCollectionTest {
    }
 
    @Test
-   public void shouldSerializeAttractionsByGetter() throws IOException, URISyntaxException, JSONException {
+   void shouldSerializeAttractionsByGetter() throws IOException, URISyntaxException, JSONException {
       AttractionsByGetter attractions = new AttractionsByGetter();
       attractions.add(new AttractionByField(uuid1, "Name", "Lorem ipsum", location));
 
@@ -76,7 +76,7 @@ public class GeoJsonSerializerFeatureCollectionTest {
    }
 
    @Test
-   public void shouldSerializeEmpty() throws IOException, URISyntaxException, JSONException {
+   void shouldSerializeEmpty() throws IOException, URISyntaxException, JSONException {
       AttractionsEmpty attractions = new AttractionsEmpty();
 
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/featurecollection/AttractionsEmpty.json").toURI(), UTF_8);
@@ -85,7 +85,7 @@ public class GeoJsonSerializerFeatureCollectionTest {
    }
 
    @Test
-   public void shouldSerializeMissing() throws IOException, URISyntaxException, JSONException {
+   void shouldSerializeMissing() throws IOException, URISyntaxException, JSONException {
       AttractionsMissing attractions = new AttractionsMissing();
 
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/featurecollection/AttractionsMissing.json").toURI(), UTF_8);
@@ -94,7 +94,7 @@ public class GeoJsonSerializerFeatureCollectionTest {
    }
 
    @Test
-   public void shouldSerializeNull() throws IOException, URISyntaxException, JSONException {
+   void shouldSerializeNull() throws IOException, URISyntaxException, JSONException {
       AttractionsNull attractions = new AttractionsNull();
 
       String expectedJson = IOUtils.toString(getClass().getResource("/examples/featurecollection/AttractionsNull.json").toURI(), UTF_8);

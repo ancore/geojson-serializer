@@ -32,7 +32,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * getter or field and can be overwritten by {@link GeoJsonProperty#name()}. The attribute values
  * can be any JSON object.
  * <p>This annotation is mutually exclusive with {@link GeoJsonProperties}.
- * <p>The properties field will be set to JSON <tt>null</tt> if no property is available.
+ * <p>The properties field will be set to JSON <code>null</code> if no property is available.
  * <p>Getter annotations example with the {@link String}:
  * <pre>
  *    &#064;GeoJsonProperty

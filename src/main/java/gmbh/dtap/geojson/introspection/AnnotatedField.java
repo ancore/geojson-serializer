@@ -32,7 +32,7 @@ public class AnnotatedField implements Annotated {
 
    private final String name;
    private final Field field;
-   private List<Annotation> annotations;
+   private final List<Annotation> annotations;
 
    /**
     * Contructor
@@ -97,9 +97,9 @@ public class AnnotatedField implements Annotated {
     */
    @Override public String toString() {
       return "AnnotatedField{" +
-            "name='" + name + '\'' +
-            ", field=" + field +
-            ", annotations=" + annotations +
-            '}';
+         "name='" + name + '\'' +
+         ", field=" + field +
+         ", annotations=" + annotations +
+         '}';
    }
 }

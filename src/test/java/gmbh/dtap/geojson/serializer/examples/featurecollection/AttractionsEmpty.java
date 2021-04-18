@@ -45,7 +45,7 @@ public class AttractionsEmpty {
 
    @Override public String toString() {
       return "AttractionsByField{" +
-            "attractions=" + attractions +
-            '}';
+         "attractions=" + attractions +
+         '}';
    }
 }

@@ -31,7 +31,7 @@ public interface GeometryCollectionDocument extends Document {
    /**
     * The geometries of the collection.
     *
-    * @return the geometries, may be empty but never <tt>null</tt>
+    * @return the geometries, may be empty but never <code>null</code>
     * @since 0.4.0
     */
    List<Geometry> getGeometries();

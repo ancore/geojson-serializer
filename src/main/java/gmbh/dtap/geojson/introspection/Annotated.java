@@ -48,7 +48,7 @@ public interface Annotated {
    /**
     * Returns all GeoJson annotations from this member.
     *
-    * @return all GeoJson annotations, may be empty but never <tt>null</tt>
+    * @return all GeoJson annotations, may be empty but never <code>null</code>
     * @since 0.4.0
     */
    List<Annotation> getAnnotations();
@@ -59,7 +59,7 @@ public interface Annotated {
     * @param object        the object of which the value should be returned
     * @param expectedClass the expected type of value
     * @param <T>           the class of the expected type
-    * @return the value, may be <tt>null</tt>
+    * @return the value, may be <code>null</code>
     * @throws DocumentFactoryException on any error
     * @since 0.4.0
     */

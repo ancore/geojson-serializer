@@ -33,7 +33,7 @@ public class IntrospectionGeometryCollectionDocument implements GeometryCollecti
    /**
     * Constructor
     *
-    * @param geometries the geometries, may be empty but not <tt>null</tt>
+    * @param geometries the geometries, may be empty but not <code>null</code>
     * @since 0.4.0
     */
    IntrospectionGeometryCollectionDocument(List<Geometry> geometries) {

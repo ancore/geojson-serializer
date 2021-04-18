@@ -34,7 +34,7 @@ class TestUtils {
    }
 
    /**
-    * Returns a {@link Point} with <tt>x</tt> and <tt>y</tt>.
+    * Returns a {@link Point} with <code>x</code> and <code>y</code>.
     *
     * @param x x-coordinate (lon)
     * @param y y-coordinate (lat)

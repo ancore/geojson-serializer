@@ -29,7 +29,7 @@ public interface FeatureCollectionDocument extends Document {
    /**
     * The features of the collection.
     *
-    * @return the features, may be empty but never <tt>null</tt>
+    * @return the features, may be empty but never <code>null</code>
     * @since 0.4.0
     */
    List<Object> getFeatures();

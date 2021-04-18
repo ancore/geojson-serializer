@@ -32,7 +32,7 @@ public class IntrospectionFeatureCollectionDocument implements FeatureCollection
    /**
     * Constructor
     *
-    * @param features the features, may be empty but not <tt>null</tt>
+    * @param features the features, may be empty but not <code>null</code>
     * @since 0.4.0
     */
    IntrospectionFeatureCollectionDocument(List<Object> features) {

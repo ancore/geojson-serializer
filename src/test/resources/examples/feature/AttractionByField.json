@@ -1,15 +1,15 @@
 {
-  "type": "Feature",
-  "id": "f551106e-3180-4aaa-957c-3f8457d3f942",
-  "geometry": {
-    "type": "Point",
-    "coordinates": [
-      23,
-      42
-    ]
-  },
-  "properties": {
-    "name": "Name",
-    "description": "Lorem ipsum"
-  }
+   "type": "Feature",
+   "id": "f551106e-3180-4aaa-957c-3f8457d3f942",
+   "geometry": {
+      "type": "Point",
+      "coordinates": [
+         23,
+         42
+      ]
+   },
+   "properties": {
+      "name": "Name",
+      "description": "Lorem ipsum"
+   }
 }

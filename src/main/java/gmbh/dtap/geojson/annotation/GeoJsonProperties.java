@@ -31,7 +31,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <p>This annotation can be present 0...1 times. The properties object can be any JSON
  * object. The getter or field name is not relevant.
  * The annotations {@link GeoJsonProperties} and {@link GeoJsonProperty} are mutual exclusive.
- * <p>The properties field will be set to JSON <tt>null</tt> if no property available.
+ * <p>The properties field will be set to JSON <code>null</code> if no property available.
  * <p>Getter annotation example with a {@link java.util.Map}:
  * <pre>
  *    &#064;GeoJsonProperties
