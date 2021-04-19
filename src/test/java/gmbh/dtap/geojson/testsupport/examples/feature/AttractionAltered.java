@@ -14,38 +14,32 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer.examples.feature;
+package gmbh.dtap.geojson.testsupport.examples.feature;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.annotation.GeoJson;
-import gmbh.dtap.geojson.annotation.GeoJsonGeometry;
 import gmbh.dtap.geojson.annotation.GeoJsonId;
 import gmbh.dtap.geojson.annotation.GeoJsonProperty;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
-import org.locationtech.jts.geom.Point;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
  * Class with correct annotations.
- * <p>This class demonstrates a <em>Feature</em> based on method annotations.
- * <p>The fact that the {@link GeoJsonProperty} annotation is present once,
- * causes the serializer to create this value as JSON object.
+ * <p>This class demonstrates a <em>Feature</em> based on a mix of field and method annotations
+ * with one altered property name.
+ * <p>The fact that the {@link GeoJsonProperty} annotation is present multiple times,
+ * causes the serializer to create a JSON object as <em>properties</em>.
  * <p>The GeoJSON will be:
  * <pre>
  *    {
  *       "type": "Feature",
  *       "id": "...",
- *       "geometry": {
- *          "type": "Point",
- *          "coordinates: [ ..., ...]
- *       },
+ *       "geometry": null,
  *       "properties": {
  *          "name": "...",
- *          "description": "..."
+ *          "alteredDescription": "..."
  *       }
  *    }
  * </pre>
@@ -54,20 +48,18 @@ import java.util.UUID;
  */
 @GeoJson(type = GeoJsonType.FEATURE)
 @JsonSerialize(using = GeoJsonSerializer.class)
-public class AttractionByMethod {
+public class AttractionAltered {
 
-   private UUID id;
-   private Map<String, String> properties = new HashMap<>();
-   private Point location;
+   @GeoJsonId private UUID id;
+   @GeoJsonProperty private String name;
+   private String description;
 
-   public AttractionByMethod(UUID id, String name, String description, Point location) {
+   public AttractionAltered(UUID id, String name, String description) {
       this.id = id;
-      this.properties.put("nameKey", name);
-      this.properties.put("descriptionKey", description);
-      this.location = location;
+      this.name = name;
+      this.description = description;
    }
 
-   @GeoJsonId
    public UUID getId() {
       return id;
    }
@@ -76,21 +68,20 @@ public class AttractionByMethod {
       this.id = id;
    }
 
-   @GeoJsonProperty
-   public Map<String, String> getProperties() {
-      return properties;
+   public String getName() {
+      return name;
    }
 
-   public void setProperties(Map<String, String> properties) {
-      this.properties = properties;
+   public void setName(String name) {
+      this.name = name;
    }
 
-   @GeoJsonGeometry
-   public Point getLocation() {
-      return location;
+   @GeoJsonProperty(name = "alteredDescription")
+   public String getDescription() {
+      return description;
    }
 
-   public void setLocation(Point location) {
-      this.location = location;
+   public void setDescription(String description) {
+      this.description = description;
    }
 }

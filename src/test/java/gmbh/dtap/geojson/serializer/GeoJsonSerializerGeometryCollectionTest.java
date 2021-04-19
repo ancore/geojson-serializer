@@ -18,7 +18,7 @@ package gmbh.dtap.geojson.serializer;
 
 import com.bedatadriven.jackson.datatype.jts.JtsModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gmbh.dtap.geojson.serializer.examples.geometrycollection.*;
+import gmbh.dtap.geojson.testsupport.examples.geometrycollection.*;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeAll;
@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import static gmbh.dtap.geojson.serializer.TestUtils.point;
+import static gmbh.dtap.geojson.testsupport.TestUtils.point;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 

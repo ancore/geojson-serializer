@@ -14,30 +14,21 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer.examples.geometrycollection;
+package gmbh.dtap.geojson.testsupport.examples.featurecollection;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.annotation.GeoJson;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
-import org.locationtech.jts.geom.Geometry;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@GeoJson(type = GeoJsonType.GEOMETRY_COLLECTION)
+/**
+ * Class with correct annotations.
+ * <p>This class demonstrates a <em>FeatureCollection</em> based on missing annotation.
+ *
+ * @since 0.2.0
+ */
+@GeoJson(type = GeoJsonType.FEATURE_COLLECTION)
 @JsonSerialize(using = GeoJsonSerializer.class)
-public class RouteMissing {
+public class AttractionsMissing {
 
-   private List<Geometry> list = new ArrayList<>();
-
-   public List<Geometry> getList() {
-      return list;
-   }
-
-   @Override public String toString() {
-      return "RouteByField{" +
-         "list=" + list +
-         '}';
-   }
 }

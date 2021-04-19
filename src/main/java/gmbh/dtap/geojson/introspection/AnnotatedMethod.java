@@ -22,6 +22,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import static org.apache.commons.lang3.Validate.notEmpty;
+import static org.apache.commons.lang3.Validate.notNull;
+
 /**
  * Describes a {@link Method method} by name, type and annotations.
  *
@@ -31,14 +34,17 @@ public class AnnotatedMethod implements Annotated {
 
    private final String name;
    private final Method method;
-   private List<Annotation> annotations;
+   private final List<Annotation> annotations;
 
    /**
-    * Contructor
+    * Constructor
     *
     * @since 0.4.0
     */
    AnnotatedMethod(String name, Method method, List<Annotation> annotations) {
+      notEmpty(name, "name is null");
+      notNull(method, "method is null");
+      notNull(annotations, "annotations is null");
       this.name = name;
       this.method = method;
       this.annotations = annotations;
@@ -78,6 +84,8 @@ public class AnnotatedMethod implements Annotated {
     * @since 0.4.0
     */
    @Override public <T> T getValue(Object object, Class<T> expectedClass) throws DocumentFactoryException {
+      notNull(object, "object is null");
+      notNull(expectedClass, "expectedClass is null");
       Object value;
       try {
          value = method.invoke(object);

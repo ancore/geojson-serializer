@@ -59,7 +59,7 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
       GeoJsonFeature.class, GeoJsonFeatures.class);
 
    /**
-    * For reflection only.
+    * Constructor for reflection.
     *
     * @since 0.4.0
     */
@@ -104,16 +104,18 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
    private FeatureDocument featureFrom(Object object) throws DocumentFactoryException {
       ListMultimap<Class<? extends Annotation>, Annotated> index = index(object);
 
-      IntrospectionFeatureDocument document = new IntrospectionFeatureDocument();
+      Object id = null;
+      Geometry geometry = null;
+      Object properties = null;
 
       Annotated idAnnotated = oneOrNull(index, GeoJsonId.class);
       if (idAnnotated != null) {
-         document.setId(idAnnotated.getValue(object, Object.class));
+         id = idAnnotated.getValue(object, Object.class);
       }
 
       Annotated geometryAnnotated = oneOrNull(index, GeoJsonGeometry.class);
       if (geometryAnnotated != null) {
-         document.setGeometry(geometryAnnotated.getValue(object, Geometry.class));
+         geometry = geometryAnnotated.getValue(object, Geometry.class);
       }
 
       Annotated propertiesAnnotated = oneOrNull(index, GeoJsonProperties.class);
@@ -125,12 +127,12 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
          throw new DocumentFactoryException("Annotations @GeoJsonProperties and @GeoJsonProperty are mutually exclusive: " + descriptions);
       } else if (propertiesAnnotated != null) {
          // one @GeoJsonProperties
-         document.setProperties(propertiesAnnotated.getValue(object, Object.class));
+         properties = propertiesAnnotated.getValue(object, Object.class);
       } else if (!propertyAnnotated.isEmpty()) {
          // one or more @GeoJsonProperty
-         document.setProperties(toProperties(object, propertyAnnotated));
+         properties = toProperties(object, propertyAnnotated);
       }
-      return document;
+      return new IntrospectionFeatureDocument(id, geometry, properties);
    }
 
    /**

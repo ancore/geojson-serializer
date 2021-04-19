@@ -20,23 +20,23 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.annotation.GeoJson;
-import gmbh.dtap.geojson.document.DocumentFactoryException;
 import gmbh.dtap.geojson.document.FeatureDocument;
+import gmbh.dtap.geojson.testsupport.TestDocumentFactory;
 import org.json.JSONException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Geometry;
 
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
+/**
+ * Tests for {@link GeoJsonSerializer}.
+ *
+ * @since 0.1.0
+ */
 class GeoJsonSerializerTest {
 
-   @BeforeAll
-   public static void setUp() throws DocumentFactoryException {
-   }
-
    @Test
-   void test() throws JsonProcessingException, JSONException {
+   void shouldSerializeFeature() throws JsonProcessingException, JSONException {
       String value = new ObjectMapper().writeValueAsString(new TestFeature());
       assertEquals("{\"type\":\"Feature\", \"id\": \"23\", \"geometry\": null, \"properties\": \"foo\"}", value, true);
    }

@@ -48,8 +48,8 @@ public enum GeoJsonType {
     */
    FEATURE_COLLECTION("FeatureCollection", false);
 
-   private String name;
-   private boolean geometryType;
+   private final String name;
+   private final boolean geometryType;
 
    GeoJsonType(String name, boolean geometryType) {
       this.name = name;

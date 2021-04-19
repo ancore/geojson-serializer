@@ -23,6 +23,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import static org.apache.commons.lang3.Validate.notEmpty;
+import static org.apache.commons.lang3.Validate.notNull;
+
 /**
  * Represents an annotated {@link Field field} by name and value.
  *
@@ -35,11 +38,14 @@ public class AnnotatedField implements Annotated {
    private final List<Annotation> annotations;
 
    /**
-    * Contructor
+    * Constructor
     *
     * @since 0.4.0
     */
    AnnotatedField(String name, Field field, List<Annotation> annotations) {
+      notEmpty(name, "name is null");
+      notNull(field, "field is null");
+      notNull(annotations, "annotations is null");
       this.name = name;
       this.field = field;
       this.annotations = annotations;
@@ -78,6 +84,8 @@ public class AnnotatedField implements Annotated {
     * @since 0.4.0
     */
    @Override public <T> T getValue(Object object, Class<T> expectedClass) throws DocumentFactoryException {
+      notNull(object, "object is null");
+      notNull(expectedClass, "expectedClass is null");
       Object value;
       try {
          value = FieldUtils.readField(field, object, true);

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer;
+package gmbh.dtap.geojson.testsupport;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -25,9 +25,9 @@ import org.locationtech.jts.geom.Point;
  *
  * @since 0.2.0
  */
-class TestUtils {
+public class TestUtils {
 
-   private static GeometryFactory geometryFactory = new GeometryFactory();
+   private static final GeometryFactory geometryFactory = new GeometryFactory();
 
    private TestUtils() {
       // static usage only
@@ -40,7 +40,7 @@ class TestUtils {
     * @param y y-coordinate (lat)
     * @return the point
     */
-   static Point point(double x, double y) {
+   public static Point point(double x, double y) {
       return geometryFactory.createPoint(new Coordinate(x, y));
    }
 }

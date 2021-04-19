@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer;
+package gmbh.dtap.geojson.testsupport;
 
 import gmbh.dtap.geojson.document.Document;
 import gmbh.dtap.geojson.document.DocumentFactory;
-import gmbh.dtap.geojson.document.DocumentFactoryException;
 
 /**
  * This implementation for testing purposes returns the input object as {@link Document}.
@@ -41,7 +40,7 @@ public class TestDocumentFactory implements DocumentFactory {
     * @since 0.4.0
     */
    @Override
-   public Document from(Object object) throws DocumentFactoryException {
+   public Document from(Object object) {
       if (object == null) {
          return null;
       }

@@ -18,8 +18,9 @@ package gmbh.dtap.geojson.serializer;
 
 import com.bedatadriven.jackson.datatype.jts.JtsModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gmbh.dtap.geojson.serializer.examples.feature.AttractionByField;
-import gmbh.dtap.geojson.serializer.examples.featurecollection.*;
+import gmbh.dtap.geojson.testsupport.TestUtils;
+import gmbh.dtap.geojson.testsupport.examples.feature.AttractionByField;
+import gmbh.dtap.geojson.testsupport.examples.featurecollection.*;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeAll;

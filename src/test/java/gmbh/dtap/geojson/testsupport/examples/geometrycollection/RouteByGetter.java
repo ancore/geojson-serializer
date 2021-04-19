@@ -14,42 +14,36 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer.examples.featurecollection;
+package gmbh.dtap.geojson.testsupport.examples.geometrycollection;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.annotation.GeoJson;
-import gmbh.dtap.geojson.annotation.GeoJsonFeatures;
+import gmbh.dtap.geojson.annotation.GeoJsonGeometries;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
-import gmbh.dtap.geojson.serializer.examples.feature.AttractionByField;
+import org.locationtech.jts.geom.Geometry;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Class with correct annotations.
- * <p>This class demonstrates a <em>FeatureCollection</em> based on a {@link List} field.
- *
- * @since 0.2.0
- */
-@GeoJson(type = GeoJsonType.FEATURE_COLLECTION)
+@GeoJson(type = GeoJsonType.GEOMETRY_COLLECTION)
 @JsonSerialize(using = GeoJsonSerializer.class)
-public class AttractionsByField {
+public class RouteByGetter {
 
-   @GeoJsonFeatures
-   private final List<AttractionByField> attractions = new ArrayList<>();
+   private List<Geometry> list = new ArrayList<>();
 
-   public void add(AttractionByField attraction) {
-      this.attractions.add(attraction);
+   public void add(Geometry geometry) {
+      list.add(geometry);
    }
 
-   public List<AttractionByField> getAttractions() {
-      return attractions;
+   @GeoJsonGeometries
+   public List<Geometry> getList() {
+      return list;
    }
 
    @Override public String toString() {
-      return "AttractionsByField{" +
-         "attractions=" + attractions +
+      return "RouteByGetter{" +
+         "list=" + list +
          '}';
    }
 }

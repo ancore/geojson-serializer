@@ -14,31 +14,37 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer.examples.geometrycollection;
+package gmbh.dtap.geojson.testsupport.examples.featurecollection;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.annotation.GeoJson;
-import gmbh.dtap.geojson.annotation.GeoJsonGeometries;
+import gmbh.dtap.geojson.annotation.GeoJsonFeatures;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
-import org.locationtech.jts.geom.Geometry;
+import gmbh.dtap.geojson.testsupport.examples.feature.AttractionByField;
 
 import java.util.List;
 
-@GeoJson(type = GeoJsonType.GEOMETRY_COLLECTION)
+/**
+ * Class with correct annotations.
+ * <p>This class demonstrates a <em>FeatureCollection</em> based on an <code>null</code> field.
+ *
+ * @since 0.2.0
+ */
+@GeoJson(type = GeoJsonType.FEATURE_COLLECTION)
 @JsonSerialize(using = GeoJsonSerializer.class)
-public class RouteNull {
+public class AttractionsNull {
 
-   private List<Geometry> list = null;
+   @GeoJsonFeatures
+   private final List<AttractionByField> attractions = null;
 
-   @GeoJsonGeometries
-   public List<Geometry> getList() {
-      return list;
+   public List<AttractionByField> getAttractions() {
+      return attractions;
    }
 
    @Override public String toString() {
-      return "RouteByField{" +
-         "list=" + list +
+      return "AttractionsByField{" +
+         "attractions=" + attractions +
          '}';
    }
 }

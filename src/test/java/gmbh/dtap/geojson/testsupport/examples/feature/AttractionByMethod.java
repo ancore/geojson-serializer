@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer.examples.feature;
+package gmbh.dtap.geojson.testsupport.examples.feature;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import gmbh.dtap.geojson.annotation.*;
+import gmbh.dtap.geojson.annotation.GeoJson;
+import gmbh.dtap.geojson.annotation.GeoJsonGeometry;
+import gmbh.dtap.geojson.annotation.GeoJsonId;
+import gmbh.dtap.geojson.annotation.GeoJsonProperty;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
 import org.locationtech.jts.geom.Point;
@@ -41,8 +44,8 @@ import java.util.UUID;
  *          "coordinates: [ ..., ...]
  *       },
  *       "properties": {
- *          "nameKey": "...",
- *          "descriptionKey": "..."
+ *          "name": "...",
+ *          "description": "..."
  *       }
  *    }
  * </pre>
@@ -51,13 +54,13 @@ import java.util.UUID;
  */
 @GeoJson(type = GeoJsonType.FEATURE)
 @JsonSerialize(using = GeoJsonSerializer.class)
-public class AttractionByGetter {
+public class AttractionByMethod {
 
    private UUID id;
    private Map<String, String> properties = new HashMap<>();
    private Point location;
 
-   public AttractionByGetter(UUID id, String name, String description, Point location) {
+   public AttractionByMethod(UUID id, String name, String description, Point location) {
       this.id = id;
       this.properties.put("nameKey", name);
       this.properties.put("descriptionKey", description);
@@ -73,7 +76,7 @@ public class AttractionByGetter {
       this.id = id;
    }
 
-   @GeoJsonProperties
+   @GeoJsonProperty
    public Map<String, String> getProperties() {
       return properties;
    }

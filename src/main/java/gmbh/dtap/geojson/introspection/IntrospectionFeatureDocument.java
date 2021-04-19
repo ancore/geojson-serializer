@@ -26,16 +26,19 @@ import org.locationtech.jts.geom.Geometry;
  */
 public class IntrospectionFeatureDocument implements FeatureDocument {
 
-   private Object id;
-   private Geometry geometry;
-   private Object properties;
+   private final Object id;
+   private final Geometry geometry;
+   private final Object properties;
 
    /**
     * Constructor
     *
-    * @since 0.4.0
+    * @since 0.5.3
     */
-   IntrospectionFeatureDocument() {
+   IntrospectionFeatureDocument(Object id, Geometry geometry, Object properties) {
+      this.id = id;
+      this.geometry = geometry;
+      this.properties = properties;
    }
 
    /**
@@ -48,16 +51,6 @@ public class IntrospectionFeatureDocument implements FeatureDocument {
    }
 
    /**
-    * Sets the ID object. A string or number is advised.
-    *
-    * @param id the ID object.
-    * @since 0.4.0
-    */
-   public void setId(Object id) {
-      this.id = id;
-   }
-
-   /**
     * {@inheritDoc}
     *
     * @since 0.4.0
@@ -67,31 +60,11 @@ public class IntrospectionFeatureDocument implements FeatureDocument {
    }
 
    /**
-    * Sets a geometry object.
-    *
-    * @param geometry the geometry object
-    * @since 0.4.0
-    */
-   public void setGeometry(Geometry geometry) {
-      this.geometry = geometry;
-   }
-
-   /**
     * {@inheritDoc}
     *
     * @since 0.4.0
     */
    @Override public Object getProperties() {
       return properties;
-   }
-
-   /**
-    * Sets a properties object.
-    *
-    * @param properties the properties object
-    * @since 0.4.0
-    */
-   public void setProperties(Object properties) {
-      this.properties = properties;
    }
 }

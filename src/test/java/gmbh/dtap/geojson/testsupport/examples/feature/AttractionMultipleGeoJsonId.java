@@ -14,52 +14,41 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer.examples.feature;
+package gmbh.dtap.geojson.testsupport.examples.feature;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.annotation.GeoJson;
+import gmbh.dtap.geojson.annotation.GeoJsonGeometry;
 import gmbh.dtap.geojson.annotation.GeoJsonId;
 import gmbh.dtap.geojson.annotation.GeoJsonProperty;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
+import org.locationtech.jts.geom.Point;
 
 import java.util.UUID;
 
 /**
- * Class with correct annotations.
- * <p>This class demonstrates a <em>Feature</em> based on a mix of field and method annotations
- * with one altered property name.
- * <p>The fact that the {@link GeoJsonProperty} annotation is present multiple times,
- * causes the serializer to create a JSON object as <em>properties</em>.
- * <p>The GeoJSON will be:
- * <pre>
- *    {
- *       "type": "Feature",
- *       "id": "...",
- *       "geometry": null,
- *       "properties": {
- *          "name": "...",
- *          "alteredDescription": "..."
- *       }
- *    }
- * </pre>
+ * Class with erroneous annotations, {@link GeoJsonId} is present multiple times.
  *
  * @since 0.2.0
  */
 @GeoJson(type = GeoJsonType.FEATURE)
 @JsonSerialize(using = GeoJsonSerializer.class)
-public class AttractionAltered {
+public class AttractionMultipleGeoJsonId {
 
    @GeoJsonId private UUID id;
    @GeoJsonProperty private String name;
-   private String description;
+   @GeoJsonProperty private String description;
+   @GeoJsonGeometry private Point location;
 
-   public AttractionAltered(UUID id, String name, String description) {
+   public AttractionMultipleGeoJsonId(UUID id, String name, String description, Point location) {
       this.id = id;
       this.name = name;
       this.description = description;
+      this.location = location;
    }
 
+   @GeoJsonId
    public UUID getId() {
       return id;
    }
@@ -76,12 +65,19 @@ public class AttractionAltered {
       this.name = name;
    }
 
-   @GeoJsonProperty(name = "alteredDescription")
    public String getDescription() {
       return description;
    }
 
    public void setDescription(String description) {
       this.description = description;
+   }
+
+   public Point getLocation() {
+      return location;
+   }
+
+   public void setLocation(Point location) {
+      this.location = location;
    }
 }

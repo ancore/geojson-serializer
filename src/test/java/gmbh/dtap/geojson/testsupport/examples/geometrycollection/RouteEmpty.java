@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package gmbh.dtap.geojson.serializer.examples.geometrycollection;
+package gmbh.dtap.geojson.testsupport.examples.geometrycollection;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.annotation.GeoJson;
