@@ -13,10 +13,15 @@ A demo Spring Boot project is available: [demo project](https://github.com/dtap-
 
 The PoJo containing the data for the GeoJSON object is annotated with `@GeoJson`.
 
-Whether the GeoJSON is a _Feature_, _FeatureCollection_ or a _GeometryCollection_ is specified by the annotation attribute `type`, for example `GeoJson(type = GeoJsonType.FEATURE)`
-.
+Whether the GeoJSON is a _Feature_, _FeatureCollection_ or a _GeometryCollection_ is specified by the annotation attribute `type`, for example `GeoJson(type = GeoJsonType.FEATURE)`.
 
 PoJo annotations on fields or getters indicate the GeoJSON members (_id_, _geometry_, _properties_, _features_) depending on the type.
+
+## Status
+
+The status of this library is something like **beta**. Please let me know if you have any ideas for improvement.
+
+There is some work to be done in test coverage, but a portion of the code is annotations and interfaces.
 
 ## Dependencies
 
@@ -29,10 +34,6 @@ of **jackson-datatype-jts**. The original **jackson-datatype-jts** project is no
 conflict due to the different package name.
 
 This library uses the **org.locationtech.jts.geom** classes.
-
-## Status
-
-The status of this library is something like **beta**. Please let me know if you have any ideas for improvement.
 
 ## Maven Dependency
 
