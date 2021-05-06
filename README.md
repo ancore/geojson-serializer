@@ -186,6 +186,10 @@ Please refer to the [demo project](https://github.com/dtap-gmbh/geojson-serializ
 
 *{0,1}: none or once*, *{0,} : none or any number*
 
+## Links
+
+* https://github.com/tmcw/awesome-geojson
+
 ## Credits
 
 Copyright (c) 2019 DTAP GmbH
