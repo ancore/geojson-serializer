@@ -37,12 +37,14 @@ This library uses the **org.locationtech.jts.geom** classes.
 
 ## Maven Dependency
 
+Check for current version: https://search.maven.org/artifact/gmbh.dtap/geojson-serializer
+
 ```xml
 
 <dependency>
    <groupId>gmbh.dtap</groupId>
    <artifactId>geojson-serializer</artifactId>
-   <version>0.5.3</version>
+   <version>X.X.X</version>
 </dependency>
 ```
 
