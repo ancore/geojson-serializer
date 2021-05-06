@@ -28,11 +28,10 @@ import java.util.List;
 /**
  * Class with correct annotations.
  * <p>This class demonstrates a <em>FeatureCollection</em> based on an <code>null</code> field.
- *
- * @since 0.2.0
  */
 @GeoJson(type = GeoJsonType.FEATURE_COLLECTION)
 @JsonSerialize(using = GeoJsonSerializer.class)
+@SuppressWarnings("ConstantConditions")
 public class AttractionsNull {
 
    @GeoJsonFeatures

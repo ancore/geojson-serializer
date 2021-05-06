@@ -23,13 +23,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import static org.apache.commons.lang3.Validate.notEmpty;
-import static org.apache.commons.lang3.Validate.notNull;
-
 /**
  * Represents an annotated {@link Field field} by name and value.
- *
- * @since 0.4.0
  */
 public class AnnotatedField implements Annotated {
 
@@ -39,13 +34,8 @@ public class AnnotatedField implements Annotated {
 
    /**
     * Constructor
-    *
-    * @since 0.4.0
     */
    AnnotatedField(String name, Field field, List<Annotation> annotations) {
-      notEmpty(name, "name is null");
-      notNull(field, "field is null");
-      notNull(annotations, "annotations is null");
       this.name = name;
       this.field = field;
       this.annotations = annotations;
@@ -53,8 +43,6 @@ public class AnnotatedField implements Annotated {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override public String getName() {
       return name;
@@ -62,8 +50,6 @@ public class AnnotatedField implements Annotated {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override public String getDescription() {
       return field.toString();
@@ -71,8 +57,6 @@ public class AnnotatedField implements Annotated {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override public List<Annotation> getAnnotations() {
       return annotations;
@@ -80,12 +64,8 @@ public class AnnotatedField implements Annotated {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override public <T> T getValue(Object object, Class<T> expectedClass) throws DocumentFactoryException {
-      notNull(object, "object is null");
-      notNull(expectedClass, "expectedClass is null");
       Object value;
       try {
          value = FieldUtils.readField(field, object, true);
@@ -96,18 +76,5 @@ public class AnnotatedField implements Annotated {
          throw new DocumentFactoryException("Value from Field is not of expected type: object=" + object + ", field=" + field + ", expectedType=" + expectedClass);
       }
       return expectedClass.cast(value);
-   }
-
-   /**
-    * {@inheritDoc}
-    *
-    * @since 0.4.0
-    */
-   @Override public String toString() {
-      return "AnnotatedField{" +
-         "name='" + name + '\'' +
-         ", field=" + field +
-         ", annotations=" + annotations +
-         '}';
    }
 }

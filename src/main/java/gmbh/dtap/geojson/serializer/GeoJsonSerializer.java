@@ -18,7 +18,6 @@ package gmbh.dtap.geojson.serializer;
 
 import com.bedatadriven.jackson.datatype.jts.serialization.GeometrySerializer;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -38,14 +37,11 @@ import java.io.IOException;
  * @see GeoJson
  * @see GeoJsonType
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3" target="_blank">RFC 7946 - GeoJSON Object</a>
- * @since 0.1.0
  */
 public class GeoJsonSerializer extends StdSerializer<Object> {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.1.0
     */
    public GeoJsonSerializer() {
       super(Object.class);
@@ -53,44 +49,6 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.1.0
-    */
-   public GeoJsonSerializer(Class<Object> t) {
-      super(t);
-   }
-
-   /**
-    * {@inheritDoc}
-    *
-    * @since 0.1.0
-    */
-   public GeoJsonSerializer(JavaType type) {
-      super(type);
-   }
-
-   /**
-    * {@inheritDoc}
-    *
-    * @since 0.1.0
-    */
-   public GeoJsonSerializer(Class<?> t, boolean dummy) {
-      super(t, dummy);
-   }
-
-   /**
-    * {@inheritDoc}
-    *
-    * @since 0.1.0
-    */
-   public GeoJsonSerializer(StdSerializer<?> src) {
-      super(src);
-   }
-
-   /**
-    * {@inheritDoc}
-    *
-    * @since 0.1.0
     */
    @Override
    public void serialize(Object object, JsonGenerator gen, SerializerProvider provider) throws IOException {
@@ -137,7 +95,6 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
     * @param gen      the generator from {@link JsonSerializer}
     * @param provider the provider from {@link JsonSerializer}
     * @throws IOException for exceptions from the generator
-    * @since 0.4.0
     */
    private void write(FeatureDocument document, JsonGenerator gen, SerializerProvider provider) throws IOException {
       gen.writeStartObject();
@@ -163,7 +120,6 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
     * @param document the feature collection document
     * @param gen      the generator from {@link JsonSerializer}
     * @throws IOException for exceptions from the generator
-    * @since 0.4.0
     */
    private void write(FeatureCollectionDocument document, JsonGenerator gen) throws IOException {
       gen.writeStartObject();
@@ -178,7 +134,6 @@ public class GeoJsonSerializer extends StdSerializer<Object> {
     * @param document the geometry collection document
     * @param gen      the generator from {@link JsonSerializer}
     * @throws IOException for exceptions from the generator
-    * @since 0.4.0
     */
    private void write(GeometryCollectionDocument document, JsonGenerator gen) throws IOException {
       gen.writeStartObject();

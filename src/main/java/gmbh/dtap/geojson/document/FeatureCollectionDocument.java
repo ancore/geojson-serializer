@@ -16,21 +16,20 @@
 
 package gmbh.dtap.geojson.document;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
  * Represents a <em>GeoJSON document</em> for a <em>FeatureCollection</em>.
  *
  * @see DocumentFactory
- * @since 0.4.0
  */
 public interface FeatureCollectionDocument extends Document {
 
    /**
     * The features of the collection.
     *
-    * @return the features, may be empty but never <code>null</code>
-    * @since 0.4.0
+    * @return the features
     */
-   List<Object> getFeatures();
+   @Nullable List<Object> getFeatures();
 }

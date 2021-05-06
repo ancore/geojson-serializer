@@ -42,15 +42,11 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  * Default implementation of a {@link DocumentFactory} that introspects the
  * object's class for annotations and retrieves the values of the annotated
  * fields and methods.
- *
- * @since 0.4.0
  */
 public class IntrospectionDocumentFactory implements DocumentFactory {
 
    /**
     * All annotations to search for on fields and methods (bean properties).
-    *
-    * @since 0.4.0
     */
    private static final Collection<Class<?>> annotationClasses = asList(
       GeoJsonId.class,
@@ -60,8 +56,6 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
 
    /**
     * Constructor for reflection.
-    *
-    * @since 0.4.0
     */
    public IntrospectionDocumentFactory() {
       // for reflection only
@@ -69,8 +63,6 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override
    public Document from(Object object) throws DocumentFactoryException {
@@ -99,7 +91,6 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
     * @param object the object
     * @return the feature document
     * @throws DocumentFactoryException on any error
-    * @since 0.4.0
     */
    private FeatureDocument featureFrom(Object object) throws DocumentFactoryException {
       ListMultimap<Class<? extends Annotation>, Annotated> index = index(object);
@@ -181,7 +172,6 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
     * @param object the object
     * @return the feature collection document
     * @throws DocumentFactoryException on any error
-    * @since 0.4.0
     */
    private FeatureCollectionDocument featureCollectionFrom(Object object) throws DocumentFactoryException {
       ListMultimap<Class<? extends Annotation>, Annotated> index = index(object);
@@ -233,7 +223,6 @@ public class IntrospectionDocumentFactory implements DocumentFactory {
     * @param object the object
     * @return the geometry collection document
     * @throws DocumentFactoryException on any error
-    * @since 0.4.0
     */
    private GeometryCollectionDocument geometryCollectionFrom(Object object) throws DocumentFactoryException {
       ListMultimap<Class<? extends Annotation>, Annotated> index = index(object);

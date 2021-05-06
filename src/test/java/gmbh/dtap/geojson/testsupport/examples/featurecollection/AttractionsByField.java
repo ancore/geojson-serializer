@@ -29,8 +29,6 @@ import java.util.List;
 /**
  * Class with correct annotations.
  * <p>This class demonstrates a <em>FeatureCollection</em> based on a {@link List} field.
- *
- * @since 0.2.0
  */
 @GeoJson(type = GeoJsonType.FEATURE_COLLECTION)
 @JsonSerialize(using = GeoJsonSerializer.class)

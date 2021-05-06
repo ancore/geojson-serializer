@@ -23,28 +23,21 @@ import gmbh.dtap.geojson.annotation.GeoJson;
  *
  * @see GeoJson
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-1.4" target="_blank">RFC 7946 - Definitions</a>
- * @since 0.1.0
  */
 public enum GeoJsonType {
 
    /**
     * Geometry type <em>GeometryCollection</em>
-    *
-    * @since 0.1.0
     */
    GEOMETRY_COLLECTION("GeometryCollection", true),
 
    /**
     * GeoJson type <em>Feature</em>
-    *
-    * @since 0.1.0
     */
    FEATURE("Feature", false),
 
    /**
     * GeoJson type <em>FeatureCollection</em>
-    *
-    * @since 0.1.0
     */
    FEATURE_COLLECTION("FeatureCollection", false);
 
@@ -59,8 +52,7 @@ public enum GeoJsonType {
    /**
     * Returns the name of the type according to the <em>GeoJSON</em> specification.
     *
-    * @return the name of the type, e.g. "MultiLine" for GeoJsonType.MULTI_LINE
-    * @since 0.1.0
+    * @return the name of the type, e.g. "FeatureCollection" for GeoJsonType.FEATURE_COLLECTION
     */
    public String getName() {
       return name;
@@ -70,7 +62,6 @@ public enum GeoJsonType {
     * Returns whether the type is a geometry type according to the <em>GeoJSON</em> specification.
     *
     * @return <code>true</code> if the type is a geometry, <code>false</code> otherwise
-    * @since 0.1.0
     */
    public boolean isGeometryType() {
       return geometryType;

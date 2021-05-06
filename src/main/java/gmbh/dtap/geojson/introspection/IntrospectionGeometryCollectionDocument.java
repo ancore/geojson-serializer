@@ -19,12 +19,11 @@ package gmbh.dtap.geojson.introspection;
 import gmbh.dtap.geojson.document.GeometryCollectionDocument;
 import org.locationtech.jts.geom.Geometry;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
  * Default implementation of a {@link GeometryCollectionDocument}.
- *
- * @since 0.4.0
  */
 public class IntrospectionGeometryCollectionDocument implements GeometryCollectionDocument {
 
@@ -33,17 +32,14 @@ public class IntrospectionGeometryCollectionDocument implements GeometryCollecti
    /**
     * Constructor
     *
-    * @param geometries the geometries, may be empty but not <code>null</code>
-    * @since 0.4.0
+    * @param geometries the geometries
     */
-   IntrospectionGeometryCollectionDocument(List<Geometry> geometries) {
+   IntrospectionGeometryCollectionDocument(@Nullable List<Geometry> geometries) {
       this.geometries = geometries;
    }
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override
    public List<Geometry> getGeometries() {

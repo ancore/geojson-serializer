@@ -18,21 +18,20 @@ package gmbh.dtap.geojson.document;
 
 import org.locationtech.jts.geom.Geometry;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
  * Represents a <em>GeoJSON document</em> for a <em>GeometryCollection</em>.
  *
  * @see DocumentFactory
- * @since 0.4.0
  */
 public interface GeometryCollectionDocument extends Document {
 
    /**
     * The geometries of the collection.
     *
-    * @return the geometries, may be empty but never <code>null</code>
-    * @since 0.4.0
+    * @return the geometries
     */
-   List<Geometry> getGeometries();
+   @Nullable List<Geometry> getGeometries();
 }

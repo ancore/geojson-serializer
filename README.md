@@ -1,4 +1,4 @@
-[![Java CI with Maven](https://github.com/dtap-gmbh/geojson-serializer/actions/workflows/maven.yml/badge.svg)](https://github.com/dtap-gmbh/geojson-serializer/actions/workflows/maven.yml) [![codecov](https://codecov.io/gh/dtap-gmbh/geojson-serializer/branch/master/graph/badge.svg?token=TU08NKlh1L)](https://codecov.io/gh/dtap-gmbh/geojson-serializer) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/gmbh.dtap/geojson-serializer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/gmbh.dtap/geojson-serializer)
+[![Java CI with Maven](https://github.com/dtap-gmbh/geojson-serializer/actions/workflows/maven.yml/badge.svg)](https://github.com/dtap-gmbh/geojson-serializer/actions/workflows/maven.yml) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/gmbh.dtap/geojson-serializer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/gmbh.dtap/geojson-serializer)
 
 # geojson-serializer
 

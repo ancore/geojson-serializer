@@ -66,7 +66,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @see JsonSerialize
  * @see GeoJsonSerializer
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3" target="_blank">RFC 7946 - GeoJSON Object</a>
- * @since 0.1.0
  */
 @Inherited
 @Documented
@@ -78,7 +77,6 @@ public @interface GeoJson {
     * Returns the {@link GeoJsonType} to serialize to.
     *
     * @return the {@link GeoJsonType}
-    * @since 0.1.0
     */
    GeoJsonType type();
 
@@ -87,7 +85,6 @@ public @interface GeoJson {
     *
     * @return the {@link DocumentFactory}, or the default if not specified
     * @see IntrospectionDocumentFactory
-    * @since 0.4.0
     */
    Class<? extends DocumentFactory> factory() default IntrospectionDocumentFactory.class;
 }

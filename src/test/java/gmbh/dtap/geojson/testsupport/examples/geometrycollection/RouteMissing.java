@@ -20,24 +20,13 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import gmbh.dtap.geojson.annotation.GeoJson;
 import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
-import org.locationtech.jts.geom.Geometry;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Class with correct annotations.
+ * <p>This class demonstrates a <em>GeometryCollection</em> based on missing annotation.
+ */
 @GeoJson(type = GeoJsonType.GEOMETRY_COLLECTION)
 @JsonSerialize(using = GeoJsonSerializer.class)
 public class RouteMissing {
 
-   private List<Geometry> list = new ArrayList<>();
-
-   public List<Geometry> getList() {
-      return list;
-   }
-
-   @Override public String toString() {
-      return "RouteByField{" +
-         "list=" + list +
-         '}';
-   }
 }

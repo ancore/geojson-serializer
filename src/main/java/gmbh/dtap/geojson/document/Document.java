@@ -23,7 +23,6 @@ package gmbh.dtap.geojson.document;
  * @see FeatureDocument
  * @see FeatureCollectionDocument
  * @see GeometryCollectionDocument
- * @since 0.4.0
  */
 public interface Document {
 

@@ -67,7 +67,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @see GeoJsonType#FEATURE_COLLECTION
  * @see GeoJsonFeature
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2" target="_blank">RFC 7946 - FeatureCollection Object</a>
- * @since 0.1.0
  */
 @Inherited
 @Documented

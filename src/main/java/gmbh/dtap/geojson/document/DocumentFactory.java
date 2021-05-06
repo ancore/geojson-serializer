@@ -22,23 +22,19 @@ import gmbh.dtap.geojson.introspection.IntrospectionDocumentFactory;
 /**
  * Implementing types can create {@link Document documents} from an annotated object.
  * <p>
- * The type can be passes with annotation attribute {@link GeoJson#factory()}.
- * <p>
- * The factory is interchangeable to enable mocking in tests.
+ * The factory is interchangeable to enable mocking in tests and customizations.
+ * The default implementation can replaced with annotation attribute {@link GeoJson#factory()}.
  *
  * @see IntrospectionDocumentFactory as default implementation
- * @since 0.4.0
  */
 public interface DocumentFactory {
 
    /**
-    * Creates a <em>GeoJSON document</em> from {@link GeoJson} annotation and
-    * the complementary annotations.
+    * Creates a <em>GeoJSON document</em> from {@link GeoJson} annotation and the complementary annotations.
     *
     * @param object the object to introspect
     * @return one of {@link FeatureDocument}, {@link FeatureCollectionDocument}, {@link GeometryCollectionDocument} depending on the attribute {@link GeoJson#type()}
     * @throws DocumentFactoryException for missing annotations, wrong types, invalid combination of annotations and such
-    * @since 0.4.0
     */
    Document from(Object object) throws DocumentFactoryException;
 }

@@ -23,8 +23,6 @@ import java.util.List;
 
 /**
  * Represents an annotated field or method found in introspection.
- *
- * @since 0.4.0
  */
 public interface Annotated {
 
@@ -33,7 +31,6 @@ public interface Annotated {
     * the name is according to the {@link java.beans.PropertyDescriptor}.
     *
     * @return the name
-    * @since 0.4.0
     */
    String getName();
 
@@ -41,15 +38,13 @@ public interface Annotated {
     * Returns a description to be identified in exception messages.
     *
     * @return a description
-    * @since 0.4.0
     */
    String getDescription();
 
    /**
     * Returns all GeoJson annotations from this member.
     *
-    * @return all GeoJson annotations, may be empty but never <code>null</code>
-    * @since 0.4.0
+    * @return all GeoJson annotations
     */
    List<Annotation> getAnnotations();
 
@@ -61,7 +56,6 @@ public interface Annotated {
     * @param <T>           the class of the expected type
     * @return the value, may be <code>null</code>
     * @throws DocumentFactoryException on any error
-    * @since 0.4.0
     */
    <T> T getValue(Object object, Class<T> expectedClass) throws DocumentFactoryException;
 }

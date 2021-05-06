@@ -21,23 +21,17 @@ import gmbh.dtap.geojson.document.DocumentFactory;
 
 /**
  * This implementation for testing purposes returns the input object as {@link Document}.
- *
- * @since 0.4.0
  */
 public class TestDocumentFactory implements DocumentFactory {
 
    /**
     * Constructor for reflection only.
-    *
-    * @since 0.4.0
     */
    public TestDocumentFactory() {
    }
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override
    public Document from(Object object) {

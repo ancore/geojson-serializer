@@ -20,10 +20,7 @@ import com.bedatadriven.jackson.datatype.jts.JtsModule;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gmbh.dtap.geojson.testsupport.TestUtils;
-import gmbh.dtap.geojson.testsupport.examples.feature.AttractionAltered;
-import gmbh.dtap.geojson.testsupport.examples.feature.AttractionByField;
-import gmbh.dtap.geojson.testsupport.examples.feature.AttractionByGetter;
-import gmbh.dtap.geojson.testsupport.examples.feature.AttractionMultipleGeoJsonId;
+import gmbh.dtap.geojson.testsupport.examples.feature.*;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeAll;
@@ -45,7 +42,7 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
  * @see AttractionAltered
  * @see AttractionByField
  * @see AttractionByGetter
- * @since 0.2.0
+ * @see AttractionWithoutId
  */
 
 class GeoJsonSerializerFeatureTest {
@@ -78,15 +75,23 @@ class GeoJsonSerializerFeatureTest {
    }
 
    @Test
-   void shouldSerializeAttractionByMethod() throws IOException, URISyntaxException, JSONException {
+   void shouldSerializeAttractionByGetter() throws IOException, URISyntaxException, JSONException {
       AttractionByGetter attraction = new AttractionByGetter(uuid, "Name", "Lorem ipsum", location);
-      String expectedJson = IOUtils.toString(getClass().getResource("/examples/feature/AttractionByMethod.json").toURI(), UTF_8);
+      String expectedJson = IOUtils.toString(getClass().getResource("/examples/feature/AttractionByGetter.json").toURI(), UTF_8);
       String actualJson = objectMapper.writeValueAsString(attraction);
       assertEquals(expectedJson, actualJson, true);
    }
 
    @Test
-   void shouldThrowExceptionWhenMultipleGeoJsonId() throws IOException {
+   void shouldSerializeAttractionWithoutId() throws IOException, URISyntaxException, JSONException {
+      AttractionWithoutId attraction = new AttractionWithoutId("Name", "Lorem ipsum", location);
+      String expectedJson = IOUtils.toString(getClass().getResource("/examples/feature/AttractionWithoutId.json").toURI(), UTF_8);
+      String actualJson = objectMapper.writeValueAsString(attraction);
+      assertEquals(expectedJson, actualJson, true);
+   }
+
+   @Test
+   void shouldThrowExceptionWhenMultipleGeoJsonId() {
       AttractionMultipleGeoJsonId attraction = new AttractionMultipleGeoJsonId(uuid, "Name", "Description", location);
       JsonMappingException jsonMappingException = assertThrows(JsonMappingException.class, () -> objectMapper.writeValueAsString(attraction));
       assertThat(jsonMappingException.getMessage()).startsWith("Annotation @GeoJsonId is present multiple times");

@@ -25,11 +25,16 @@ import org.locationtech.jts.geom.Geometry;
 
 import java.util.List;
 
+/**
+ * Class with correct annotations.
+ * <p>This class demonstrates a <em>GeometryCollection</em> based on an <code>null</code> field.
+ */
 @GeoJson(type = GeoJsonType.GEOMETRY_COLLECTION)
 @JsonSerialize(using = GeoJsonSerializer.class)
+@SuppressWarnings("ConstantConditions")
 public class RouteNull {
 
-   private List<Geometry> list = null;
+   private final List<Geometry> list = null;
 
    @GeoJsonGeometries
    public List<Geometry> getList() {

@@ -46,8 +46,6 @@ import java.util.UUID;
  *       }
  *    }
  * </pre>
- *
- * @since 0.2.0
  */
 @GeoJson(type = GeoJsonType.FEATURE)
 @JsonSerialize(using = GeoJsonSerializer.class)

@@ -31,8 +31,6 @@ import java.util.List;
  * <p>This class demonstrates a <em>FeatureCollection</em> based on a getter
  * that returns only one feature. The serializer will create an array to
  * assign as <em>Feature Object</em>.
- *
- * @since 0.2.0
  */
 @GeoJson(type = GeoJsonType.FEATURE_COLLECTION)
 @JsonSerialize(using = GeoJsonSerializer.class)

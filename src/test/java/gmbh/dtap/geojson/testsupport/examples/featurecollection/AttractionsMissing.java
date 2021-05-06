@@ -24,8 +24,6 @@ import gmbh.dtap.geojson.serializer.GeoJsonType;
 /**
  * Class with correct annotations.
  * <p>This class demonstrates a <em>FeatureCollection</em> based on missing annotation.
- *
- * @since 0.2.0
  */
 @GeoJson(type = GeoJsonType.FEATURE_COLLECTION)
 @JsonSerialize(using = GeoJsonSerializer.class)

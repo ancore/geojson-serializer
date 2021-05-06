@@ -39,7 +39,9 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
  *
  * @see AttractionsByField
  * @see AttractionsByGetter
- * @since 0.2.0
+ * @see AttractionsEmpty
+ * @see AttractionsMissing
+ * @see AttractionsNull
  */
 class GeoJsonSerializerFeatureCollectionTest {
 

@@ -26,12 +26,16 @@ import org.locationtech.jts.geom.Geometry;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class with correct annotations.
+ * <p>This class demonstrates a <em>GeometryCollection</em> based on an empty {@link List}.
+ */
 @GeoJson(type = GeoJsonType.GEOMETRY_COLLECTION)
 @JsonSerialize(using = GeoJsonSerializer.class)
 public class RouteEmpty {
 
    @GeoJsonGeometries
-   private List<Geometry> list = new ArrayList<>();
+   private final List<Geometry> list = new ArrayList<>();
 
    public List<Geometry> getList() {
       return list;

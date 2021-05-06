@@ -18,35 +18,33 @@ package gmbh.dtap.geojson.document;
 
 import org.locationtech.jts.geom.Geometry;
 
+import javax.annotation.Nullable;
+
 /**
  * Represents a <em>GeoJSON document</em> for a <em>Feature</em>.
  *
  * @see DocumentFactory
- * @since 0.4.0
  */
 public interface FeatureDocument extends Document {
 
    /**
     * The optional ID.
     *
-    * @return the optional ID, may be <code>null</code>
-    * @since 0.4.0
+    * @return the optional ID
     */
-   Object getId();
+   @Nullable Object getId();
 
    /**
     * The optional Geometry object.
     *
-    * @return the optional geometry, may be <code>null</code>
-    * @since 0.4.0
+    * @return the optional geometry
     */
-   Geometry getGeometry();
+   @Nullable Geometry getGeometry();
 
    /**
     * The optional properties object.
     *
-    * @return the optional properties, may be <code>null</code>
-    * @since 0.4.0
+    * @return the optional properties
     */
-   Object getProperties();
+   @Nullable Object getProperties();
 }

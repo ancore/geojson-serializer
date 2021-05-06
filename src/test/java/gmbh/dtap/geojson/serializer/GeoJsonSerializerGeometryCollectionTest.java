@@ -36,7 +36,9 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
  *
  * @see RouteByField
  * @see RouteByGetter
- * @since 0.5.0
+ * @see RouteEmpty
+ * @see RouteMissing
+ * @see RouteNull
  */
 class GeoJsonSerializerGeometryCollectionTest {
 

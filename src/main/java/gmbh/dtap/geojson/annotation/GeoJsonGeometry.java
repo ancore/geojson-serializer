@@ -55,7 +55,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @see <a href="https://github.com/locationtech/jts" target="_blank">JTS Topology Suite</a>
  * @see <a href="https://github.com/graphhopper/jackson-datatype-jts">jackson-datatype-jts</a>
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2" target="_blank">RFC 7946 - Feature Object</a>
- * @since 0.5.0
  */
 @Inherited
 @Documented

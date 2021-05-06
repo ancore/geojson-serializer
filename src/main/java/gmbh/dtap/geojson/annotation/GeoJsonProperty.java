@@ -50,7 +50,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @see GeoJsonType#FEATURE
  * @see GeoJsonProperties
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2" target="_blank">RFC 7946 - Feature Object</a>
- * @since 0.1.0
  */
 @Documented
 @Target({METHOD, FIELD})
@@ -62,7 +61,6 @@ public @interface GeoJsonProperty {
     * <p>If not set, the field name or getter name (without "get", lower case) wil be used.
     *
     * @return the optional name of the property
-    * @since 0.1.0
     */
    String name() default "";
 }

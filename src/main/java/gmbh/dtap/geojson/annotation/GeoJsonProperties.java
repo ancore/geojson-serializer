@@ -49,7 +49,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @see GeoJsonType#FEATURE
  * @see GeoJsonProperty
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2" target="_blank">RFC 7946 - Feature Object</a>
- * @since 0.2.0
  */
 @Documented
 @Target({METHOD, FIELD})

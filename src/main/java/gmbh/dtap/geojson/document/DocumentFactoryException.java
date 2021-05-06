@@ -18,15 +18,11 @@ package gmbh.dtap.geojson.document;
 
 /**
  * For exceptions thrown by a {@link DocumentFactory} implementation.
- *
- * @since 0.4.0
  */
 public class DocumentFactoryException extends Exception {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    public DocumentFactoryException(String message) {
       super(message);
@@ -34,8 +30,6 @@ public class DocumentFactoryException extends Exception {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    public DocumentFactoryException(String message, Throwable cause) {
       super(message, cause);

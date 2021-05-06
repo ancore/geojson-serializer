@@ -21,8 +21,6 @@ import org.locationtech.jts.geom.Geometry;
 
 /**
  * Default implementation of a {@link FeatureDocument}.
- *
- * @since 0.4.0
  */
 public class IntrospectionFeatureDocument implements FeatureDocument {
 
@@ -32,8 +30,6 @@ public class IntrospectionFeatureDocument implements FeatureDocument {
 
    /**
     * Constructor
-    *
-    * @since 0.5.3
     */
    IntrospectionFeatureDocument(Object id, Geometry geometry, Object properties) {
       this.id = id;
@@ -43,8 +39,6 @@ public class IntrospectionFeatureDocument implements FeatureDocument {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override public Object getId() {
       return id;
@@ -52,8 +46,6 @@ public class IntrospectionFeatureDocument implements FeatureDocument {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override public Geometry getGeometry() {
       return geometry;
@@ -61,8 +53,6 @@ public class IntrospectionFeatureDocument implements FeatureDocument {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override public Object getProperties() {
       return properties;

@@ -21,9 +21,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 
 /**
- * Utility class for tests.
- *
- * @since 0.2.0
+ * Utility class for tests that allows easy creation of geometry objects from {@link GeometryFactory}.
  */
 public class TestUtils {
 

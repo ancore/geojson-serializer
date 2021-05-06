@@ -50,7 +50,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @see GeoJsonType#GEOMETRY_COLLECTION
  * @see GeoJsonGeometry
  * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.1.8" target="_blank">RFC 7946 - GeometryCollections</a>
- * @since 0.1.0
  */
 @Inherited
 @Documented

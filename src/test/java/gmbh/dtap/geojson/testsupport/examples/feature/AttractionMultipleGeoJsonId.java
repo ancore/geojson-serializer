@@ -29,8 +29,6 @@ import java.util.UUID;
 
 /**
  * Class with erroneous annotations, {@link GeoJsonId} is present multiple times.
- *
- * @since 0.2.0
  */
 @GeoJson(type = GeoJsonType.FEATURE)
 @JsonSerialize(using = GeoJsonSerializer.class)

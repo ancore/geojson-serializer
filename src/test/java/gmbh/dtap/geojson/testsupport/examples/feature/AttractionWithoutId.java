@@ -25,67 +25,40 @@ import gmbh.dtap.geojson.serializer.GeoJsonSerializer;
 import gmbh.dtap.geojson.serializer.GeoJsonType;
 import org.locationtech.jts.geom.Point;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 /**
  * Class with correct annotations.
- * <p>This class demonstrates a <em>Feature</em> based on method annotations.
- * <p>The fact that the {@link GeoJsonProperty} annotation is present once,
- * causes the serializer to create this value as JSON object.
- * <p>The GeoJSON will be:
- * <pre>
- *    {
- *       "type": "Feature",
- *       "id": "...",
- *       "geometry": {
- *          "type": "Point",
- *          "coordinates: [ ..., ...]
- *       },
- *       "properties": {
- *          "name": "...",
- *          "description": "..."
- *       }
- *    }
- * </pre>
- *
- * @since 0.2.0
+ * <p>This class demonstrates a <em>Feature</em> based on field annotations without {@link GeoJsonId}.
  */
 @GeoJson(type = GeoJsonType.FEATURE)
 @JsonSerialize(using = GeoJsonSerializer.class)
-public class AttractionByMethod {
+public class AttractionWithoutId {
 
-   private UUID id;
-   private Map<String, String> properties = new HashMap<>();
-   private Point location;
+   @GeoJsonProperty private String name;
+   @GeoJsonProperty private String description;
+   @GeoJsonGeometry private Point location;
 
-   public AttractionByMethod(UUID id, String name, String description, Point location) {
-      this.id = id;
-      this.properties.put("nameKey", name);
-      this.properties.put("descriptionKey", description);
+   public AttractionWithoutId(String name, String description, Point location) {
+      this.name = name;
+      this.description = description;
       this.location = location;
    }
 
-   @GeoJsonId
-   public UUID getId() {
-      return id;
+   public String getName() {
+      return name;
    }
 
-   public void setId(UUID id) {
-      this.id = id;
+   public void setName(String name) {
+      this.name = name;
    }
 
-   @GeoJsonProperty
-   public Map<String, String> getProperties() {
-      return properties;
+   public String getDescription() {
+      return description;
    }
 
-   public void setProperties(Map<String, String> properties) {
-      this.properties = properties;
+   public void setDescription(String description) {
+      this.description = description;
    }
 
-   @GeoJsonGeometry
    public Point getLocation() {
       return location;
    }

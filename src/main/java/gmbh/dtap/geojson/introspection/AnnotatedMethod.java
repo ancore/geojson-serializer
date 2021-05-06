@@ -22,13 +22,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import static org.apache.commons.lang3.Validate.notEmpty;
-import static org.apache.commons.lang3.Validate.notNull;
-
 /**
  * Describes a {@link Method method} by name, type and annotations.
- *
- * @since 0.4.0
  */
 public class AnnotatedMethod implements Annotated {
 
@@ -38,13 +33,8 @@ public class AnnotatedMethod implements Annotated {
 
    /**
     * Constructor
-    *
-    * @since 0.4.0
     */
    AnnotatedMethod(String name, Method method, List<Annotation> annotations) {
-      notEmpty(name, "name is null");
-      notNull(method, "method is null");
-      notNull(annotations, "annotations is null");
       this.name = name;
       this.method = method;
       this.annotations = annotations;
@@ -52,8 +42,6 @@ public class AnnotatedMethod implements Annotated {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
 
    @Override public String getName() {
@@ -62,8 +50,6 @@ public class AnnotatedMethod implements Annotated {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override public String getDescription() {
       return method.toString();
@@ -71,8 +57,6 @@ public class AnnotatedMethod implements Annotated {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override public List<Annotation> getAnnotations() {
       return annotations;
@@ -80,12 +64,8 @@ public class AnnotatedMethod implements Annotated {
 
    /**
     * {@inheritDoc}
-    *
-    * @since 0.4.0
     */
    @Override public <T> T getValue(Object object, Class<T> expectedClass) throws DocumentFactoryException {
-      notNull(object, "object is null");
-      notNull(expectedClass, "expectedClass is null");
       Object value;
       try {
          value = method.invoke(object);
@@ -96,18 +76,5 @@ public class AnnotatedMethod implements Annotated {
          throw new DocumentFactoryException("Value from Method is not of expected type: object=" + object + ", method=" + method + ", expectedType=" + expectedClass);
       }
       return expectedClass.cast(value);
-   }
-
-   /**
-    * {@inheritDoc}
-    *
-    * @since 0.4.0
-    */
-   @Override public String toString() {
-      return "AnnotatedMethod{" +
-         "name='" + name + '\'' +
-         ", method=" + method +
-         ", annotations=" + annotations +
-         '}';
    }
 }
