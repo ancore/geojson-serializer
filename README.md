@@ -2,9 +2,9 @@
 
 # geojson-serializer
 
-A library with a JsonSerializer and a set of annotations to serialize any PoJo as [GeoJSON](https://tools.ietf.org/html/rfc7946).
+A library with a `JsonSerializer` and a set of annotations to serialize any PoJo as [GeoJSON](https://tools.ietf.org/html/rfc7946).
 
-Currently supported is [Feature](https://tools.ietf.org/html/rfc7946#section-3.2) and [FeatureCollection](https://tools.ietf.org/html/rfc7946#section-3.3),
+Supported so far is [Feature](https://tools.ietf.org/html/rfc7946#section-3.2) and [FeatureCollection](https://tools.ietf.org/html/rfc7946#section-3.3),
 [GeometryCollection](https://tools.ietf.org/html/rfc7946#section-3.1.8).
 
 A demo Spring Boot project is available: [demo project](https://github.com/dtap-gmbh/geojson-serializer-demo)
@@ -18,12 +18,6 @@ Whether the GeoJSON is a _Feature_, _FeatureCollection_ or a _GeometryCollection
 
 PoJo annotations on fields or getters indicate the GeoJSON members (_id_, _geometry_, _properties_, _features_) depending on the type.
 
-## Status
-
-The status of this library is something like **beta**. Please let me know if you have any ideas for improvement.
-
-There is some work to be done in test coverage, but a portion of the code is annotations and interfaces.
-
 ## Dependencies
 
 - [Jackson Databind](https://github.com/FasterXML/jackson-databind)
@@ -36,9 +30,17 @@ conflict due to the different package name.
 
 This library uses the **org.locationtech.jts.geom** classes.
 
+## Status
+
+The status of this library is something like **beta**. Please let me know if you have any ideas for improvement.
+
+TODO:
+
+* Caching by Type
+
 ## Maven Dependency
 
-Check for current version: https://search.maven.org/artifact/gmbh.dtap/geojson-serializer
+Check for the current version: https://search.maven.org/artifact/gmbh.dtap/geojson-serializer
 
 ```xml
 
@@ -173,7 +175,7 @@ Please refer to the [demo project](https://github.com/dtap-gmbh/geojson-serializ
 
 The library provides one type annotation `@GeoJson` and several annotations used on fields or methods. Methods are limited to getters ("Bean Property").
 
-Additionally, the provided `GeoJsonSerializer` has to be used.
+**Additionally**, the provided `GeoJsonSerializer` has to be used.
 
 ### @GeoJson
 
@@ -265,13 +267,13 @@ using `com.graphhopper.external:jackson-datatype-jts`.
 Again, two mutually exclusive annotations are used. The values are excepted to be serializable as `Feature`, most likely using Java classes with annotations from this library. If
 no field is annotated with either of them, the Feature Array is empty.
 
-### @GeoJsonFeatures
+#### @GeoJsonFeatures
 
 * indicates the Feature Array of a `FeatureCollection`
 * optional, but not more than once per class
 * mutually exclusive with `@GeoJsonFeature`
 
-### @GeoJsonFeature
+#### @GeoJsonFeature
 
 * indicates one Feature of the Feature Array of a `FeatureCollection`
 * optional and unlimited
