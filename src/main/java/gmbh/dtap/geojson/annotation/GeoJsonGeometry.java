@@ -46,7 +46,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <p>Field annotation example with the {@link Polygon} implementation of {@link Geometry}:
  * <pre>
  *    &#064;GeoJsonGeometry
- *    &#064;JsonSerialize(using = GeoJsonSerializer.class)
  *    private Polygon area;
  * </pre>
  *

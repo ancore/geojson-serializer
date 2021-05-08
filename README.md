@@ -13,7 +13,8 @@ A demo Spring Boot project is available: [demo project](https://github.com/dtap-
 
 The PoJo containing the data for the GeoJSON object is annotated with `@GeoJson`.
 
-Whether the GeoJSON is a _Feature_, _FeatureCollection_ or a _GeometryCollection_ is specified by the annotation attribute `type`, for example `GeoJson(type = GeoJsonType.FEATURE)`.
+Whether the GeoJSON is a _Feature_, _FeatureCollection_ or a _GeometryCollection_ is specified by the annotation attribute `type`, for example `GeoJson(type = GeoJsonType.FEATURE)`
+.
 
 PoJo annotations on fields or getters indicate the GeoJSON members (_id_, _geometry_, _properties_, _features_) depending on the type.
 
@@ -168,27 +169,113 @@ public class WebController {
 
 Please refer to the [demo project](https://github.com/dtap-gmbh/geojson-serializer-demo) for details.
 
-## Annotation Combinations
+## Annotations
 
-**@GeoJson(type=GeoJsonType.FEATURE)**
+The library provides one type annotation `@GeoJson` and several annotations used on fields or methods. Methods are limited to getters ("Bean Property").
 
-- @GeoJsonId {0,1}
-- @GeoJsonGeometry {0,1}
-- @GeoJsonProperties {0,1} **or** @GeoJsonProperty {0,}
+Additionally, the provided `GeoJsonSerializer` has to be used.
 
-**@GeoJson(type=GeoJsonType.FEATURE_COLLECTION)**
+### @GeoJson
 
-- @GeoJsonFeatures {0,1} **or** @GeoJsonFeature {0,}
+This annotation declares a Java class as `Feature`, `FeatureCollection` or `GeometryCollection` by using the respective `GeoJsonType`:
 
-**@GeoJson(type=GeoJsonType.GEOMETRY_COLLECTION)**
+* @GeoJson(type=GeoJsonType.FEATURE)
+* @GeoJson(type=GeoJsonType.FEATURE_COLLECTION)
+* @GeoJson(type=GeoJsonType.GEOMETRY_COLLECTION)
 
-- @GeoJsonGeometries {0,1} **or*** @GeoJsonGeometry {0,}
+The class furthermore contains fields or getters with annotations representing attributes of the specific type.
 
-*{0,1}: none or once*, *{0,} : none or any number*
+Example: The class 'Attraction' representing a `Feature` can be used in a class 'Attractions' representing a `FeatureCollection`.
 
-## Links
+```java
 
-* https://github.com/tmcw/awesome-geojson
+@GeoJson(type = GeoJsonType.FEATURE)
+@JsonSerialize(using = GeoJsonSerializer.class)
+public class Attraction {
+
+   @GeoJsonId private UUID id;
+   @GeoJsonProperty private String name;
+   @GeoJsonProperty private String description;
+   @GeoJsonGeometry private Point location;
+
+   // ...
+}
+
+@GeoJson(type = GeoJsonType.FEATURE_COLLECTION)
+@JsonSerialize(using = GeoJsonSerializer.class)
+public class Attractions {
+
+   @GeoJsonFeatures private List<Attraction> attractions; // using 'Feature' Attraction
+
+   // ...
+}
+```
+
+### @GeoJsonId
+
+* indicates the ID of a `Feature`
+* optional annotation, ID attribute is omitted if missing
+
+### Properties
+
+There are two mutually exclusive annotations to indicate the Properties Object of a `Feature`. One is used for one Java object to represent the Properties Object, the other to
+collect all occurrences and combine them to one Properties Object. If no field is annotated with either of them, the Properties Object is set to `null`.
+
+#### @GeoJsonProperties
+
+* indicates the Properties Object of a `Feature`
+* optional, but not more than once per class
+* mutually exclusive with `@GeoJsonProperty`
+* field or getter name is irrelevant
+* the field or getter value should serialize to a JSON object
+
+#### @GeoJsonProperty
+
+* indicates one attribute of the Properties Object of a `Feature`
+* optional and unlimited
+* mutually exclusive with `@GeoJsonProperties`
+* field or getter name is used as attribute key, unless overwritten with `@GeoJsonProperty#name()`
+* the attribute value should be any serializable object
+
+### Geometries
+
+As with Properties, two mutually exclusive annotations are available. A `Feature` may have one Geometry, a `GeometryCollection` has a Geometries Array. Missing annotations will
+lead to a `null` value for `Feature` or an empty Array for a `GeometryCollection`.
+
+Every element is expected to be of type `org.locationtech.jts.geom.Geometry` or one of the standard subtypes like `Point`, `Polygon` and so on. The actual serialization is done by
+using `com.graphhopper.external:jackson-datatype-jts`.
+
+#### @GeoJsonGeometries
+
+* indicates the Geometry Array of a `GeometryCollection`
+* optional, but not more than once per class
+* mutually exclusive with `@GeoJsonGeometry`
+* field or getter name is irrelevant
+* the field or getter value should serialize to a serializable collection containing Geometry elements
+
+#### @GeoJsonGeometry
+
+* indicates the Geometry Object of a `Feature` or one element of the Geometries Array of a `GeometryCollection`
+* optional and unlimited
+* mutually exclusive with `@GeoJsonGeometries`
+* field or getter name is irrelevant
+
+### Features
+
+Again, two mutually exclusive annotations are used. The values are excepted to be serializable as `Feature`, most likely using Java classes with annotations from this library. If
+no field is annotated with either of them, the Feature Array is empty.
+
+### @GeoJsonFeatures
+
+* indicates the Feature Array of a `FeatureCollection`
+* optional, but not more than once per class
+* mutually exclusive with `@GeoJsonFeature`
+
+### @GeoJsonFeature
+
+* indicates one Feature of the Feature Array of a `FeatureCollection`
+* optional and unlimited
+* mutually exclusive with `@GeoJsonFeatures`
 
 ## Credits
 
