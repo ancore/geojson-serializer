@@ -1,4 +1,4 @@
-[![Java CI with Maven](https://github.com/dtap-gmbh/geojson-serializer/actions/workflows/maven.yml/badge.svg)](https://github.com/dtap-gmbh/geojson-serializer/actions/workflows/maven.yml) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/gmbh.dtap/geojson-serializer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/gmbh.dtap/geojson-serializer)
+[![Java CI with Maven](https://github.com/ancore/geojson-serializer/actions/workflows/maven.yml/badge.svg)](https://github.com/ancore/geojson-serializer/actions/workflows/maven.yml) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ch.cordsen/geojson-serializer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ch.cordsen/geojson-serializer)
 
 # geojson-serializer
 
@@ -7,7 +7,7 @@ A library with a `JsonSerializer` and a set of annotations to serialize any PoJo
 Supported so far is [Feature](https://tools.ietf.org/html/rfc7946#section-3.2) and [FeatureCollection](https://tools.ietf.org/html/rfc7946#section-3.3),
 [GeometryCollection](https://tools.ietf.org/html/rfc7946#section-3.1.8).
 
-A demo Spring Boot project is available: [demo project](https://github.com/dtap-gmbh/geojson-serializer-demo)
+A demo Spring Boot project is available: [demo project](https://github.com/ancore/geojson-serializer-demo)
 
 ## Procedure
 
@@ -40,12 +40,12 @@ TODO:
 
 ## Maven Dependency
 
-Check for the current version: https://search.maven.org/artifact/gmbh.dtap/geojson-serializer
+Check for the current version: https://search.maven.org/artifact/ch.cordsen/geojson-serializer
 
 ```xml
 
 <dependency>
-   <groupId>gmbh.dtap</groupId>
+   <groupId>ch.cordsen</groupId>
    <artifactId>geojson-serializer</artifactId>
    <version>X.X.X</version>
 </dependency>
@@ -57,9 +57,13 @@ The following PoJo (Attraction) is annotated to be serialized as a GeoJSON Featu
 geometry (Point).
 
 ```java
+import ch.cordsen.geojson.annotation.GeoJson;
+import ch.cordsen.geojson.annotation.GeoJsonGeometry;
+import ch.cordsen.geojson.annotation.GeoJsonId;
+import ch.cordsen.geojson.annotation.GeoJsonProperty;
+import ch.cordsen.geojson.serializer.GeoJsonSerializer;
+import ch.cordsen.geojson.serializer.GeoJsonType;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import gmbh.dtap.geojson.annotation.*;
-import gmbh.dtap.geojson.serializer.*;
 import org.locationtech.jts.geom.Point;
 
 import java.util.UUID;
@@ -169,7 +173,7 @@ public class WebController {
 }
 ```
 
-Please refer to the [demo project](https://github.com/dtap-gmbh/geojson-serializer-demo) for details.
+Please refer to the [demo project](https://github.com/ancore/geojson-serializer-demo) for details.
 
 ## Annotations
 
@@ -281,6 +285,6 @@ no field is annotated with either of them, the Feature Array is empty.
 
 ## Credits
 
-Copyright (c) 2019 DTAP GmbH
+Copyright (c) 2019 Andreas Cordsen
 
 Please refer to the LICENSE file for details.
