@@ -28,7 +28,6 @@
       <connection>scm:git@github.com:ancore/geojson-serializer.git</connection>
       <url>scm:git@github.com:ancore/geojson-serializer.git</url>
       <developerConnection>scm:git:git@github.com:ancore/geojson-serializer.git</developerConnection>
-      <tag>geojson-serializer-0.6.0</tag>
    </scm>
 
    <distributionManagement>
